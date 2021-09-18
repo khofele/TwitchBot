@@ -1,0 +1,10 @@
+GMAIL
+blopsquadbot@gmail.com
+BlopsquadIsFrickingAmazing
+
+TWITCH
+blopsquadbot
+BlopsquadIsFrickingAmazing
+
+OAUTH
+oauth:prmbz98t28zxk3qqs22xhy6x6tkp1y
