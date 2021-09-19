@@ -1,20 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 
 namespace TwitchBot
 {
+    enum Quote
+    {
+        ONEMORE, TEA, BIO
+    }
+
+    enum Pomodoro
+    {
+        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS
+    }
+
     class Bot
     {
         ConnectionCredentials creds = new ConnectionCredentials("blopsquadbot", "oauth:prmbz98t28zxk3qqs22xhy6x6tkp1y");
         TwitchClient client;
         private string channel = "akaTripzz";
         private string response;
-        private Task task;
-
-        private FileManager fileManager = new FileManager();
         private TaskManager taskManager = new TaskManager();
 
         public Bot()
@@ -37,174 +46,138 @@ namespace TwitchBot
         {
             switch (e.Command.CommandText.ToLower())
             {
+                // EVERYONE
+                // POMO
                 case "addtask":
-                    AddTaskCommand(e);
+                    DisplayPomodoroCommand(Pomodoro.ADD, e);
                     break;
 
                 case "edittask":
-                    EditTaskCommand(e);
+                    DisplayPomodoroCommand(Pomodoro.EDIT, e);
                     break;
 
                 case "removetask":
-                    RemoveTaskCommand(e);
+                    DisplayPomodoroCommand(Pomodoro.REMOVE, e);
                     break;
 
                 case "taskdone":
-                    TaskDoneCommand(e);
+                    DisplayPomodoroCommand(Pomodoro.DONE, e);
                     break;
 
                 case "finishedtasks":
-                    FinishedTasksCommand(e);
+                    DisplayPomodoroCommand(Pomodoro.FINISHEDTASKS, e);
+                    break;
+
+
+                // QUOTES
+                case "tea":
+                    DisplayQuoteCommand(Quote.TEA, e);
+                    break;
+
+                case "onemore":
+                    DisplayQuoteCommand(Quote.ONEMORE, e);
                     break;
 
                 case "hello":
-                    BioEasterEgg(e);
+                    DisplayQuoteCommand(Quote.BIO, e);
+                    break;
+
+
+                // MODS ONLY
+                // POMO
+                case "timeoutdelete":
                     break;
             }
         }
 
-        private void AddTaskCommand(OnChatCommandReceivedArgs e)
+
+        private void DisplayQuoteCommand(Quote quote, OnChatCommandReceivedArgs e)
         {
-            string chatMessage = e.Command.ChatMessage.Message.ToString();
-            string taskMessage = chatMessage.Replace("!addtask", " -");
-            CheckAndAddTask(taskMessage, GetUser(e), e);
-            if (taskManager.finishedTasks.ContainsKey(GetUser(e)) == false)
+            switch (quote)
             {
-                taskManager.finishedTasks.Add(GetUser(e), 0);
+                case Quote.ONEMORE:
+                    response = "“i will just play one more game, one more, i promise!” - Mike 2019";
+                    break;
+
+                case Quote.TEA:
+                    response = "Yes, yes i love mint tea.I have about 5 cups a day.Dont touch my tea. -Mike 22 - 6 - 2019";
+                    break;
+
+                case Quote.BIO:
+                    if (e.Command.ChatMessage.DisplayName == "bioklappstuhl")
+                    {
+                        response = "hello bio! you are so loved! hihi <3";
+                    }
+                    else
+                    {
+                        response = "you're not bio :c";
+                    }
+                    break;
+            }
+
+            if (CheckModerator(e) == true)
+            {
+                SendChatMessage(response);
+            }
+            else if (DateTime.Now >= Cooldown.globalCooldownsQuotes[quote].AddSeconds(Cooldown.cooldownLengthsQuotes[quote]))
+            {
+                Cooldown.globalCooldownsQuotes[quote] = DateTime.Now;
+                SendChatMessage(response);
             }
         }
 
-        private void EditTaskCommand(OnChatCommandReceivedArgs e)
+        private void DisplayPomodoroCommand(Pomodoro pomo, OnChatCommandReceivedArgs e)
         {
-            string chatMessage = e.Command.ChatMessage.Message.ToString();
-            string editMessage = chatMessage.Replace("!edittask", " -");
-            CheckAndEditTask(GetUser(e), editMessage, e);
-            if (fileManager.FindTask(GetUser(e)) != null)
+            switch(pomo)
             {
-                response = GetUser(e) + " edited the task: " + fileManager.FindTask(GetUser(e)) + "! akatri2Work";
-                client.SendMessage(channel, response);
-            } 
-            else
+                case Pomodoro.ADD:
+                    response = taskManager.AddTaskCommand(e);
+                    break;
+
+                case Pomodoro.EDIT:
+                    response = taskManager.EditTaskCommand(e);
+                    break;
+
+                case Pomodoro.DONE:
+                    response = taskManager.TaskDoneCommand(e);
+                    break;
+
+                case Pomodoro.REMOVE:
+                    response = taskManager.RemoveTaskCommand(e);
+                    break;
+
+                case Pomodoro.FINISHEDTASKS:
+                    response = taskManager.FinishedTasksCommand(e);
+                    break;
+            }
+
+            if (CheckModerator(e) == true)
             {
-                response = GetUser(e) + " you have to add a task to edit a task! akatri2Pew";
-                client.SendMessage(channel, response);
+                SendChatMessage(response);
+            }
+            else if (DateTime.Now >= Cooldown.globalCooldownsPomos[pomo].AddSeconds(Cooldown.cooldownLengthsPomos[pomo]))
+            {
+                Cooldown.globalCooldownsPomos[pomo] = DateTime.Now;
+                SendChatMessage(response);
             }
         }
 
-        private void RemoveTaskCommand(OnChatCommandReceivedArgs e)
+        private bool CheckModerator(OnChatCommandReceivedArgs e)
         {
-            if (fileManager.FindTask(GetUser(e)) != null)
+            if (e.Command.ChatMessage.UserType == TwitchLib.Client.Enums.UserType.Moderator)
             {
-                response = GetUser(e) + " canceled the task: " + fileManager.FindTask(GetUser(e)) + "! akatri2Pew ";
-                client.SendMessage(channel, response);
-                Console.WriteLine($"[Bot]: {response}");
-                taskManager.RemoveTask(GetUser(e));
-                fileManager.DeleteTaskInFile(GetUser(e));
-            } 
-            else
-            {
-                response = GetUser(e) + " you have to add a task to remove a task! akatri2Pew";
-                client.SendMessage(channel, response);
-            }
-
-        }
-
-
-
-        private void TaskDoneCommand(OnChatCommandReceivedArgs e)
-        {
-            if(fileManager.FindTask(GetUser(e)) != null)
-            {
-                response = " CONGRATS " + GetUser(e) + "! akatri2Hype YOU COMPLETED YOUR TASK! " + fileManager.FindTask(GetUser(e)).ToUpper() + " IS DONE! akatri2Party akatri2Lovings";
-                client.SendMessage(channel, response);
-                taskManager.RemoveTask(GetUser(e));
-                fileManager.DeleteTaskInFile(GetUser(e));
-                CheckAndAddFinishedTask(e);
-            }
-            else
-            {
-                response = GetUser(e) + " you have to add a task to finish a task! akatri2Pew";
-                client.SendMessage(channel, response);
-            }
-
-        }
-
-        private void FinishedTasksCommand(OnChatCommandReceivedArgs e)
-        {
-            CheckAndAddFinishedTask(e);
-        }
-
-        private void BioEasterEgg(OnChatCommandReceivedArgs e)
-        {
-            if (GetUser(e) == "bioklappstuhl")
-            {
-                response = "hello bio! you are so loved! hihi <3";
-                client.SendMessage(channel, response);
-                Console.WriteLine($"[Bot]: {response}");
-            }
-            else
-            {
-                response = "you're not bio :c";
-                client.SendMessage(channel, response);
-                Console.WriteLine($"[Bot]: {response}");
-            }
-        }
-
-        private void CheckAndAddTask(string taskMessage, string user, OnChatCommandReceivedArgs e)
-        {
-            task = new Task(user, taskMessage);
-            taskManager.CheckTaskUser(task.User);
-
-            if (taskManager.NotAdded == true)
-            {
-                response = GetUser(e) + " added a task: " + taskMessage.Replace("- ", "") + "! akatri2Work ";
-                client.SendMessage(channel, response);
-                Console.WriteLine($"[Bot]: {response}");
-                fileManager.WriteToFile(GetUser(e) + task.UserTask);
-                taskManager.AddTask(task);
+                return true;
             }
             else
             {
-                response = GetUser(e) + " you already added a task! Remove or finish your task first! akatri2Pew ";
-                client.SendMessage(channel, response);
-                Console.WriteLine($"[Bot]: {response}");
+                return false;
             }
         }
 
-        private void CheckAndEditTask(string user, string editMessage, OnChatCommandReceivedArgs e)
+        private void SendChatMessage(string response)
         {
-            fileManager.FindAndEditTask(user, editMessage);
-        }
-
-        private void CheckAndAddFinishedTask(OnChatCommandReceivedArgs e)
-        {
-            if (taskManager.finishedTasks.ContainsKey(GetUser(e)))
-            {
-                int finishedTasks = taskManager.finishedTasks[GetUser(e)];
-                finishedTasks++;
-                taskManager.finishedTasks[GetUser(e)] = finishedTasks;
-
-                if(finishedTasks == 1)
-                {
-                    response = GetUser(e) + " finished " + finishedTasks + " task today! akatri2Party";
-                }
-                else
-                {
-                    response = GetUser(e) + " finished " + finishedTasks + " tasks today! akatri2Party";
-                }
-                client.SendMessage(channel, response);
-            }
-            else
-            {
-                taskManager.finishedTasks.Add(GetUser(e), 1);
-                response = GetUser(e) + " finished one task today! akatri2Party";
-                client.SendMessage(channel, response);
-            }
-        }
-
-        private string GetUser(OnChatCommandReceivedArgs e)
-        {
-            return e.Command.ChatMessage.DisplayName.ToString();
+            client.SendMessage(channel, response);
+            Console.WriteLine($"[Bot]: {response}");
         }
     }
 }

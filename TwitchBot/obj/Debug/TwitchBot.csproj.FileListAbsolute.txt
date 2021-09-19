@@ -1,7 +1,6 @@
 F:\Projekte\Twitchbot\TwitchBot\TwitchBot\bin\Debug\TwitchBot.exe.config
 F:\Projekte\Twitchbot\TwitchBot\TwitchBot\bin\Debug\TwitchBot.exe
 F:\Projekte\Twitchbot\TwitchBot\TwitchBot\bin\Debug\TwitchBot.pdb
-F:\Projekte\Twitchbot\TwitchBot\TwitchBot\obj\Debug\TwitchBot.csprojAssemblyReference.cache
 F:\Projekte\Twitchbot\TwitchBot\TwitchBot\obj\Debug\TwitchBot.csproj.CoreCompileInputs.cache
 F:\Projekte\Twitchbot\TwitchBot\TwitchBot\obj\Debug\TwitchBot.exe
 F:\Projekte\Twitchbot\TwitchBot\TwitchBot\obj\Debug\TwitchBot.pdb

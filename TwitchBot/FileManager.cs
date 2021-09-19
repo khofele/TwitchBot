@@ -5,13 +5,19 @@ namespace TwitchBot
 {
     class FileManager
     {
-        private string path = @"E:\Desktop\Temp\text.txt";
-        private string tempPath = @"E:\Desktop\Temp\text.txt";
+        private static string path = @"C:\Users\mikea\Documents\KAROCHATBOT\text.txt";
+        private string tempPath = @"C:\Users\mikea\Documents\KAROCHATBOT\temptext.txt";
+
+
+        public static string Path
+        {
+            get => path;
+        }
         public void WriteToFile(string message)
         {
-            using (StreamWriter writer = File.AppendText(tempPath))
+            using (StreamWriter writer = File.AppendText(path))
             {
-                writer.WriteLine(message + "\r");
+                writer.WriteLine(message);
             }
         }
 
@@ -39,45 +45,51 @@ namespace TwitchBot
 
         public string FindTask(string user)
         {
-            string line = "";
-
-            using (StreamReader reader = new StreamReader(path))
+            if (File.Exists(FileManager.Path))
             {
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if (line.StartsWith(user))
-                    {
-                        string modifiedLine = line.Replace((user + " - "), "");
-                        return modifiedLine;
-                    }
-                }
-            }
-            return null;
-        }
+                string line = "";
 
-        public string FindAndEditTask(string user, string message)
-        {
-            string line = "";
-
-            using (StreamReader reader = new StreamReader(path))
-            {
-                using (StreamWriter writer = new StreamWriter(tempPath))
+                using (StreamReader reader = new StreamReader(path))
                 {
                     while ((line = reader.ReadLine()) != null)
                     {
                         if (line.StartsWith(user))
                         {
-                            string modifiedLine = line.Replace(line, user + message);
-                            writer.WriteLine(modifiedLine);
-                            continue;
+                            string modifiedLine = line.Replace((user + " - "), "");
+                            return modifiedLine;
                         }
-                        writer.WriteLine(line);
                     }
                 }
+                return null;
             }
-            RenameAndDeleteFile();
-            DeleteEmptyLines();
             return null;
+        }
+
+        public void FindAndEditTask(string user, string message)
+        {
+            if(File.Exists(FileManager.Path))
+            {
+                string line = "";
+
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    using (StreamWriter writer = new StreamWriter(tempPath))
+                    {
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (line.StartsWith(user))
+                            {
+                                string modifiedLine = line.Replace(line, user + message);
+                                writer.WriteLine(modifiedLine);
+                                continue;
+                            }
+                            writer.WriteLine(line);
+                        }
+                    }
+                }
+                RenameAndDeleteFile();
+                DeleteEmptyLines();
+            }
         }
 
         private void DeleteEmptyLines()
