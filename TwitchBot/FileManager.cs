@@ -9,6 +9,7 @@ namespace TwitchBot
         private string tempPath = @"C:\Users\mikea\Documents\KAROCHATBOT\temptext.txt";
 
 
+
         public static string Path
         {
             get => path;

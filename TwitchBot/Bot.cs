@@ -115,14 +115,17 @@ namespace TwitchBot
                     break;
             }
 
-            if (CheckModerator(e) == true)
+            if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
             {
                 SendChatMessage(response);
+                return;
             }
-            else if (DateTime.Now >= Cooldown.globalCooldownsQuotes[quote].AddSeconds(Cooldown.cooldownLengthsQuotes[quote]))
+            else if (Cooldown.CheckCooldownOffQuote(quote) == true)
             {
                 Cooldown.globalCooldownsQuotes[quote] = DateTime.Now;
+                Cooldown.globalCooldownsRunningQuotes[quote] = true;
                 SendChatMessage(response);
+                return;
             }
         }
 
@@ -151,20 +154,35 @@ namespace TwitchBot
                     break;
             }
 
-            if (CheckModerator(e) == true)
+            if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
             {
                 SendChatMessage(response);
+                return;
             }
-            else if (DateTime.Now >= Cooldown.globalCooldownsPomos[pomo].AddSeconds(Cooldown.cooldownLengthsPomos[pomo]))
+            else if (Cooldown.CheckCooldownOffPomodoro(pomo) == true)
             {
                 Cooldown.globalCooldownsPomos[pomo] = DateTime.Now;
+                Cooldown.globalCooldownsRunningPomos[pomo] = true;
                 SendChatMessage(response);
+                return;
             }
         }
 
         private bool CheckModerator(OnChatCommandReceivedArgs e)
         {
-            if (e.Command.ChatMessage.UserType == TwitchLib.Client.Enums.UserType.Moderator)
+            if (e.Command.ChatMessage.IsModerator == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool CheckBroadcaster(OnChatCommandReceivedArgs e)
+        {
+            if (e.Command.ChatMessage.IsBroadcaster == true)
             {
                 return true;
             }
