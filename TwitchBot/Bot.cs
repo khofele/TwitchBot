@@ -15,7 +15,7 @@ namespace TwitchBot
 
     enum Pomodoro
     {
-        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS
+        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS
     }
 
     class Bot
@@ -66,6 +66,10 @@ namespace TwitchBot
 
                 case "finishedtasks":
                     DisplayPomodoroCommand(Pomodoro.FINISHEDTASKS, e);
+                    break;
+
+                case "allfinishedtasks":
+                    DisplayPomodoroCommand(Pomodoro.ALLFINISHEDTASKS, e);
                     break;
 
 
@@ -151,6 +155,10 @@ namespace TwitchBot
 
                 case Pomodoro.FINISHEDTASKS:
                     response = taskManager.FinishedTasksCommand(e);
+                    break;
+
+                case Pomodoro.ALLFINISHEDTASKS:
+                    response = taskManager.GetAllFinishedTasks();
                     break;
             }
 

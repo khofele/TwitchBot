@@ -138,6 +138,30 @@ namespace TwitchBot
             return CheckFinishedTask(e);
         }
 
+        public string GetAllFinishedTasks()
+        {
+            if(finishedTasks.Count > 0)
+            {
+                int allFinishedTasks = 0;
+                foreach (KeyValuePair<string, int> entry in finishedTasks)
+                {  
+                    allFinishedTasks += entry.Value;
+                }
+                if(allFinishedTasks == 1)
+                {
+                    return "THE BLOPSQUAD FINISHED 1 TASK TODAY! YOU'RE DOING AMAZING GUYS!  akatri2Party akatri2Hype";
+                } 
+                else
+                {
+                    return "THE BLOPSQUAD FINISHED " + allFinishedTasks + " TASKS TODAY! YOU'RE DOING AMAZING GUYS!  akatri2Party akatri2Hype";
+                }
+            }
+            else
+            {
+                return "THE BLOPSQUAD HASN'T FINISHED ANY TASKS TODAY! COME ON GUYS YOU CAN DO IT! akatri2Lovings";
+            }
+        }
+
         private string CheckAndAddTask(string taskMessage, string user, OnChatCommandReceivedArgs e)
         {
             task = new Task(user, taskMessage);

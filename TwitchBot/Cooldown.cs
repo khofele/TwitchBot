@@ -36,7 +36,8 @@ namespace TwitchBot
             { Pomodoro.EDIT, DateTime.Now },
             { Pomodoro.DONE, DateTime.Now },
             { Pomodoro.REMOVE, DateTime.Now},
-            { Pomodoro.FINISHEDTASKS, DateTime.Now }
+            { Pomodoro.FINISHEDTASKS, DateTime.Now },
+            { Pomodoro.ALLFINISHEDTASKS, DateTime.Now }
         };
 
         public static Dictionary<Pomodoro, int> globalCooldownLengthsPomos = new Dictionary<Pomodoro, int>()
@@ -45,7 +46,8 @@ namespace TwitchBot
             { Pomodoro.EDIT, 5 },
             { Pomodoro.DONE, 5 },
             { Pomodoro.REMOVE, 5 },
-            { Pomodoro.FINISHEDTASKS, 5 }
+            { Pomodoro.FINISHEDTASKS, 5 },
+            { Pomodoro.ALLFINISHEDTASKS, 5 }
         };
 
         public static Dictionary<Pomodoro, bool> globalCooldownsRunningPomos = new Dictionary<Pomodoro, bool>()
@@ -54,7 +56,8 @@ namespace TwitchBot
             { Pomodoro.EDIT, false },
             { Pomodoro.DONE, false },
             { Pomodoro.REMOVE, false },
-            { Pomodoro.FINISHEDTASKS, false }
+            { Pomodoro.FINISHEDTASKS, false },
+            { Pomodoro.ALLFINISHEDTASKS, false }
         };
 
         //public static bool CheckCommandAvailableQuote(Quote quote)

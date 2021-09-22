@@ -23,4 +23,3 @@ F:\Projekte\Twitchbot\TwitchBot\TwitchBot\bin\Debug\TwitchLib.PubSub.dll
 F:\Projekte\Twitchbot\TwitchBot\TwitchBot\bin\Debug\Microsoft.Extensions.Logging.Abstractions.xml
 F:\Projekte\Twitchbot\TwitchBot\TwitchBot\bin\Debug\Newtonsoft.Json.xml
 F:\Projekte\Twitchbot\TwitchBot\TwitchBot\obj\Debug\TwitchBot.csproj.CopyComplete
-F:\Projekte\Twitchbot\TwitchBot\TwitchBot\obj\Debug\TwitchBot.csprojAssemblyReference.cache
