@@ -24,3 +24,28 @@ F:\Projekte\Twitchbot\TwitchBot\TwitchBot\bin\Debug\Microsoft.Extensions.Logging
 F:\Projekte\Twitchbot\TwitchBot\TwitchBot\bin\Debug\Newtonsoft.Json.xml
 F:\Projekte\Twitchbot\TwitchBot\TwitchBot\obj\Debug\TwitchBot.csproj.CopyComplete
 F:\Projekte\Twitchbot\TwitchBot\TwitchBot\obj\Debug\TwitchBot.csprojAssemblyReference.cache
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchBot.exe.config
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchBot.exe
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchBot.pdb
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\Microsoft.Extensions.Logging.Abstractions.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\Newtonsoft.Json.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.Api.Core.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.Api.Core.Enums.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.Api.Core.Interfaces.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.Api.Core.Models.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.Api.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.Api.Helix.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.Api.Helix.Models.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.Api.V5.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.Api.V5.Models.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.Client.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.Client.Enums.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.Client.Models.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.Communication.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\TwitchLib.PubSub.dll
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\Microsoft.Extensions.Logging.Abstractions.xml
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\bin\Debug\Newtonsoft.Json.xml
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\obj\Debug\TwitchBot.csproj.CoreCompileInputs.cache
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\obj\Debug\TwitchBot.csproj.CopyComplete
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\obj\Debug\TwitchBot.exe
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\obj\Debug\TwitchBot.pdb

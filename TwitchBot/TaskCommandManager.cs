@@ -3,7 +3,7 @@ using TwitchLib.Client.Events;
 
 namespace TwitchBot
 {
-    class TaskManager
+    class TaskCommandManager
     {
         public List<Task> tasks = new List<Task>();
         public Dictionary<string, int> finishedTasks = new Dictionary<string, int>();
@@ -79,10 +79,10 @@ namespace TwitchBot
         {
             string chatMessage = e.Command.ChatMessage.Message.ToString();
             string taskMessage = chatMessage.Replace("!addtask", " -");
-            string response = CheckAndAddTask(taskMessage, GetUser(e), e);
-            if (finishedTasks.ContainsKey(GetUser(e)) == false)
+            string response = CheckAndAddTask(taskMessage, User.GetUser(e), e);
+            if (finishedTasks.ContainsKey(User.GetUser(e)) == false)
             {
-                finishedTasks.Add(GetUser(e), 0);
+                finishedTasks.Add(User.GetUser(e), 0);
             }
             return response;
         }
@@ -91,45 +91,45 @@ namespace TwitchBot
         {
             string chatMessage = e.Command.ChatMessage.Message.ToString();
             string editMessage = chatMessage.Replace("!edittask", " -");
-            CheckAndEditTask(GetUser(e), editMessage, e);
-            if (fileManager.FindTask(GetUser(e)) != null)
+            CheckAndEditTask(User.GetUser(e), editMessage, e);
+            if (fileManager.FindTask(User.GetUser(e)) != null)
             {
-                return GetUser(e) + " edited the task: " + editMessage.Replace(" -", "") + "! akatri2Work";
+                return User.GetUser(e) + " edited the task: " + editMessage.Replace(" -", "") + "! akatri2Work";
             }
             else
             {
-                return GetUser(e) + " you have to add a task to edit a task! akatri2Pew";
+                return User.GetUser(e) + " you have to add a task to edit a task! akatri2Pew";
             }
         }
 
         public string RemoveTaskCommand(OnChatCommandReceivedArgs e)
         {
-            if (fileManager.FindTask(GetUser(e)) != null)
+            if (fileManager.FindTask(User.GetUser(e)) != null)
             {
-                string canceledTask = fileManager.FindTask(GetUser(e));
-                RemoveTask(GetUser(e));
-                fileManager.DeleteTaskInFile(GetUser(e));
-                return GetUser(e) + " canceled the task: " + canceledTask + "! akatri2Pew ";
+                string canceledTask = fileManager.FindTask(User.GetUser(e));
+                RemoveTask(User.GetUser(e));
+                fileManager.DeleteTaskInFile(User.GetUser(e));
+                return User.GetUser(e) + " canceled the task: " + canceledTask + "! akatri2Pew ";
             }
             else
             {
-                return GetUser(e) + " you have to add a task to remove a task! akatri2Pew";
+                return User.GetUser(e) + " you have to add a task to remove a task! akatri2Pew";
             }
         }
 
         public string TaskDoneCommand(OnChatCommandReceivedArgs e)
         {
-            if (fileManager.FindTask(GetUser(e)) != null)
+            if (fileManager.FindTask(User.GetUser(e)) != null)
             {
                 string response = CheckAndAddFinishedTask(e);
-                string finishedTask = fileManager.FindTask(GetUser(e)).ToUpper();
-                RemoveTask(GetUser(e));
-                fileManager.DeleteTaskInFile(GetUser(e));
-                return "CONGRATS " + GetUser(e) + "! akatri2Hype YOU COMPLETED YOUR TASK! " + finishedTask + " IS DONE! " + response + " akatri2Party akatri2Lovings";
+                string finishedTask = fileManager.FindTask(User.GetUser(e)).ToUpper();
+                RemoveTask(User.GetUser(e));
+                fileManager.DeleteTaskInFile(User.GetUser(e));
+                return "CONGRATS " + User.GetUser(e) + "! akatri2Hype YOU COMPLETED YOUR TASK! " + finishedTask + " IS DONE! " + response + " akatri2Party akatri2Lovings";
             }
             else
             {
-                return GetUser(e) + " you have to add a task to finish a task! akatri2Pew";
+                return User.GetUser(e) + " you have to add a task to finish a task! akatri2Pew";
             }
         }
 
@@ -169,13 +169,13 @@ namespace TwitchBot
 
             if (NotAdded == true)
             {
-                fileManager.WriteToFile(GetUser(e) + task.UserTask);
+                fileManager.WriteToFile(User.GetUser(e) + task.UserTask);
                 AddTask(task);
-                return GetUser(e) + " added a task: " + taskMessage.Replace("- ", "") + "! akatri2Work ";
+                return User.GetUser(e) + " added a task: " + taskMessage.Replace("- ", "") + "! akatri2Work ";
             }
             else
             {
-                return GetUser(e) + " you already added a task! Remove or finish your task first! akatri2Pew ";
+                return User.GetUser(e) + " you already added a task! Remove or finish your task first! akatri2Pew ";
             }
         }
 
@@ -186,52 +186,47 @@ namespace TwitchBot
 
         private string CheckAndAddFinishedTask(OnChatCommandReceivedArgs e)
         {
-            if (finishedTasks.ContainsKey(GetUser(e)))
+            if (finishedTasks.ContainsKey(User.GetUser(e)))
             {
-                int finished = finishedTasks[GetUser(e)];
+                int finished = finishedTasks[User.GetUser(e)];
                 finished++;
-                finishedTasks[GetUser(e)] = finished;
+                finishedTasks[User.GetUser(e)] = finished;
 
                 if (finished == 1)
                 {
-                    return GetUser(e) + " finished " + finished + " task today!";
+                    return User.GetUser(e) + " finished " + finished + " task today!";
                 }
                 else
                 {
-                    return GetUser(e) + " finished " + finished + " tasks today!";
+                    return User.GetUser(e) + " finished " + finished + " tasks today!";
                 }
             }
             else
             {
-                finishedTasks.Add(GetUser(e), 1);
-                return GetUser(e) + " finished one task today! akatri2Party";
+                finishedTasks.Add(User.GetUser(e), 1);
+                return User.GetUser(e) + " finished one task today! akatri2Party";
             }
         }
 
         private string CheckFinishedTask(OnChatCommandReceivedArgs e)
         {
-            if (finishedTasks.ContainsKey(GetUser(e)))
+            if (finishedTasks.ContainsKey(User.GetUser(e)))
             {
-                int finished = finishedTasks[GetUser(e)];
+                int finished = finishedTasks[User.GetUser(e)];
 
                 if (finished == 1)
                 {
-                    return GetUser(e) + " finished " + finished + " task today! akatri2Party";
+                    return User.GetUser(e) + " finished " + finished + " task today! akatri2Party";
                 }
                 else
                 {
-                    return GetUser(e) + " finished " + finished + " tasks today! akatri2Party";
+                    return User.GetUser(e) + " finished " + finished + " tasks today! akatri2Party";
                 }
             }
             else
             {
-                return GetUser(e) + " you finished 0 tasks today! COME ON YOU CAN DO IT! akatri2Lovings";
+                return User.GetUser(e) + " you finished 0 tasks today! COME ON YOU CAN DO IT! akatri2Lovings";
             }
-        }
-
-        private string GetUser(OnChatCommandReceivedArgs e)
-        {
-            return e.Command.ChatMessage.DisplayName.ToString();
         }
     }
 }

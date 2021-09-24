@@ -131,8 +131,10 @@
     <Compile Include="FileManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomCommandManager.cs" />
     <Compile Include="Task.cs" />
-    <Compile Include="TaskManager.cs" />
+    <Compile Include="TaskCommandManager.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

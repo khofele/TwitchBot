@@ -18,13 +18,19 @@ namespace TwitchBot
         ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS
     }
 
+    enum RandomCounter
+    {
+        SPICECHECK
+    }
+
     class Bot
     {
         ConnectionCredentials creds = new ConnectionCredentials("blopsquadbot", "oauth:prmbz98t28zxk3qqs22xhy6x6tkp1y");
         TwitchClient client;
         private string channel = "akaTripzz";
         private string response;
-        private TaskManager taskManager = new TaskManager();
+        private TaskCommandManager taskManager = new TaskCommandManager();
+        private RandomCommandManager randomManager = new RandomCommandManager();
 
         public Bot()
         {
@@ -86,12 +92,49 @@ namespace TwitchBot
                     DisplayQuoteCommand(Quote.BIO, e);
                     break;
 
+                // RANDOM
+                case "spicecheck":
+                    DisplayRandomCommand(RandomCounter.SPICECHECK, e);
+                    break;
+
 
                 // MODS ONLY
                 // POMO
                 case "timeoutdelete":
                     break;
             }
+        }
+
+        private void DisplayPomodoroCommand(Pomodoro pomo, OnChatCommandReceivedArgs e)
+        {
+            switch (pomo)
+            {
+                case Pomodoro.ADD:
+                    response = taskManager.AddTaskCommand(e);
+                    break;
+
+                case Pomodoro.EDIT:
+                    response = taskManager.EditTaskCommand(e);
+                    break;
+
+                case Pomodoro.DONE:
+                    response = taskManager.TaskDoneCommand(e);
+                    break;
+
+                case Pomodoro.REMOVE:
+                    response = taskManager.RemoveTaskCommand(e);
+                    break;
+
+                case Pomodoro.FINISHEDTASKS:
+                    response = taskManager.FinishedTasksCommand(e);
+                    break;
+
+                case Pomodoro.ALLFINISHEDTASKS:
+                    response = taskManager.GetAllFinishedTasks();
+                    break;
+            }
+
+            SendChatMessage(response);
         }
 
 
@@ -133,32 +176,12 @@ namespace TwitchBot
             }
         }
 
-        private void DisplayPomodoroCommand(Pomodoro pomo, OnChatCommandReceivedArgs e)
+        private void DisplayRandomCommand(RandomCounter random, OnChatCommandReceivedArgs e)
         {
-            switch(pomo)
+            switch (random)
             {
-                case Pomodoro.ADD:
-                    response = taskManager.AddTaskCommand(e);
-                    break;
-
-                case Pomodoro.EDIT:
-                    response = taskManager.EditTaskCommand(e);
-                    break;
-
-                case Pomodoro.DONE:
-                    response = taskManager.TaskDoneCommand(e);
-                    break;
-
-                case Pomodoro.REMOVE:
-                    response = taskManager.RemoveTaskCommand(e);
-                    break;
-
-                case Pomodoro.FINISHEDTASKS:
-                    response = taskManager.FinishedTasksCommand(e);
-                    break;
-
-                case Pomodoro.ALLFINISHEDTASKS:
-                    response = taskManager.GetAllFinishedTasks();
+                case RandomCounter.SPICECHECK:
+                    response = randomManager.SpiceCheckCommand(e);
                     break;
             }
 
@@ -167,14 +190,16 @@ namespace TwitchBot
                 SendChatMessage(response);
                 return;
             }
-            else if (Cooldown.CheckCooldownOffPomodoro(pomo) == true)
+            else if (Cooldown.CheckCooldownOffRandom(random) == true)
             {
-                Cooldown.globalCooldownsPomos[pomo] = DateTime.Now;
-                Cooldown.globalCooldownsRunningPomos[pomo] = true;
+                Cooldown.globalCooldownsRandom[random] = DateTime.Now;
+                Cooldown.globalCooldownsRunningRandom[random] = true;
                 SendChatMessage(response);
                 return;
             }
         }
+
+
 
         private bool CheckModerator(OnChatCommandReceivedArgs e)
         {
