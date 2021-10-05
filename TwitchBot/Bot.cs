@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
@@ -25,9 +22,9 @@ namespace TwitchBot
 
     class Bot
     {
-        ConnectionCredentials creds = new ConnectionCredentials("blopsquadbot", "oauth:prmbz98t28zxk3qqs22xhy6x6tkp1y");
-        TwitchClient client;
-        private string channel = "akaTripzz";
+        private ConnectionCredentials creds = new ConnectionCredentials("blopsquadbot", "oauth:prmbz98t28zxk3qqs22xhy6x6tkp1y");
+        private TwitchClient client;
+        private string channel = "karomagkekse";
         private string response;
         private TaskCommandManager taskManager = new TaskCommandManager();
         private RandomCommandManager randomManager = new RandomCommandManager();

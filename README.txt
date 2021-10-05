@@ -24,9 +24,11 @@
 
 
 !edittask <task>
-- response: <user> edited the task: abcd! akatri2Work
+- response: <user> edited the task: <task>! akatri2Work
 - edits user's task in txt-file 
 
+!finishedtasks
+!allfinishedtasks
 
 !hello
 - response: hello bio! you are so loved! hihi <3
