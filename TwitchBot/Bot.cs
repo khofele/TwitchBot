@@ -12,7 +12,7 @@ namespace TwitchBot
 
     enum Pomodoro
     {
-        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS
+        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS, SETTARGET
     }
 
     enum RandomCounter
@@ -22,12 +22,17 @@ namespace TwitchBot
 
     class Bot
     {
-        private ConnectionCredentials creds = new ConnectionCredentials("blopsquadbot", "oauth:prmbz98t28zxk3qqs22xhy6x6tkp1y");
-        private TwitchClient client;
-        private string channel = "karomagkekse";
+        private ConnectionCredentials creds = new ConnectionCredentials("blopsquadbot", "oauth:jijizjd20ou8g7ghnbqnoz6hy9ksl1");
+        private static TwitchClient client;
+        private static string channel = "akaTripzz";
         private string response;
         private TaskCommandManager taskManager = new TaskCommandManager();
         private RandomCommandManager randomManager = new RandomCommandManager();
+
+        public static TwitchClient Client
+        {
+            get => client;
+        }
 
         public Bot()
         {
@@ -99,6 +104,10 @@ namespace TwitchBot
                 // POMO
                 case "timeoutdelete":
                     break;
+
+                case "settarget":
+                    DisplayPomodoroCommand(Pomodoro.SETTARGET, e);
+                    break;
             }
         }
 
@@ -106,6 +115,13 @@ namespace TwitchBot
         {
             switch (pomo)
             {
+                case Pomodoro.SETTARGET:
+                    if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+                    {
+                        response = taskManager.SetTargetCommand(e);
+                    }
+                    break;
+
                 case Pomodoro.ADD:
                     response = taskManager.AddTaskCommand(e);
                     break;
@@ -222,7 +238,7 @@ namespace TwitchBot
             }
         }
 
-        private void SendChatMessage(string response)
+        public static void SendChatMessage(string response)
         {
             client.SendMessage(channel, response);
             Console.WriteLine($"[Bot]: {response}");

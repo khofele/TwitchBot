@@ -10,6 +10,9 @@ namespace TwitchBot
         private int counter = 0;
         private bool notAdded = true;
         private Task task;
+        private string target = "0";
+
+        private static int allFinishedTasks = 0;
 
         private FileManager fileManager = new FileManager();
 
@@ -125,6 +128,8 @@ namespace TwitchBot
                 string finishedTask = fileManager.FindTask(User.GetUser(e)).ToUpper();
                 RemoveTask(User.GetUser(e));
                 fileManager.DeleteTaskInFile(User.GetUser(e));
+                SetTargetToFile(target, SumUpFinishedTasks());
+                CheckTargetAchieved();
                 return "CONGRATS " + User.GetUser(e) + "! akatri2Hype YOU COMPLETED YOUR TASK! " + finishedTask + " IS DONE! " + response + " akatri2Party akatri2Lovings";
             }
             else
@@ -140,27 +145,44 @@ namespace TwitchBot
 
         public string GetAllFinishedTasks()
         {
-            if(finishedTasks.Count > 0)
+            SumUpFinishedTasks();
+            if(allFinishedTasks == 1)
             {
-                int allFinishedTasks = 0;
-                foreach (KeyValuePair<string, int> entry in finishedTasks)
-                {  
-                    allFinishedTasks += entry.Value;
-                }
-                if(allFinishedTasks == 1)
-                {
-                    return "THE BLOPSQUAD FINISHED 1 TASK TODAY! YOU'RE DOING AMAZING GUYS!  akatri2Party akatri2Hype";
-                } 
-                else
-                {
-                    return "THE BLOPSQUAD FINISHED " + allFinishedTasks + " TASKS TODAY! YOU'RE DOING AMAZING GUYS!  akatri2Party akatri2Hype";
-                }
-            }
-            else
+                return "THE BLOPSQUAD FINISHED 1 TASK TODAY! YOU'RE DOING AMAZING GUYS!  akatri2Party akatri2Hype";
+            } 
+            else if(allFinishedTasks == 0)
             {
                 return "THE BLOPSQUAD HASN'T FINISHED ANY TASKS TODAY! COME ON GUYS YOU CAN DO IT! akatri2Lovings";
             }
+            else
+            {
+                return "THE BLOPSQUAD FINISHED " + allFinishedTasks + " TASKS TODAY! YOU'RE DOING AMAZING GUYS!  akatri2Party akatri2Hype";
+            }
         }
+
+        public string SetTargetCommand(OnChatCommandReceivedArgs e)
+        {
+            string chatMessage = e.Command.ChatMessage.Message.ToString();
+            target = chatMessage.Replace("!settarget", "");
+            SetTargetToFile(target, SumUpFinishedTasks());
+            string response = "Target set to: " + target + "!";
+            return response;
+        }
+
+        private void SetTargetToFile(string target, int currentTasks)
+        {
+            fileManager.ResetTargetFile();
+            fileManager.WriteToFile("Target: " + target + " " + "Current: " + allFinishedTasks, FileManager.TargetPath);
+        }
+
+        private void CheckTargetAchieved()
+        {
+            if(allFinishedTasks >= int.Parse(target) && int.Parse(target) > 0)
+            {
+                Bot.SendChatMessage("TARGET ACHIEVED! TARGET ACHIEVED! I AM SO PROUD OF Y'ALL! <3");
+            }
+        }
+
 
         private string CheckAndAddTask(string taskMessage, string user, OnChatCommandReceivedArgs e)
         {
@@ -169,7 +191,7 @@ namespace TwitchBot
 
             if (NotAdded == true)
             {
-                fileManager.WriteToFile(User.GetUser(e) + task.UserTask);
+                fileManager.WriteToFile(User.GetUser(e) + task.UserTask, FileManager.TaskPath);
                 AddTask(task);
                 return User.GetUser(e) + " added a task: " + taskMessage.Replace("- ", "") + "! akatri2Work ";
             }
@@ -227,6 +249,16 @@ namespace TwitchBot
             {
                 return User.GetUser(e) + " you finished 0 tasks today! COME ON YOU CAN DO IT! akatri2Lovings";
             }
+        }
+
+        private int SumUpFinishedTasks()
+        {
+            allFinishedTasks = 0;
+            foreach (KeyValuePair<string, int> entry in finishedTasks)
+            {
+                allFinishedTasks += entry.Value;
+            }
+            return allFinishedTasks;
         }
     }
 }

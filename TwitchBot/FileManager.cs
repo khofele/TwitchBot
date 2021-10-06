@@ -5,14 +5,20 @@ namespace TwitchBot
 {
     class FileManager
     {
-        private static string path = @"E:\Desktop\Temp\text.txt";
-        private string tempPath = @"E:\Desktop\Temp\temptext.txt";
+        private static string taskPath = @"E:\Desktop\Temp\text.txt";
+        private string tempTaskPath = @"E:\Desktop\Temp\temptext.txt";
+        private static string targetPath = @"E:\Desktop\Temp\target.txt";
 
-        public static string Path
+        public static string TaskPath
         {
-            get => path;
+            get => taskPath;
         }
-        public void WriteToFile(string message)
+
+        public static string TargetPath
+        {
+            get => targetPath;
+        }
+        public void WriteToFile(string message, string path)
         {
             using (StreamWriter writer = File.AppendText(path))
             {
@@ -24,9 +30,9 @@ namespace TwitchBot
         {
             string line = "";
 
-            using (StreamReader reader = new StreamReader(path))
+            using (StreamReader reader = new StreamReader(taskPath))
             {
-                using (StreamWriter writer = new StreamWriter(tempPath))
+                using (StreamWriter writer = new StreamWriter(tempTaskPath))
                 {
                     while ((line = reader.ReadLine()) != null)
                     {
@@ -44,11 +50,11 @@ namespace TwitchBot
 
         public string FindTask(string user)
         {
-            if (File.Exists(FileManager.Path))
+            if (File.Exists(FileManager.TaskPath))
             {
                 string line = "";
 
-                using (StreamReader reader = new StreamReader(path))
+                using (StreamReader reader = new StreamReader(taskPath))
                 {
                     while ((line = reader.ReadLine()) != null)
                     {
@@ -66,13 +72,13 @@ namespace TwitchBot
 
         public void FindAndEditTask(string user, string message)
         {
-            if(File.Exists(FileManager.Path))
+            if(File.Exists(FileManager.TaskPath))
             {
                 string line = "";
 
-                using (StreamReader reader = new StreamReader(path))
+                using (StreamReader reader = new StreamReader(taskPath))
                 {
-                    using (StreamWriter writer = new StreamWriter(tempPath))
+                    using (StreamWriter writer = new StreamWriter(tempTaskPath))
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
@@ -93,17 +99,22 @@ namespace TwitchBot
 
         private void DeleteEmptyLines()
         {
-            string text = File.ReadAllText(path);
+            string text = File.ReadAllText(taskPath);
             string result = Regex.Replace(text, @"(^\p{Zs}*\r\n){2,}", "\r\n", RegexOptions.Multiline);
-            File.WriteAllText(tempPath, result);
+            File.WriteAllText(tempTaskPath, result);
             RenameAndDeleteFile();
         }
 
         private void RenameAndDeleteFile()
         {
-            File.Delete(path);
-            File.Move(tempPath, path);
-            File.Delete(tempPath);
+            File.Delete(taskPath);
+            File.Move(tempTaskPath, taskPath);
+            File.Delete(tempTaskPath);
+        }
+
+        public void ResetTargetFile()
+        {
+            File.Delete(targetPath);
         }
     }
 }

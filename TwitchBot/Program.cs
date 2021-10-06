@@ -12,7 +12,7 @@ namespace TwitchBot
         static void Main(string[] args)
         {
             Bot bot = new Bot();
-            File.Delete(FileManager.Path);
+            File.Delete(FileManager.TaskPath);
             Console.ReadLine();
         }
     }
