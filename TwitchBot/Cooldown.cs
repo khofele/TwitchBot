@@ -63,17 +63,23 @@ namespace TwitchBot
         // ---------- RANDOM-COUNTER-COMMANDS ----------
         public static Dictionary<RandomCounter, DateTime> globalCooldownsRandom = new Dictionary<RandomCounter, DateTime>()
         {
-            { RandomCounter.SPICECHECK, DateTime.Now }
+            { RandomCounter.SPICECHECK, DateTime.Now },
+            { RandomCounter.NAPCHECK, DateTime.Now },
+            { RandomCounter.HYPECHECK, DateTime.Now }
         };
 
         public static Dictionary<RandomCounter, int> globalCooldownLengthsRandom = new Dictionary<RandomCounter, int>()
         {
-            { RandomCounter.SPICECHECK, 10 }
+            { RandomCounter.SPICECHECK, 10 },
+            { RandomCounter.NAPCHECK, 10},
+            { RandomCounter.HYPECHECK, 10 }
         };
 
         public static Dictionary<RandomCounter, bool> globalCooldownsRunningRandom = new Dictionary<RandomCounter, bool>()
         {
-            { RandomCounter.SPICECHECK, false }
+            { RandomCounter.SPICECHECK, false },
+            { RandomCounter.NAPCHECK, false },
+            { RandomCounter.HYPECHECK, false }
         };
 
         public static bool CheckCooldownOffQuote(Quote quote)

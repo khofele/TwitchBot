@@ -5,9 +5,10 @@ namespace TwitchBot
 {
     class FileManager
     {
-        private static string taskPath = @"E:\Desktop\Temp\text.txt";
-        private string tempTaskPath = @"E:\Desktop\Temp\temptext.txt";
-        private static string targetPath = @"E:\Desktop\Temp\target.txt";
+        private static string taskPath = @"C:\Users\mikea\Documents\KAROCHATBOT\text.txt";
+        private string tempTaskPath = @"C:\Users\mikea\Documents\KAROCHATBOT\temptext.txt";
+        private static string targetPath = @"C:\Users\mikea\Documents\KAROCHATBOT\target.txt";
+
 
         public static string TaskPath
         {

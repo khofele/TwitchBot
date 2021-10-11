@@ -12,17 +12,17 @@ namespace TwitchBot
 
     enum Pomodoro
     {
-        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS, SETTARGET
+        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS, SETTARGET, MYTASK
     }
 
     enum RandomCounter
     {
-        SPICECHECK
+        SPICECHECK, NAPCHECK, HYPECHECK
     }
 
     class Bot
     {
-        private ConnectionCredentials creds = new ConnectionCredentials("blopsquadbot", "oauth:jijizjd20ou8g7ghnbqnoz6hy9ksl1");
+        private ConnectionCredentials creds = new ConnectionCredentials("blopsquadbot", "oauth:4h6ckv84qqeu1eexdnt57qgulfjwjo");
         private static TwitchClient client;
         private static string channel = "akaTripzz";
         private string response;
@@ -80,6 +80,10 @@ namespace TwitchBot
                     DisplayPomodoroCommand(Pomodoro.ALLFINISHEDTASKS, e);
                     break;
 
+                case "mytask":
+                    DisplayPomodoroCommand(Pomodoro.MYTASK, e);
+                    break;
+
 
                 // QUOTES
                 case "tea":
@@ -97,6 +101,14 @@ namespace TwitchBot
                 // RANDOM
                 case "spicecheck":
                     DisplayRandomCommand(RandomCounter.SPICECHECK, e);
+                    break;
+
+                case "napcheck":
+                    DisplayRandomCommand(RandomCounter.NAPCHECK, e);
+                    break;
+
+                case "hypecheck":
+                    DisplayRandomCommand(RandomCounter.HYPECHECK, e);
                     break;
 
 
@@ -144,6 +156,10 @@ namespace TwitchBot
 
                 case Pomodoro.ALLFINISHEDTASKS:
                     response = taskManager.GetAllFinishedTasks();
+                    break;
+
+                case Pomodoro.MYTASK:
+                    response = taskManager.MyTaskCommand(e);
                     break;
             }
 
@@ -195,6 +211,14 @@ namespace TwitchBot
             {
                 case RandomCounter.SPICECHECK:
                     response = randomManager.SpiceCheckCommand(e);
+                    break;
+
+                case RandomCounter.NAPCHECK:
+                    response = randomManager.NapCheckCommand(e);
+                    break;
+
+                case RandomCounter.HYPECHECK:
+                    response = randomManager.HypeCheckCommand(e);
                     break;
             }
 

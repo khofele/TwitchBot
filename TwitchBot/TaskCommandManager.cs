@@ -169,6 +169,20 @@ namespace TwitchBot
             return response;
         }
 
+        public string MyTaskCommand(OnChatCommandReceivedArgs e)
+        {
+            string user = User.GetUser(e);
+            if (fileManager.FindTask(User.GetUser(e)) != null)
+            {
+                string task = fileManager.FindTask(user);
+                string response = user + " you are working on: " + task + "! Good luck! <3";
+                return response;
+            } else
+            {
+                return user + " you have to add a task first! You got this! <3";
+            }
+        }
+
         private void SetTargetToFile(string target, int currentTasks)
         {
             fileManager.ResetTargetFile();
