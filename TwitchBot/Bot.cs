@@ -17,7 +17,7 @@ namespace TwitchBot
 
     enum RandomCounter
     {
-        SPICECHECK, NAPCHECK, HYPECHECK
+        SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK
     }
 
     class Bot
@@ -111,6 +111,17 @@ namespace TwitchBot
                     DisplayRandomCommand(RandomCounter.HYPECHECK, e);
                     break;
 
+                case "lovecheck":
+                    DisplayRandomCommand(RandomCounter.LOVECHECK, e);
+                    break;
+
+                case "checkcheck":
+                    DisplayRandomCommand(RandomCounter.CHECKCHECK, e);
+                    break;
+
+                case "boobacheck":
+                    DisplayRandomCommand(RandomCounter.BOOBACHECK, e);
+                    break;
 
                 // MODS ONLY
                 // POMO
@@ -219,6 +230,18 @@ namespace TwitchBot
 
                 case RandomCounter.HYPECHECK:
                     response = randomManager.HypeCheckCommand(e);
+                    break;
+
+                case RandomCounter.LOVECHECK:
+                    response = randomManager.LoveCheckCommand(e);
+                    break;
+
+                case RandomCounter.CHECKCHECK:
+                    response = randomManager.CheckCheckCommand(e);
+                    break;
+
+                case RandomCounter.BOOBACHECK:
+                    response = randomManager.BoobaCheckCommand(e);
                     break;
             }
 

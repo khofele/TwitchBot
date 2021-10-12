@@ -20,15 +20,15 @@ namespace TwitchBot
         public string SpiceCheckCommand(OnChatCommandReceivedArgs e)
         {
             int randomCounter = GetRandom(1, 102);
-            if(randomCounter == 69)
+            if (randomCounter == 69)
             {
                 return "( ͡° ͜ʖ ͡°) ( ͡° ͜ʖ ͡°) ( ͡° ͜ʖ ͡°) " + User.GetUser(e) + " is " + randomCounter + "% spicy today! ( ͡° ͜ʖ ͡°) ( ͡° ͜ʖ ͡°) ( ͡° ͜ʖ ͡°)";
             }
-            else if(randomCounter == 101)
+            else if (randomCounter == 101)
             {
                 return User.GetUser(e) + " is " + randomCounter + "% spicy today! THE SPICE IS MASSIVE! WE BOW DOWN! YOU ARE A SPICEGOD!";
             }
-            else if(randomCounter > 70)
+            else if (randomCounter > 70)
             {
                 return User.GetUser(e) + " is " + randomCounter + "% spicy today! THE SPICE IS STRONG!";
             }
@@ -41,19 +41,19 @@ namespace TwitchBot
         public string HypeCheckCommand(OnChatCommandReceivedArgs e)
         {
             int randomCounter = GetRandom(1, 102);
-            if(randomCounter == 101)
+            if (randomCounter == 101)
             {
                 return "akatri2Party " + randomCounter + "% HYPE! " + User.GetUser(e) + " IS HYPING IN THE STRATOSPHERE! AYAYAYAYAYAYAYYYYYYYYY akatri2Party";
             }
-            else if(randomCounter == 69)
+            else if (randomCounter == 69)
             {
                 return User.GetUser(e) + " YOU ARE " + randomCounter + "% HYPED! S P I C E HYPE! akatri2Party";
             }
             else if (randomCounter > 50)
             {
-                if(randomCounter > 90)
+                if (randomCounter > 90)
                 {
-                    return "akatri2Party " + randomCounter+ "% HYPE! SHEEEEESH THE HYPE IS SO STRONG! " + User.GetUser(e) + " YOU'RE ABOUT TO EXPLODE! akatri2Party";
+                    return "akatri2Party " + randomCounter + "% HYPE! SHEEEEESH THE HYPE IS SO STRONG! " + User.GetUser(e) + " YOU'RE ABOUT TO EXPLODE! akatri2Party";
                 }
                 else
                 {
@@ -69,18 +69,65 @@ namespace TwitchBot
         public string NapCheckCommand(OnChatCommandReceivedArgs e)
         {
             int randomCounter = GetRandom(1, 101);
-            randomCounter = 1;
             if (randomCounter > 60)
             {
                 return User.GetUser(e) + " is " + randomCounter + "% tired today! You better take a nap <3";
             }
-            else if(randomCounter <= 10)
+            else if (randomCounter <= 10)
             {
                 return User.GetUser(e) + " is " + randomCounter + "% tired today!.... WAIT YOU'RE NOT TIRED AT ALL BACK TO WORK :p <3";
             }
             else
             {
                 return User.GetUser(e) + " is " + randomCounter + "% tired today!";
+            }
+        }
+
+        public string LoveCheckCommand(OnChatCommandReceivedArgs e)
+        {
+            int randomCounter = GetRandom(1, 101);
+            if (e.Command.ChatMessage.DisplayName == "akaTripzz")
+            {
+                if (randomCounter == 69)
+                {
+                    return "Jódete el amor Mike aka FUCK YOUR LOVE MIKE! jk jk we love you <3";
+                }
+            }
+            else
+            {
+                return "SOOOO " + User.GetUser(e) + " YOU WANNA CHECK ON BEING LOVED? ALRIGHT LEMME TELL YOU SOMETHING: YOU ARE SUCH A WONDERFUL HUMAN BEING AND I LOVE YOU SO SO SO SO MUCH! YOU ARE 2352325325252141% LOVED! TAKE ALL MY LUB BISH YOU ARE AMAZING <3 P.S.: Karo will push you in a pond if you don't believe me xoxo";
+            }
+            return null;
+        }
+
+        public string CheckCheckCommand(OnChatCommandReceivedArgs e)
+        {
+            int randomCounter = GetRandom(1, 102);
+            return User.GetUser(e) + " " + randomCounter + "% checked themselves before they wrecked themselves";
+        }
+
+        public string BoobaCheckCommand(OnChatCommandReceivedArgs e)
+        {
+            int randomCounter = GetRandom(1, 102);
+            if (e.Command.ChatMessage.DisplayName == "sollunatic")
+            {
+                return "@sollunatic MAIN BOOBA GIRL IS 1069% BOOBALICIOUS!";
+            }
+            else if(randomCounter == 69)
+            {
+                return User.GetUser(e) + " is " + randomCounter + "% boobalicious and hit that sweet spot ( ͡° ͜ʖ ͡°)";
+            }
+            else if(randomCounter == 101)
+            {
+                return User.GetUser(e) + " is " +randomCounter+ "% boobalicious! ALL HAIL BOOBA!";
+            }
+            else if(randomCounter < 10)
+            {
+                return User.GetUser(e) + " stop thinking about booba go back to work! jk pray to the booba-gods! may they never sag （• ㅅ •)";
+            }
+            else
+            {
+                return User.GetUser(e) + " is " + randomCounter + "% boobalicious!";
             }
         }
     }

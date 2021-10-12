@@ -9,7 +9,6 @@ namespace TwitchBot
         private string tempTaskPath = @"C:\Users\mikea\Documents\KAROCHATBOT\temptext.txt";
         private static string targetPath = @"C:\Users\mikea\Documents\KAROCHATBOT\target.txt";
 
-
         public static string TaskPath
         {
             get => taskPath;
