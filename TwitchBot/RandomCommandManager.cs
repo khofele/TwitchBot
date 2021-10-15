@@ -91,13 +91,16 @@ namespace TwitchBot
                 if (randomCounter == 69)
                 {
                     return "Jódete el amor Mike aka FUCK YOUR LOVE MIKE! jk jk we love you <3";
+                } 
+                else
+                {
+                    return "SOOOO " + User.GetUser(e) + " YOU WANNA CHECK ON BEING LOVED? ALRIGHT LEMME TELL YOU SOMETHING: YOU ARE SUCH A WONDERFUL HUMAN BEING AND I LOVE YOU SO SO SO SO MUCH! YOU ARE 2352325325252141% LOVED! TAKE ALL MY LUB BISH YOU ARE AMAZING <3 P.S.: Karo will push you in a pond if you don't believe me xoxo";
                 }
             }
             else
             {
                 return "SOOOO " + User.GetUser(e) + " YOU WANNA CHECK ON BEING LOVED? ALRIGHT LEMME TELL YOU SOMETHING: YOU ARE SUCH A WONDERFUL HUMAN BEING AND I LOVE YOU SO SO SO SO MUCH! YOU ARE 2352325325252141% LOVED! TAKE ALL MY LUB BISH YOU ARE AMAZING <3 P.S.: Karo will push you in a pond if you don't believe me xoxo";
             }
-            return null;
         }
 
         public string CheckCheckCommand(OnChatCommandReceivedArgs e)
@@ -128,6 +131,48 @@ namespace TwitchBot
             else
             {
                 return User.GetUser(e) + " is " + randomCounter + "% boobalicious!";
+            }
+        }
+
+        public string SusCheckCommand(OnChatCommandReceivedArgs e)
+        {
+            int randomCounter = GetRandom(1, 102);
+            if(randomCounter == 101)
+            {
+                return User.GetUser(e) + " IS SUS TO THE MAXIMUM SUS! WE CAN'T TRUST YOU! (jk jk you cheeky homeslice) akatri2Pew";
+            }
+            else if(randomCounter == 1)
+            {
+                return User.GetUser(e) + " you're the most innocent blop! <3";
+            }
+            else if(randomCounter == 69)
+            {
+                return "YOU ARE SUS AND SPICY SHEEEESH! ( ͡° ͜ʖ ͡°) " + User.GetUser(e) + " IS ON FIRE TODAY! akatri2Pew ";
+            }
+            else
+            {
+                return User.GetUser(e) + " is " + randomCounter + " % sus! akatri2Pew ";
+            }
+        }
+
+        public string SpookCheckCommand(OnChatCommandReceivedArgs e)
+        {
+            int randomCounter = GetRandom(1, 101);
+            if(randomCounter == 100)
+            {
+                return User.GetUser(e) + " YOU ARE 100% SPOOKY! YOU ARE A SPOOKY SCARY SKELETON! BOOOOOO 👻";
+            }
+            else if(randomCounter == 69)
+            {
+                return User.GetUser(e) + " of course you can't just be spooky... SOMEONE HAS TO BE SPICY AND SPOOKY AND THAT'S YOUUUUUUU BOOOOOOOOO! 👻";
+            }
+            else if(randomCounter > 70)
+            {
+                return User.GetUser(e) + " is " + randomCounter + "% spooky! YOU ARE SCARY AS HELL! 👻";
+            }
+            else
+            {
+                return User.GetUser(e) + " is " + randomCounter + "% spooky! 👻";
             }
         }
     }

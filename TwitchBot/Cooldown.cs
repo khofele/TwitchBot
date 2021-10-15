@@ -68,7 +68,9 @@ namespace TwitchBot
             { RandomCounter.HYPECHECK, DateTime.Now },
             { RandomCounter.LOVECHECK, DateTime.Now },
             { RandomCounter.BOOBACHECK, DateTime.Now },
-            { RandomCounter.CHECKCHECK, DateTime.Now }
+            { RandomCounter.CHECKCHECK, DateTime.Now },
+            { RandomCounter.SUSCHECK, DateTime.Now },
+            { RandomCounter.SPOOKCHECK, DateTime.Now }
         };
 
         public static Dictionary<RandomCounter, int> globalCooldownLengthsRandom = new Dictionary<RandomCounter, int>()
@@ -78,7 +80,9 @@ namespace TwitchBot
             { RandomCounter.HYPECHECK, 10 },
             { RandomCounter.LOVECHECK, 10 },
             { RandomCounter.BOOBACHECK, 10 },
-            { RandomCounter.CHECKCHECK, 10 }
+            { RandomCounter.CHECKCHECK, 10 },
+            { RandomCounter.SUSCHECK, 10},
+            { RandomCounter.SPOOKCHECK, 10 }
         };
 
         public static Dictionary<RandomCounter, bool> globalCooldownsRunningRandom = new Dictionary<RandomCounter, bool>()
@@ -88,7 +92,9 @@ namespace TwitchBot
             { RandomCounter.HYPECHECK, false },
             { RandomCounter.LOVECHECK, false },
             { RandomCounter.BOOBACHECK, false },
-            { RandomCounter.CHECKCHECK, false }
+            { RandomCounter.CHECKCHECK, false },
+            { RandomCounter.SUSCHECK, false },
+            { RandomCounter.SPOOKCHECK, false }
         };
 
         public static bool CheckCooldownOffQuote(Quote quote)
