@@ -137,7 +137,11 @@ namespace TwitchBot
         public string SusCheckCommand(OnChatCommandReceivedArgs e)
         {
             int randomCounter = GetRandom(1, 102);
-            if(randomCounter == 101)
+            if (e.Command.ChatMessage.DisplayName == "kiwi_Sr")
+            {
+                return "@kiwi_Sr SUS-GOD! WE BOW DOWN! KIWI SUS!";
+            }
+            else if (randomCounter == 101)
             {
                 return User.GetUser(e) + " IS SUS TO THE MAXIMUM SUS! WE CAN'T TRUST YOU! (jk jk you cheeky homeslice) akatri2Pew";
             }

@@ -129,6 +129,7 @@
     <Compile Include="Bot.cs" />
     <Compile Include="Cooldown.cs" />
     <Compile Include="FileManager.cs" />
+    <Compile Include="GeneralManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomCommandManager.cs" />

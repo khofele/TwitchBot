@@ -30,35 +30,38 @@ namespace TwitchBot
         };
 
         // ---------- POMO-COMMANDS ----------
-        //public static Dictionary<Pomodoro, DateTime> globalCooldownsPomos = new Dictionary<Pomodoro, DateTime>()
-        //{
-        //    { Pomodoro.ADD, DateTime.Now },
-        //    { Pomodoro.EDIT, DateTime.Now },
-        //    { Pomodoro.DONE, DateTime.Now },
-        //    { Pomodoro.REMOVE, DateTime.Now},
-        //    { Pomodoro.FINISHEDTASKS, DateTime.Now },
-        //    { Pomodoro.ALLFINISHEDTASKS, DateTime.Now }
-        //};
+        public static Dictionary<Pomodoro, DateTime> globalCooldownsPomos = new Dictionary<Pomodoro, DateTime>()
+        {
+            { Pomodoro.ADD, DateTime.Now },
+            { Pomodoro.EDIT, DateTime.Now },
+            { Pomodoro.DONE, DateTime.Now },
+            { Pomodoro.REMOVE, DateTime.Now},
+            { Pomodoro.FINISHEDTASKS, DateTime.Now },
+            { Pomodoro.ALLFINISHEDTASKS, DateTime.Now },
+            { Pomodoro.MYTASK, DateTime.Now }
+        };
 
-        //public static Dictionary<Pomodoro, int> globalCooldownLengthsPomos = new Dictionary<Pomodoro, int>()
-        //{
-        //    { Pomodoro.ADD, 0 },
-        //    { Pomodoro.EDIT, 0 },
-        //    { Pomodoro.DONE, 0 },
-        //    { Pomodoro.REMOVE, 0 },
-        //    { Pomodoro.FINISHEDTASKS, 0 },
-        //    { Pomodoro.ALLFINISHEDTASKS, 5 }
-        //};
+        public static Dictionary<Pomodoro, int> globalCooldownLengthsPomos = new Dictionary<Pomodoro, int>()
+        {
+            { Pomodoro.ADD, 0 },
+            { Pomodoro.EDIT, 0 },
+            { Pomodoro.DONE, 0 },
+            { Pomodoro.REMOVE, 0 },
+            { Pomodoro.FINISHEDTASKS, 0 },
+            { Pomodoro.ALLFINISHEDTASKS, 0 },
+            { Pomodoro.MYTASK, 0 }
+        };
 
-        //public static Dictionary<Pomodoro, bool> globalCooldownsRunningPomos = new Dictionary<Pomodoro, bool>()
-        //{
-        //    { Pomodoro.ADD, false },
-        //    { Pomodoro.EDIT, false },
-        //    { Pomodoro.DONE, false },
-        //    { Pomodoro.REMOVE, false },
-        //    { Pomodoro.FINISHEDTASKS, false },
-        //    { Pomodoro.ALLFINISHEDTASKS, false }
-        //};
+        public static Dictionary<Pomodoro, bool> globalCooldownsRunningPomos = new Dictionary<Pomodoro, bool>()
+        {
+            { Pomodoro.ADD, false },
+            { Pomodoro.EDIT, false },
+            { Pomodoro.DONE, false },
+            { Pomodoro.REMOVE, false },
+            { Pomodoro.FINISHEDTASKS, false },
+            { Pomodoro.ALLFINISHEDTASKS, false },
+            { Pomodoro.MYTASK, false}
+        };
 
         // ---------- RANDOM-COUNTER-COMMANDS ----------
         public static Dictionary<RandomCounter, DateTime> globalCooldownsRandom = new Dictionary<RandomCounter, DateTime>()
@@ -97,6 +100,22 @@ namespace TwitchBot
             { RandomCounter.SPOOKCHECK, false }
         };
 
+        // ---------- GENERAL-COMMANDS ----------
+        public static Dictionary<General, DateTime> globalCooldownsGeneral = new Dictionary<General, DateTime>()
+        {
+            { General.SUGGEST, DateTime.Now }
+        };
+
+        public static Dictionary<General, int> globalCooldownLengthsGeneral = new Dictionary<General, int>()
+        {
+            { General.SUGGEST, 10 }
+        };
+
+        public static Dictionary<General, bool> globalCooldownsRunningGeneral = new Dictionary<General, bool>()
+        {
+            { General.SUGGEST, false }
+        };
+
         public static bool CheckCooldownOffQuote(Quote quote)
         {
             if(DateTime.Now >= globalCooldownsQuotes[quote].AddSeconds(globalCooldownLengthsQuotes[quote])) {
@@ -109,24 +128,37 @@ namespace TwitchBot
             }
         }
 
-        //public static bool CheckCooldownOffPomodoro(Pomodoro pomo)
-        //{
-        //    if (DateTime.Now >= globalCooldownsPomos[pomo].AddSeconds(globalCooldownLengthsPomos[pomo]))
-        //    {
-        //        globalCooldownsRunningPomos[pomo] = false;
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
+        public static bool CheckCooldownOffPomodoro(Pomodoro pomo)
+        {
+            if (DateTime.Now >= globalCooldownsPomos[pomo].AddSeconds(globalCooldownLengthsPomos[pomo]))
+            {
+                globalCooldownsRunningPomos[pomo] = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public static bool CheckCooldownOffRandom(RandomCounter random)
         {
             if (DateTime.Now >= globalCooldownsRandom[random].AddSeconds(globalCooldownLengthsRandom[random]))
             {
                 globalCooldownsRunningRandom[random] = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool CheckCooldownOffGeneral(General general)
+        {
+            if (DateTime.Now >= globalCooldownsGeneral[general].AddSeconds(globalCooldownLengthsGeneral[general]))
+            {
+                globalCooldownsRunningGeneral[general] = false;
                 return true;
             }
             else

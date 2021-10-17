@@ -20,14 +20,20 @@ namespace TwitchBot
         SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK
     }
 
+    enum General
+    {
+        SUGGEST
+    }
+
     class Bot
     {
         private ConnectionCredentials creds = new ConnectionCredentials("blopsquadbot", "oauth:4h6ckv84qqeu1eexdnt57qgulfjwjo");
         private static TwitchClient client;
-        private static string channel = "akaTripzz";
+        private static string channel = "karomagkekse";
         private string response;
         private TaskCommandManager taskManager = new TaskCommandManager();
         private RandomCommandManager randomManager = new RandomCommandManager();
+        private GeneralManager generalManager = new GeneralManager();
 
         public static TwitchClient Client
         {
@@ -132,6 +138,11 @@ namespace TwitchBot
                     DisplayRandomCommand(RandomCounter.SPOOKCHECK, e);
                     break;
 
+                // GENERAL
+                case "suggest":
+                    DisplayGeneralCommand(General.SUGGEST, e);
+                    break;
+
                 // MODS ONLY
                 // POMO
                 case "timeoutdelete":
@@ -144,6 +155,103 @@ namespace TwitchBot
         }
 
         private void DisplayPomodoroCommand(Pomodoro pomo, OnChatCommandReceivedArgs e)
+        {
+            if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+            {
+                GetResponsePomodoro(pomo, e);
+                if (response != null)
+                {
+                    SendChatMessage(response);
+                    return;
+                }
+            }
+            else if (Cooldown.CheckCooldownOffPomodoro(pomo) == true)
+            {
+                GetResponsePomodoro(pomo, e);
+                Cooldown.globalCooldownsPomos[pomo] = DateTime.Now;
+                Cooldown.globalCooldownsRunningPomos[pomo] = true;
+                if (response != null)
+                {
+                    SendChatMessage(response);
+                    return;
+                }
+            }
+        }
+
+
+        private void DisplayQuoteCommand(Quote quote, OnChatCommandReceivedArgs e)
+        {
+            if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+            {
+                GetResponseQuote(quote, e);
+                if (response != null)
+                {
+                    SendChatMessage(response);
+                    return;
+                }
+            }
+            else if (Cooldown.CheckCooldownOffQuote(quote) == true)
+            {
+                GetResponseQuote(quote, e);
+                Cooldown.globalCooldownsQuotes[quote] = DateTime.Now;
+                Cooldown.globalCooldownsRunningQuotes[quote] = true;
+                if (response != null)
+                {
+                    SendChatMessage(response);
+                    return;
+                }
+            }
+        }
+
+        private void DisplayRandomCommand(RandomCounter random, OnChatCommandReceivedArgs e)
+        {
+            if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+            {
+                GetResponseRandomCommand(random, e);
+                if (response != null)
+                {
+                    SendChatMessage(response);
+                    return;
+                }
+            }
+            else if (Cooldown.CheckCooldownOffRandom(random) == true)
+            {
+                GetResponseRandomCommand(random, e);
+                Cooldown.globalCooldownsRandom[random] = DateTime.Now;
+                Cooldown.globalCooldownsRunningRandom[random] = true;
+                if (response != null)
+                {
+                    SendChatMessage(response);
+                    return;
+                }
+            }
+        }
+
+        private void DisplayGeneralCommand(General general, OnChatCommandReceivedArgs e)
+        {
+            if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+            {
+                GetResponseGeneralCommand(general, e);
+                if (response != null)
+                {
+                    SendChatMessage(response);
+                    return;
+                }
+            }
+            else if (Cooldown.CheckCooldownOffGeneral(general) == true)
+            {
+                GetResponseGeneralCommand(general, e);
+                Cooldown.globalCooldownsGeneral[general] = DateTime.Now;
+                Cooldown.globalCooldownsRunningGeneral[general] = true;
+                if (response != null)
+                {
+                    SendChatMessage(response);
+                    return;
+                }
+            }
+        }
+
+        private string GetResponsePomodoro(Pomodoro pomo, OnChatCommandReceivedArgs e)
         {
             switch (pomo)
             {
@@ -182,50 +290,10 @@ namespace TwitchBot
                     response = taskManager.MyTaskCommand(e);
                     break;
             }
-
-            SendChatMessage(response);
+            return response;
         }
 
-
-        private void DisplayQuoteCommand(Quote quote, OnChatCommandReceivedArgs e)
-        {
-            switch (quote)
-            {
-                case Quote.ONEMORE:
-                    response = "“i will just play one more game, one more, i promise!” - Mike 2019";
-                    break;
-
-                case Quote.TEA:
-                    response = "Yes, yes i love mint tea.I have about 5 cups a day.Dont touch my tea. -Mike 22 - 6 - 2019";
-                    break;
-
-                case Quote.BIO:
-                    if (e.Command.ChatMessage.DisplayName == "bioklappstuhl")
-                    {
-                        response = "hello bio! you are so loved! hihi <3";
-                    }
-                    else
-                    {
-                        response = "you're not bio :c";
-                    }
-                    break;
-            }
-
-            if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
-            {
-                SendChatMessage(response);
-                return;
-            }
-            else if (Cooldown.CheckCooldownOffQuote(quote) == true)
-            {
-                Cooldown.globalCooldownsQuotes[quote] = DateTime.Now;
-                Cooldown.globalCooldownsRunningQuotes[quote] = true;
-                SendChatMessage(response);
-                return;
-            }
-        }
-
-        private void DisplayRandomCommand(RandomCounter random, OnChatCommandReceivedArgs e)
+        private string GetResponseRandomCommand(RandomCounter random, OnChatCommandReceivedArgs e)
         {
             switch (random)
             {
@@ -261,21 +329,45 @@ namespace TwitchBot
                     response = randomManager.SpookCheckCommand(e);
                     break;
             }
-
-            if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
-            {
-                SendChatMessage(response);
-                return;
-            }
-            else if (Cooldown.CheckCooldownOffRandom(random) == true)
-            {
-                Cooldown.globalCooldownsRandom[random] = DateTime.Now;
-                Cooldown.globalCooldownsRunningRandom[random] = true;
-                SendChatMessage(response);
-                return;
-            }
+            return response;
         }
 
+        private string GetResponseQuote(Quote quote, OnChatCommandReceivedArgs e)
+        {
+            switch (quote)
+            {
+                case Quote.ONEMORE:
+                    response = "“i will just play one more game, one more, i promise!” - Mike 2019";
+                    break;
+
+                case Quote.TEA:
+                    response = "Yes, yes i love mint tea.I have about 5 cups a day.Dont touch my tea. -Mike 22 - 6 - 2019";
+                    break;
+
+                case Quote.BIO:
+                    if (e.Command.ChatMessage.DisplayName == "bioklappstuhl")
+                    {
+                        response = "hello bio! you are so loved! hihi <3";
+                    }
+                    else
+                    {
+                        response = "you're not bio :c";
+                    }
+                    break;
+            }
+            return response;
+        }
+
+        private string GetResponseGeneralCommand(General general, OnChatCommandReceivedArgs e)
+        {
+            switch (general)
+            {
+                case General.SUGGEST:
+                    response = generalManager.SuggestCommand(e);
+                    break;
+            }
+            return response;
+        }
 
 
         private bool CheckModerator(OnChatCommandReceivedArgs e)
