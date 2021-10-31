@@ -17,12 +17,12 @@ namespace TwitchBot
 
     enum RandomCounter
     {
-        SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK
+        SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK, BOJOCHECK, BUMBUM
     }
 
     enum General
     {
-        SUGGEST
+        SUGGEST, BREAK
     }
 
     class Bot
@@ -133,6 +133,14 @@ namespace TwitchBot
                     DisplayRandomCommand(RandomCounter.SUSCHECK, e);
                     break;
 
+                case "bojo":
+                    DisplayRandomCommand(RandomCounter.BOJOCHECK, e);
+                    break;
+
+                case "bumbum":
+                    DisplayRandomCommand(RandomCounter.BUMBUM, e);
+                    break;
+
                 // SPOOKTOBER
                 case "spookcheck":
                     DisplayRandomCommand(RandomCounter.SPOOKCHECK, e);
@@ -141,6 +149,10 @@ namespace TwitchBot
                 // GENERAL
                 case "suggest":
                     DisplayGeneralCommand(General.SUGGEST, e);
+                    break;
+
+                case "break":
+                    DisplayGeneralCommand(General.BREAK, e);
                     break;
 
                 // MODS ONLY
@@ -328,6 +340,14 @@ namespace TwitchBot
                 case RandomCounter.SPOOKCHECK:
                     response = randomManager.SpookCheckCommand(e);
                     break;
+
+                case RandomCounter.BOJOCHECK:
+                    response = randomManager.BojoCheckCommand(e);
+                    break;
+
+                case RandomCounter.BUMBUM:
+                    response = randomManager.BumBumCommand(e);
+                    break;
             }
             return response;
         }
@@ -364,6 +384,10 @@ namespace TwitchBot
             {
                 case General.SUGGEST:
                     response = generalManager.SuggestCommand(e);
+                    break;
+
+                case General.BREAK:
+                    response = generalManager.BreakCommand();
                     break;
             }
             return response;

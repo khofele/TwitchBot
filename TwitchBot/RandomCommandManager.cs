@@ -41,7 +41,11 @@ namespace TwitchBot
         public string HypeCheckCommand(OnChatCommandReceivedArgs e)
         {
             int randomCounter = GetRandom(1, 102);
-            if (randomCounter == 101)
+            if (e.Command.ChatMessage.DisplayName == "karomagkekse")
+            {
+                return "@karomagkekse NUMBER ONE HYPE GIRL IS IN THE HOUSE! AYAYAYAYY KARO IS 1069% HYPED AND ABOUT TO EXPLODE AYYYYYYYYYYYYY! akatri2Party";
+            }
+            else if (randomCounter == 101)
             {
                 return "akatri2Party " + randomCounter + "% HYPE! " + User.GetUser(e) + " IS HYPING IN THE STRATOSPHERE! AYAYAYAYAYAYAYYYYYYYYY akatri2Party";
             }
@@ -177,6 +181,48 @@ namespace TwitchBot
             else
             {
                 return User.GetUser(e) + " is " + randomCounter + "% spooky! 👻";
+            }
+        }
+
+        public string BojoCheckCommand(OnChatCommandReceivedArgs e)
+        {
+            int randomCounter = GetRandom(1, 102);
+            if(randomCounter == 101)
+            {
+                return User.GetUser(e) + " OMG NO 1 UKGOV FAN! YOU ARE THE BIGGEST BOJO SHRIMP DAYUM! ( ͡° ͜ʖ ͡°) <3";
+            }
+            else if(randomCounter == 69)
+            {
+                return User.GetUser(e) + " OMG STOP THINKING ABOUT UKGOV! BOJO IS WATCHING YOU! YOU BETTER GET BACK TO WORK! akatri2Pew";
+            }
+            else if(randomCounter > 75)
+            {
+                return User.GetUser(e) + " YOU'RE A TRUE MEMBER OF THE BOJO-FANCLUB! CONGRATS! LIFEGOAL ACHIEVED!";
+            }
+            else
+            {
+                return User.GetUser(e) + " is " + randomCounter + "% in love with ukgov! OMG! <3";
+            }
+        }
+
+        public string BumBumCommand(OnChatCommandReceivedArgs e)
+        {
+            int randomCounter = GetRandom(1, 101);
+            if(randomCounter == 101)
+            {
+                return User.GetUser(e) + "akatri2Party BUMBUM-GOD! WE BOW DOWN! BUMBUM IN THE AIR AND DANCE FOR US! akatri2Party";
+            }
+            else if(randomCounter == 69)
+            {
+                return User.GetUser(e) + "/me is twerking through chat! akatri2Party";
+            }
+            else if(randomCounter < 40)
+            {
+                return User.GetUser(e) + " YOU ARE NOT HYPED ENOUGH BUMBUM IN THE AIR AND DANCE A LIL BIT! akatri2Party";
+            }
+            else
+            {
+                return User.GetUser(e) + " LOVES THE BUMBUM! <3";
             }
         }
     }

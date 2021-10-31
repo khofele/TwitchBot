@@ -14,5 +14,10 @@ namespace TwitchBot
             fileManager.WriteToFile(User.GetUser(e) + suggestMessage, FileManager.SuggestPath);
             return User.GetUser(e) + " thank you for your suggestion! <3";
         }
+
+        public string BreakCommand()
+        {
+            return "ALRIGHT GUYS IT'S BREAKTIME! STAND UP! BUMBUMS IN THE AIR! STRETCH! HYDRATE! DROP YOUR PENS! HYDRATE! WE DON'T WANT YOU TO BURN OUT! <3";
+        }
     }
 }

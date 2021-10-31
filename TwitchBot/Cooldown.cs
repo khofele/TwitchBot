@@ -73,19 +73,23 @@ namespace TwitchBot
             { RandomCounter.BOOBACHECK, DateTime.Now },
             { RandomCounter.CHECKCHECK, DateTime.Now },
             { RandomCounter.SUSCHECK, DateTime.Now },
-            { RandomCounter.SPOOKCHECK, DateTime.Now }
+            { RandomCounter.SPOOKCHECK, DateTime.Now },
+            { RandomCounter.BOJOCHECK, DateTime.Now },
+            { RandomCounter.BUMBUM, DateTime.Now }
         };
 
         public static Dictionary<RandomCounter, int> globalCooldownLengthsRandom = new Dictionary<RandomCounter, int>()
         {
-            { RandomCounter.SPICECHECK, 10 },
-            { RandomCounter.NAPCHECK, 10},
-            { RandomCounter.HYPECHECK, 10 },
-            { RandomCounter.LOVECHECK, 10 },
-            { RandomCounter.BOOBACHECK, 10 },
-            { RandomCounter.CHECKCHECK, 10 },
-            { RandomCounter.SUSCHECK, 10},
-            { RandomCounter.SPOOKCHECK, 10 }
+            { RandomCounter.SPICECHECK, 2 },
+            { RandomCounter.NAPCHECK, 2 },
+            { RandomCounter.HYPECHECK, 2 },
+            { RandomCounter.LOVECHECK, 2 },
+            { RandomCounter.BOOBACHECK, 2 },
+            { RandomCounter.CHECKCHECK, 2 },
+            { RandomCounter.SUSCHECK, 2 },
+            { RandomCounter.SPOOKCHECK, 2 },
+            { RandomCounter.BOJOCHECK, 2 },
+            { RandomCounter.BUMBUM, 2 }
         };
 
         public static Dictionary<RandomCounter, bool> globalCooldownsRunningRandom = new Dictionary<RandomCounter, bool>()
@@ -97,23 +101,28 @@ namespace TwitchBot
             { RandomCounter.BOOBACHECK, false },
             { RandomCounter.CHECKCHECK, false },
             { RandomCounter.SUSCHECK, false },
-            { RandomCounter.SPOOKCHECK, false }
+            { RandomCounter.SPOOKCHECK, false },
+            { RandomCounter.BOJOCHECK, false },
+            { RandomCounter.BUMBUM, false }
         };
 
         // ---------- GENERAL-COMMANDS ----------
         public static Dictionary<General, DateTime> globalCooldownsGeneral = new Dictionary<General, DateTime>()
         {
-            { General.SUGGEST, DateTime.Now }
+            { General.SUGGEST, DateTime.Now },
+            { General.BREAK, DateTime.Now }
         };
 
         public static Dictionary<General, int> globalCooldownLengthsGeneral = new Dictionary<General, int>()
         {
-            { General.SUGGEST, 10 }
+            { General.SUGGEST, 10 },
+            { General.BREAK, 5 }
         };
 
         public static Dictionary<General, bool> globalCooldownsRunningGeneral = new Dictionary<General, bool>()
         {
-            { General.SUGGEST, false }
+            { General.SUGGEST, false },
+            { General.BREAK, false }
         };
 
         public static bool CheckCooldownOffQuote(Quote quote)

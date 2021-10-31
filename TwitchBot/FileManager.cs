@@ -43,7 +43,7 @@ namespace TwitchBot
                 {
                     while ((line = reader.ReadLine()) != null)
                     {
-                        if (line.StartsWith(user))
+                        if (line.StartsWith("•" + user))
                         {
                             continue;
                         }
@@ -65,7 +65,7 @@ namespace TwitchBot
                 {
                     while ((line = reader.ReadLine()) != null)
                     {
-                        if (line.StartsWith(user))
+                        if (line.StartsWith("•"+user))
                         {
                             string modifiedLine = line.Replace((user + " - "), "");
                             return modifiedLine;
@@ -89,9 +89,9 @@ namespace TwitchBot
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            if (line.StartsWith(user))
+                            if (line.StartsWith("•" + user))
                             {
-                                string modifiedLine = line.Replace(line, user + message);
+                                string modifiedLine = line.Replace(line, "•" + user + message);
                                 writer.WriteLine(modifiedLine);
                                 continue;
                             }

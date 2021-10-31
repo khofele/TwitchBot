@@ -95,7 +95,7 @@ namespace TwitchBot
             string chatMessage = e.Command.ChatMessage.Message.ToString();
             string editMessage = chatMessage.Replace("!edittask", " -");
             CheckAndEditTask(User.GetUser(e), editMessage, e);
-            if (fileManager.FindTask(User.GetUser(e)) != null)
+            if (fileManager.FindTask((User.GetUser(e))) != null)
             {
                 return User.GetUser(e) + " edited the task: " + editMessage.Replace(" -", "") + "! akatri2Work";
             }
@@ -112,7 +112,7 @@ namespace TwitchBot
                 string canceledTask = fileManager.FindTask(User.GetUser(e));
                 RemoveTask(User.GetUser(e));
                 fileManager.DeleteTaskInFile(User.GetUser(e));
-                return User.GetUser(e) + " canceled the task: " + canceledTask + "! akatri2Pew ";
+                return User.GetUser(e) + " canceled the task: " + canceledTask.Replace("•", "") + "! akatri2Pew ";
             }
             else
             {
@@ -130,7 +130,7 @@ namespace TwitchBot
                 fileManager.DeleteTaskInFile(User.GetUser(e));
                 SetTargetToFile(target, SumUpFinishedTasks());
                 CheckTargetAchieved();
-                return "CONGRATS " + User.GetUser(e) + "! akatri2Hype YOU COMPLETED YOUR TASK! " + finishedTask + " IS DONE! " + response + " akatri2Party akatri2Lovings";
+                return "CONGRATS " + User.GetUser(e) + "! akatri2Hype YOU COMPLETED YOUR TASK! " + finishedTask.Replace("•", "") + " IS DONE! " + response + " akatri2Party akatri2Lovings";
             }
             else
             {
@@ -175,7 +175,7 @@ namespace TwitchBot
             if (fileManager.FindTask(User.GetUser(e)) != null)
             {
                 string task = fileManager.FindTask(user);
-                string response = user + " you are working on: " + task + "! Good luck! <3";
+                string response = user + " you are working on: " + task.Replace("•", "") + "! Good luck! <3";
                 return response;
             } else
             {
@@ -205,7 +205,7 @@ namespace TwitchBot
 
             if (NotAdded == true)
             {
-                fileManager.WriteToFile(User.GetUser(e) + task.UserTask, FileManager.TaskPath);
+                fileManager.WriteToFile("•" + User.GetUser(e) + task.UserTask, FileManager.TaskPath);
                 AddTask(task);
                 return User.GetUser(e) + " added a task: " + taskMessage.Replace("- ", "") + "! akatri2Work ";
             }
