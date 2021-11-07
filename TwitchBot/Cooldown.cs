@@ -7,167 +7,111 @@ namespace TwitchBot
 {
     class Cooldown
     {
-        // ---------- QUOTES ----------
-        public static Dictionary<Quote, DateTime> globalCooldownsQuotes = new Dictionary<Quote, DateTime>()
+        public static Dictionary<Command, DateTime> globalCooldowns = new Dictionary<Command, DateTime>()
         {
-            { Quote.TEA, DateTime.Now },
-            { Quote.ONEMORE, DateTime.Now },
-            { Quote.BIO, DateTime.Now}
+            { Command.TEA, DateTime.Now },
+            { Command.ONEMORE, DateTime.Now },
+            { Command.BIO, DateTime.Now },
+
+
+            { Command.ADD, DateTime.Now },
+            { Command.EDIT, DateTime.Now },
+            { Command.DONE, DateTime.Now },
+            { Command.REMOVE, DateTime.Now},
+            { Command.FINISHEDTASKS, DateTime.Now },
+            { Command.ALLFINISHEDTASKS, DateTime.Now },
+            { Command.MYTASK, DateTime.Now },
+
+
+            { Command.SPICECHECK, DateTime.Now },
+            { Command.NAPCHECK, DateTime.Now },
+            { Command.HYPECHECK, DateTime.Now },
+            { Command.LOVECHECK, DateTime.Now },
+            { Command.BOOBACHECK, DateTime.Now },
+            { Command.CHECKCHECK, DateTime.Now },
+            { Command.SUSCHECK, DateTime.Now },
+            { Command.SPOOKCHECK, DateTime.Now },
+            { Command.BOJOCHECK, DateTime.Now },
+            { Command.BUMBUM, DateTime.Now },
+
+
+            { Command.SUGGEST, DateTime.Now },
+            { Command.BREAK, DateTime.Now },
+            { Command.UNO, DateTime.Now }
         };
 
-        public static Dictionary<Quote, int> globalCooldownLengthsQuotes = new Dictionary<Quote, int>()
+        public static Dictionary<Command, int> globalCooldownLengths = new Dictionary<Command, int>()
         {
-            { Quote.TEA, 30 },
-            { Quote.ONEMORE, 30 },
-            { Quote.BIO, 30}
+            { Command.TEA, 30 },
+            { Command.ONEMORE, 30 },
+            { Command.BIO, 30 },
+
+
+            { Command.ADD, 0 },
+            { Command.EDIT, 0 },
+            { Command.DONE, 0 },
+            { Command.REMOVE, 0},
+            { Command.FINISHEDTASKS, 0 },
+            { Command.ALLFINISHEDTASKS, 0 },
+            { Command.MYTASK, 0 },
+
+
+            { Command.SPICECHECK, 2 },
+            { Command.NAPCHECK, 2 },
+            { Command.HYPECHECK, 2 },
+            { Command.LOVECHECK, 2 },
+            { Command.BOOBACHECK, 2 },
+            { Command.CHECKCHECK, 2 },
+            { Command.SUSCHECK, 2 },
+            { Command.SPOOKCHECK, 2 },
+            { Command.BOJOCHECK, 2 },
+            { Command.BUMBUM, 2 },
+
+
+            { Command.SUGGEST, 10 },
+            { Command.BREAK, 5 },
+            { Command.UNO, 5 }
         };
 
-        public static Dictionary<Quote, bool> globalCooldownsRunningQuotes = new Dictionary<Quote, bool>()
+        public static Dictionary<Command, bool> globalCooldownsRunning = new Dictionary<Command, bool>()
         {
-            { Quote.TEA, false },
-            { Quote.ONEMORE, false },
-            { Quote.BIO, false}
+            { Command.TEA, false },
+            { Command.ONEMORE, false },
+            { Command.BIO, false },
+
+
+            { Command.ADD, false },
+            { Command.EDIT, false },
+            { Command.DONE, false },
+            { Command.REMOVE, false},
+            { Command.FINISHEDTASKS, false },
+            { Command.ALLFINISHEDTASKS, false },
+            { Command.MYTASK, false },
+
+
+            { Command.SPICECHECK, false },
+            { Command.NAPCHECK, false },
+            { Command.HYPECHECK, false },
+            { Command.LOVECHECK, false },
+            { Command.BOOBACHECK, false },
+            { Command.CHECKCHECK, false },
+            { Command.SUSCHECK, false },
+            { Command.SPOOKCHECK, false },
+            { Command.BOJOCHECK, false },
+            { Command.BUMBUM, false },
+
+
+            { Command.SUGGEST, false },
+            { Command.BREAK, false },
+            { Command.UNO, false }
         };
 
-        // ---------- POMO-COMMANDS ----------
-        public static Dictionary<Pomodoro, DateTime> globalCooldownsPomos = new Dictionary<Pomodoro, DateTime>()
-        {
-            { Pomodoro.ADD, DateTime.Now },
-            { Pomodoro.EDIT, DateTime.Now },
-            { Pomodoro.DONE, DateTime.Now },
-            { Pomodoro.REMOVE, DateTime.Now},
-            { Pomodoro.FINISHEDTASKS, DateTime.Now },
-            { Pomodoro.ALLFINISHEDTASKS, DateTime.Now },
-            { Pomodoro.MYTASK, DateTime.Now }
-        };
 
-        public static Dictionary<Pomodoro, int> globalCooldownLengthsPomos = new Dictionary<Pomodoro, int>()
+        public static bool CheckCooldownOff(Command command)
         {
-            { Pomodoro.ADD, 0 },
-            { Pomodoro.EDIT, 0 },
-            { Pomodoro.DONE, 0 },
-            { Pomodoro.REMOVE, 0 },
-            { Pomodoro.FINISHEDTASKS, 0 },
-            { Pomodoro.ALLFINISHEDTASKS, 0 },
-            { Pomodoro.MYTASK, 0 }
-        };
-
-        public static Dictionary<Pomodoro, bool> globalCooldownsRunningPomos = new Dictionary<Pomodoro, bool>()
-        {
-            { Pomodoro.ADD, false },
-            { Pomodoro.EDIT, false },
-            { Pomodoro.DONE, false },
-            { Pomodoro.REMOVE, false },
-            { Pomodoro.FINISHEDTASKS, false },
-            { Pomodoro.ALLFINISHEDTASKS, false },
-            { Pomodoro.MYTASK, false}
-        };
-
-        // ---------- RANDOM-COUNTER-COMMANDS ----------
-        public static Dictionary<RandomCounter, DateTime> globalCooldownsRandom = new Dictionary<RandomCounter, DateTime>()
-        {
-            { RandomCounter.SPICECHECK, DateTime.Now },
-            { RandomCounter.NAPCHECK, DateTime.Now },
-            { RandomCounter.HYPECHECK, DateTime.Now },
-            { RandomCounter.LOVECHECK, DateTime.Now },
-            { RandomCounter.BOOBACHECK, DateTime.Now },
-            { RandomCounter.CHECKCHECK, DateTime.Now },
-            { RandomCounter.SUSCHECK, DateTime.Now },
-            { RandomCounter.SPOOKCHECK, DateTime.Now },
-            { RandomCounter.BOJOCHECK, DateTime.Now },
-            { RandomCounter.BUMBUM, DateTime.Now }
-        };
-
-        public static Dictionary<RandomCounter, int> globalCooldownLengthsRandom = new Dictionary<RandomCounter, int>()
-        {
-            { RandomCounter.SPICECHECK, 2 },
-            { RandomCounter.NAPCHECK, 2 },
-            { RandomCounter.HYPECHECK, 2 },
-            { RandomCounter.LOVECHECK, 2 },
-            { RandomCounter.BOOBACHECK, 2 },
-            { RandomCounter.CHECKCHECK, 2 },
-            { RandomCounter.SUSCHECK, 2 },
-            { RandomCounter.SPOOKCHECK, 2 },
-            { RandomCounter.BOJOCHECK, 2 },
-            { RandomCounter.BUMBUM, 2 }
-        };
-
-        public static Dictionary<RandomCounter, bool> globalCooldownsRunningRandom = new Dictionary<RandomCounter, bool>()
-        {
-            { RandomCounter.SPICECHECK, false },
-            { RandomCounter.NAPCHECK, false },
-            { RandomCounter.HYPECHECK, false },
-            { RandomCounter.LOVECHECK, false },
-            { RandomCounter.BOOBACHECK, false },
-            { RandomCounter.CHECKCHECK, false },
-            { RandomCounter.SUSCHECK, false },
-            { RandomCounter.SPOOKCHECK, false },
-            { RandomCounter.BOJOCHECK, false },
-            { RandomCounter.BUMBUM, false }
-        };
-
-        // ---------- GENERAL-COMMANDS ----------
-        public static Dictionary<General, DateTime> globalCooldownsGeneral = new Dictionary<General, DateTime>()
-        {
-            { General.SUGGEST, DateTime.Now },
-            { General.BREAK, DateTime.Now }
-        };
-
-        public static Dictionary<General, int> globalCooldownLengthsGeneral = new Dictionary<General, int>()
-        {
-            { General.SUGGEST, 10 },
-            { General.BREAK, 5 }
-        };
-
-        public static Dictionary<General, bool> globalCooldownsRunningGeneral = new Dictionary<General, bool>()
-        {
-            { General.SUGGEST, false },
-            { General.BREAK, false }
-        };
-
-        public static bool CheckCooldownOffQuote(Quote quote)
-        {
-            if(DateTime.Now >= globalCooldownsQuotes[quote].AddSeconds(globalCooldownLengthsQuotes[quote])) {
-                globalCooldownsRunningQuotes[quote] = false;
-                return true;
-            } 
-            else
+            if (DateTime.Now >= globalCooldowns[command].AddSeconds(globalCooldownLengths[command]))
             {
-                return false;
-            }
-        }
-
-        public static bool CheckCooldownOffPomodoro(Pomodoro pomo)
-        {
-            if (DateTime.Now >= globalCooldownsPomos[pomo].AddSeconds(globalCooldownLengthsPomos[pomo]))
-            {
-                globalCooldownsRunningPomos[pomo] = false;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public static bool CheckCooldownOffRandom(RandomCounter random)
-        {
-            if (DateTime.Now >= globalCooldownsRandom[random].AddSeconds(globalCooldownLengthsRandom[random]))
-            {
-                globalCooldownsRunningRandom[random] = false;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public static bool CheckCooldownOffGeneral(General general)
-        {
-            if (DateTime.Now >= globalCooldownsGeneral[general].AddSeconds(globalCooldownLengthsGeneral[general]))
-            {
-                globalCooldownsRunningGeneral[general] = false;
+                globalCooldownsRunning[command] = false;
                 return true;
             }
             else

@@ -5,24 +5,21 @@ using TwitchLib.Client.Models;
 
 namespace TwitchBot
 {
-    enum Quote
+    enum Command
     {
-        ONEMORE, TEA, BIO
-    }
+        // Quote
+        ONEMORE, TEA, BIO,
 
-    enum Pomodoro
-    {
-        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS, SETTARGET, MYTASK
-    }
+        // Pomo
+        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS, SETTARGET, MYTASK,
+        
+        // Check-commands
+        SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK, BOJOCHECK, BUMBUM,
 
-    enum RandomCounter
-    {
-        SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK, BOJOCHECK, BUMBUM
-    }
+        // General
+        SUGGEST, BREAK, UNO,
 
-    enum General
-    {
-        SUGGEST, BREAK
+        NULL
     }
 
     class Bot
@@ -63,150 +60,136 @@ namespace TwitchBot
                 // EVERYONE
                 // POMO
                 case "addtask":
-                    DisplayPomodoroCommand(Pomodoro.ADD, e);
+                    DisplayCommand(Command.ADD, e);
                     break;
 
                 case "edittask":
-                    DisplayPomodoroCommand(Pomodoro.EDIT, e);
+                    DisplayCommand(Command.EDIT, e);
                     break;
 
                 case "removetask":
-                    DisplayPomodoroCommand(Pomodoro.REMOVE, e);
+                    DisplayCommand(Command.REMOVE, e);
                     break;
 
                 case "taskdone":
-                    DisplayPomodoroCommand(Pomodoro.DONE, e);
+                    DisplayCommand(Command.DONE, e);
                     break;
 
                 case "finishedtasks":
-                    DisplayPomodoroCommand(Pomodoro.FINISHEDTASKS, e);
+                    DisplayCommand(Command.FINISHEDTASKS, e);
                     break;
 
                 case "allfinishedtasks":
-                    DisplayPomodoroCommand(Pomodoro.ALLFINISHEDTASKS, e);
+                    DisplayCommand(Command.ALLFINISHEDTASKS, e);
                     break;
 
                 case "mytask":
-                    DisplayPomodoroCommand(Pomodoro.MYTASK, e);
+                    DisplayCommand(Command.MYTASK, e);
                     break;
 
 
                 // QUOTES
                 case "tea":
-                    DisplayQuoteCommand(Quote.TEA, e);
+                    DisplayCommand(Command.TEA, e);
                     break;
 
                 case "onemore":
-                    DisplayQuoteCommand(Quote.ONEMORE, e);
+                    DisplayCommand(Command.ONEMORE, e);
                     break;
 
                 case "hello":
-                    DisplayQuoteCommand(Quote.BIO, e);
+                    DisplayCommand(Command.BIO, e);
                     break;
 
                 // RANDOM
                 case "spicecheck":
-                    DisplayRandomCommand(RandomCounter.SPICECHECK, e);
+                    DisplayCommand(Command.SPICECHECK, e);
                     break;
 
                 case "napcheck":
-                    DisplayRandomCommand(RandomCounter.NAPCHECK, e);
+                    DisplayCommand(Command.NAPCHECK, e);
                     break;
 
                 case "hypecheck":
-                    DisplayRandomCommand(RandomCounter.HYPECHECK, e);
+                    DisplayCommand(Command.HYPECHECK, e);
                     break;
 
                 case "lovecheck":
-                    DisplayRandomCommand(RandomCounter.LOVECHECK, e);
+                    DisplayCommand(Command.LOVECHECK, e);
                     break;
 
                 case "checkcheck":
-                    DisplayRandomCommand(RandomCounter.CHECKCHECK, e);
+                    DisplayCommand(Command.CHECKCHECK, e);
                     break;
 
                 case "boobacheck":
-                    DisplayRandomCommand(RandomCounter.BOOBACHECK, e);
+                    DisplayCommand(Command.BOOBACHECK, e);
                     break;
 
                 case "suscheck":
-                    DisplayRandomCommand(RandomCounter.SUSCHECK, e);
+                    DisplayCommand(Command.SUSCHECK, e);
                     break;
 
                 case "bojo":
-                    DisplayRandomCommand(RandomCounter.BOJOCHECK, e);
+                    DisplayCommand(Command.BOJOCHECK, e);
                     break;
 
                 case "bumbum":
-                    DisplayRandomCommand(RandomCounter.BUMBUM, e);
+                    DisplayCommand(Command.BUMBUM, e);
                     break;
 
                 // SPOOKTOBER
-                case "spookcheck":
-                    DisplayRandomCommand(RandomCounter.SPOOKCHECK, e);
-                    break;
+                //case "spookcheck":
+                //    DisplayCommand(Command.SPOOKCHECK, e);
+                //    break;
 
                 // GENERAL
                 case "suggest":
-                    DisplayGeneralCommand(General.SUGGEST, e);
+                    DisplayCommand(Command.SUGGEST, e);
                     break;
 
                 case "break":
-                    DisplayGeneralCommand(General.BREAK, e);
+                    DisplayCommand(Command.BREAK, e);
                     break;
 
-                // MODS ONLY
+                case "uno":
+                    DisplayCommand(Command.UNO, e);
+                    break;
+
+                // ------------------------------------------------------  MODS ONLY ------------------------------------------------------  
                 // POMO
                 case "timeoutdelete":
                     break;
 
                 case "settarget":
-                    DisplayPomodoroCommand(Pomodoro.SETTARGET, e);
+                    DisplayCommand(Command.SETTARGET, e);
                     break;
+
+                // Debug
+                //case "banana":
+                //    CheckAndGetTaggedUser(e);
+                //    break;
             }
         }
 
-        private void DisplayPomodoroCommand(Pomodoro pomo, OnChatCommandReceivedArgs e)
+        private void DisplayCommand(Command command, OnChatCommandReceivedArgs e)
         {
+            LastUsedCommand.LastUsedCommandCheck(e);
+
             if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
             {
-                GetResponsePomodoro(pomo, e);
+                GetResponse(command, e);
                 if (response != null)
                 {
                     SendChatMessage(response);
                     return;
                 }
             }
-            else if (Cooldown.CheckCooldownOffPomodoro(pomo) == true)
+            else if (Cooldown.CheckCooldownOff(command) == true)
             {
-                GetResponsePomodoro(pomo, e);
-                Cooldown.globalCooldownsPomos[pomo] = DateTime.Now;
-                Cooldown.globalCooldownsRunningPomos[pomo] = true;
-                if (response != null)
-                {
-                    SendChatMessage(response);
-                    return;
-                }
-            }
-        }
-
-
-        private void DisplayQuoteCommand(Quote quote, OnChatCommandReceivedArgs e)
-        {
-            if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
-            {
-                GetResponseQuote(quote, e);
-                if (response != null)
-                {
-                    SendChatMessage(response);
-                    return;
-                }
-            }
-            else if (Cooldown.CheckCooldownOffQuote(quote) == true)
-            {
-                GetResponseQuote(quote, e);
-                Cooldown.globalCooldownsQuotes[quote] = DateTime.Now;
-                Cooldown.globalCooldownsRunningQuotes[quote] = true;
+                GetResponse(command, e);
+                Cooldown.globalCooldowns[command] = DateTime.Now;
+                Cooldown.globalCooldownsRunning[command] = true;
                 if (response != null)
                 {
                     SendChatMessage(response);
@@ -215,156 +198,99 @@ namespace TwitchBot
             }
         }
 
-        private void DisplayRandomCommand(RandomCounter random, OnChatCommandReceivedArgs e)
-        {
-            if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
-            {
-                GetResponseRandomCommand(random, e);
-                if (response != null)
-                {
-                    SendChatMessage(response);
-                    return;
-                }
-            }
-            else if (Cooldown.CheckCooldownOffRandom(random) == true)
-            {
-                GetResponseRandomCommand(random, e);
-                Cooldown.globalCooldownsRandom[random] = DateTime.Now;
-                Cooldown.globalCooldownsRunningRandom[random] = true;
-                if (response != null)
-                {
-                    SendChatMessage(response);
-                    return;
-                }
-            }
-        }
 
-        private void DisplayGeneralCommand(General general, OnChatCommandReceivedArgs e)
+        private string GetResponse(Command command, OnChatCommandReceivedArgs e)
         {
-            if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+            string user = CheckAndGetTaggedUser(e);
+            switch(command)
             {
-                GetResponseGeneralCommand(general, e);
-                if (response != null)
-                {
-                    SendChatMessage(response);
-                    return;
-                }
-            }
-            else if (Cooldown.CheckCooldownOffGeneral(general) == true)
-            {
-                GetResponseGeneralCommand(general, e);
-                Cooldown.globalCooldownsGeneral[general] = DateTime.Now;
-                Cooldown.globalCooldownsRunningGeneral[general] = true;
-                if (response != null)
-                {
-                    SendChatMessage(response);
-                    return;
-                }
-            }
-        }
-
-        private string GetResponsePomodoro(Pomodoro pomo, OnChatCommandReceivedArgs e)
-        {
-            switch (pomo)
-            {
-                case Pomodoro.SETTARGET:
+                // Pomodoro
+                case Command.SETTARGET:
                     if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
                     {
                         response = taskManager.SetTargetCommand(e);
                     }
                     break;
 
-                case Pomodoro.ADD:
+                case Command.ADD:
                     response = taskManager.AddTaskCommand(e);
                     break;
 
-                case Pomodoro.EDIT:
+                case Command.EDIT:
                     response = taskManager.EditTaskCommand(e);
                     break;
 
-                case Pomodoro.DONE:
+                case Command.DONE:
                     response = taskManager.TaskDoneCommand(e);
                     break;
 
-                case Pomodoro.REMOVE:
+                case Command.REMOVE:
                     response = taskManager.RemoveTaskCommand(e);
                     break;
 
-                case Pomodoro.FINISHEDTASKS:
+                case Command.FINISHEDTASKS:
                     response = taskManager.FinishedTasksCommand(e);
                     break;
 
-                case Pomodoro.ALLFINISHEDTASKS:
+                case Command.ALLFINISHEDTASKS:
                     response = taskManager.GetAllFinishedTasks();
                     break;
 
-                case Pomodoro.MYTASK:
+                case Command.MYTASK:
                     response = taskManager.MyTaskCommand(e);
                     break;
-            }
-            return response;
-        }
 
-        private string GetResponseRandomCommand(RandomCounter random, OnChatCommandReceivedArgs e)
-        {
-            switch (random)
-            {
-                case RandomCounter.SPICECHECK:
-                    response = randomManager.SpiceCheckCommand(e);
+                // Check-Commands
+                case Command.SPICECHECK:
+                    response = randomManager.SpiceCheckCommand(user);
                     break;
 
-                case RandomCounter.NAPCHECK:
-                    response = randomManager.NapCheckCommand(e);
+                case Command.NAPCHECK:
+                    response = randomManager.NapCheckCommand(user);
                     break;
 
-                case RandomCounter.HYPECHECK:
-                    response = randomManager.HypeCheckCommand(e);
+                case Command.HYPECHECK:
+                    response = randomManager.HypeCheckCommand(user);
                     break;
 
-                case RandomCounter.LOVECHECK:
-                    response = randomManager.LoveCheckCommand(e);
+                case Command.LOVECHECK:
+                    response = randomManager.LoveCheckCommand(user);
                     break;
 
-                case RandomCounter.CHECKCHECK:
-                    response = randomManager.CheckCheckCommand(e);
+                case Command.CHECKCHECK:
+                    response = randomManager.CheckCheckCommand(user);
                     break;
 
-                case RandomCounter.BOOBACHECK:
-                    response = randomManager.BoobaCheckCommand(e);
+                case Command.BOOBACHECK:
+                    response = randomManager.BoobaCheckCommand(user);
                     break;
 
-                case RandomCounter.SUSCHECK:
-                    response = randomManager.SusCheckCommand(e);
+                case Command.SUSCHECK:
+                    response = randomManager.SusCheckCommand(user);
                     break;
 
-                case RandomCounter.SPOOKCHECK:
-                    response = randomManager.SpookCheckCommand(e);
+                //case Command.SPOOKCHECK:
+                //    response = randomManager.SpookCheckCommand(e);
+                //    break;
+
+                case Command.BOJOCHECK:
+                    response = randomManager.BojoCheckCommand(user);
                     break;
 
-                case RandomCounter.BOJOCHECK:
-                    response = randomManager.BojoCheckCommand(e);
+                case Command.BUMBUM:
+                    response = randomManager.BumBumCommand(user);
                     break;
 
-                case RandomCounter.BUMBUM:
-                    response = randomManager.BumBumCommand(e);
-                    break;
-            }
-            return response;
-        }
-
-        private string GetResponseQuote(Quote quote, OnChatCommandReceivedArgs e)
-        {
-            switch (quote)
-            {
-                case Quote.ONEMORE:
+                // Quotes
+                case Command.ONEMORE:
                     response = "“i will just play one more game, one more, i promise!” - Mike 2019";
                     break;
 
-                case Quote.TEA:
+                case Command.TEA:
                     response = "Yes, yes i love mint tea.I have about 5 cups a day.Dont touch my tea. -Mike 22 - 6 - 2019";
                     break;
 
-                case Quote.BIO:
+                case Command.BIO:
                     if (e.Command.ChatMessage.DisplayName == "bioklappstuhl")
                     {
                         response = "hello bio! you are so loved! hihi <3";
@@ -374,25 +300,25 @@ namespace TwitchBot
                         response = "you're not bio :c";
                     }
                     break;
-            }
-            return response;
-        }
 
-        private string GetResponseGeneralCommand(General general, OnChatCommandReceivedArgs e)
-        {
-            switch (general)
-            {
-                case General.SUGGEST:
+                // General
+                case Command.SUGGEST:
                     response = generalManager.SuggestCommand(e);
                     break;
 
-                case General.BREAK:
+                case Command.BREAK:
                     response = generalManager.BreakCommand();
+                    break;
+
+                case Command.UNO:
+                    if(generalManager.UnoCommand(e) != Command.NULL)
+                    {
+                        DisplayCommand(generalManager.UnoCommand(e), e);
+                    }
                     break;
             }
             return response;
         }
-
 
         private bool CheckModerator(OnChatCommandReceivedArgs e)
         {
@@ -422,6 +348,25 @@ namespace TwitchBot
         {
             client.SendMessage(channel, response);
             Console.WriteLine($"[Bot]: {response}");
+        }
+
+        public string CheckAndGetTaggedUser(OnChatCommandReceivedArgs e)
+        {
+            string chatMessage = e.Command.ChatMessage.Message;
+            string user = null;
+
+            string text = chatMessage.Replace(("!" + e.Command.CommandText).ToString(), "");
+            
+            if(text != "" && text != " " && text != "  " && text != null)
+            {
+                user = text;
+            }
+            else
+            {
+                user = User.GetUser(e);
+            }
+
+            return user;
         }
     }
 }
