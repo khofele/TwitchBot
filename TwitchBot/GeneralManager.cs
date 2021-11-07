@@ -20,15 +20,18 @@ namespace TwitchBot
             return "ALRIGHT GUYS IT'S BREAKTIME! STAND UP! BUMBUMS IN THE AIR! STRETCH! HYDRATE! DROP YOUR PENS! HYDRATE! WE DON'T WANT YOU TO BURN OUT! <3";
         }
 
-        public Command UnoCommand(OnChatCommandReceivedArgs e)
+        public Command UnoCommand(string user)
         {
             Command lastCommand;
-            if(LastUsedCommand.lastUsedCommands.ContainsKey(User.GetUser(e)))
+            if(LastUsedCommand.lastUsedCommands.ContainsKey(user))
             {
-                lastCommand = LastUsedCommand.lastUsedCommands[User.GetUser(e)];
+                lastCommand = LastUsedCommand.lastUsedCommands[user];
                 return lastCommand;
             }
-            return Command.NULL;
+            else
+            { 
+                return Command.NULL;
+            }            
         }
     }
 }

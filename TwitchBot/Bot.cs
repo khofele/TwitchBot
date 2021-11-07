@@ -174,11 +174,12 @@ namespace TwitchBot
 
         private void DisplayCommand(Command command, OnChatCommandReceivedArgs e)
         {
-            LastUsedCommand.LastUsedCommandCheck(e);
+            LastUsedCommand.LastUsedCommandCheck(e.Command.CommandText, User.GetUser(e));
+            string taggedUser = CheckAndGetTaggedUser(e);
 
             if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
             {
-                GetResponse(command, e);
+                GetResponse(command, e, taggedUser);
                 if (response != null)
                 {
                     SendChatMessage(response);
@@ -187,7 +188,7 @@ namespace TwitchBot
             }
             else if (Cooldown.CheckCooldownOff(command) == true)
             {
-                GetResponse(command, e);
+                GetResponse(command, e, taggedUser);
                 Cooldown.globalCooldowns[command] = DateTime.Now;
                 Cooldown.globalCooldownsRunning[command] = true;
                 if (response != null)
@@ -199,9 +200,8 @@ namespace TwitchBot
         }
 
 
-        private string GetResponse(Command command, OnChatCommandReceivedArgs e)
+        private string GetResponse(Command command, OnChatCommandReceivedArgs e, string taggedUser)
         {
-            string user = CheckAndGetTaggedUser(e);
             switch(command)
             {
                 // Pomodoro
@@ -242,31 +242,31 @@ namespace TwitchBot
 
                 // Check-Commands
                 case Command.SPICECHECK:
-                    response = randomManager.SpiceCheckCommand(user);
+                    response = randomManager.SpiceCheckCommand(taggedUser);
                     break;
 
                 case Command.NAPCHECK:
-                    response = randomManager.NapCheckCommand(user);
+                    response = randomManager.NapCheckCommand(taggedUser);
                     break;
 
                 case Command.HYPECHECK:
-                    response = randomManager.HypeCheckCommand(user);
+                    response = randomManager.HypeCheckCommand(taggedUser);
                     break;
 
                 case Command.LOVECHECK:
-                    response = randomManager.LoveCheckCommand(user);
+                    response = randomManager.LoveCheckCommand(taggedUser);
                     break;
 
                 case Command.CHECKCHECK:
-                    response = randomManager.CheckCheckCommand(user);
+                    response = randomManager.CheckCheckCommand(taggedUser);
                     break;
 
                 case Command.BOOBACHECK:
-                    response = randomManager.BoobaCheckCommand(user);
+                    response = randomManager.BoobaCheckCommand(taggedUser);
                     break;
 
                 case Command.SUSCHECK:
-                    response = randomManager.SusCheckCommand(user);
+                    response = randomManager.SusCheckCommand(taggedUser);
                     break;
 
                 //case Command.SPOOKCHECK:
@@ -274,11 +274,11 @@ namespace TwitchBot
                 //    break;
 
                 case Command.BOJOCHECK:
-                    response = randomManager.BojoCheckCommand(user);
+                    response = randomManager.BojoCheckCommand(taggedUser);
                     break;
 
                 case Command.BUMBUM:
-                    response = randomManager.BumBumCommand(user);
+                    response = randomManager.BumBumCommand(taggedUser);
                     break;
 
                 // Quotes
@@ -311,10 +311,12 @@ namespace TwitchBot
                     break;
 
                 case Command.UNO:
-                    if(generalManager.UnoCommand(e) != Command.NULL)
-                    {
-                        DisplayCommand(generalManager.UnoCommand(e), e);
-                    }
+                    Command lastCommand = generalManager.UnoCommand(taggedUser);
+                    response = GetResponse(lastCommand, e, taggedUser);
+                    break;
+
+                default:
+                    response = null;
                     break;
             }
             return response;
@@ -355,7 +357,7 @@ namespace TwitchBot
             string chatMessage = e.Command.ChatMessage.Message;
             string user = null;
 
-            string text = chatMessage.Replace(("!" + e.Command.CommandText).ToString(), "");
+            string text = chatMessage.Replace(("!" + e.Command.CommandText).ToString() + " ", "");
             
             if(text != "" && text != " " && text != "  " && text != null)
             {
@@ -367,6 +369,11 @@ namespace TwitchBot
             }
 
             return user;
+        }
+
+        private void DisplayUnoCommand(Command command, string user)
+        {
+
         }
     }
 }

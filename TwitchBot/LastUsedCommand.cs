@@ -11,10 +11,10 @@ namespace TwitchBot
     {
         public static Dictionary<String, Command> lastUsedCommands = new Dictionary<string, Command>();
 
-        public static void LastUsedCommandCheck(OnChatCommandReceivedArgs e)
+        public static void LastUsedCommandCheck(string commandText, string user)
         {
             Command command;
-            switch (e.Command.CommandText)
+            switch (commandText)
             {
                 // POMO
                 //case "addtask":
@@ -126,13 +126,13 @@ namespace TwitchBot
                     command = Command.NULL;
                     break;
             }
-            if(command != Command.NULL && lastUsedCommands.ContainsKey(User.GetUser(e)) == false)
+            if(command != Command.NULL && lastUsedCommands.ContainsKey(user) == false)
             {
-                lastUsedCommands.Add(User.GetUser(e), command);
+                lastUsedCommands.Add(user, command);
             }
             else if(command != Command.NULL)
             {
-                lastUsedCommands[User.GetUser(e)] = command;
+                lastUsedCommands[user] = command;
             }
         }
     }
