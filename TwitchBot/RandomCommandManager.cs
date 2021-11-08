@@ -255,7 +255,7 @@ namespace TwitchBot
             }
             else
             {
-                return user + " loves Chairiel " + randomCounter + " % !";
+                return user + " loves Chairiel " + randomCounter + " %!";
             }
         }
 

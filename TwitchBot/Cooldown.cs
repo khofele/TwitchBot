@@ -39,8 +39,9 @@ namespace TwitchBot
             { Command.SUGGEST, DateTime.Now },
             { Command.BREAK, DateTime.Now },
             { Command.UNO, DateTime.Now },
-            { Command.YO, DateTime.Now }
-
+            { Command.YO, DateTime.Now },
+            { Command.LOVE, DateTime.Now },
+            { Command.HUG, DateTime.Now }
         };
 
         public static Dictionary<Command, int> globalCooldownLengths = new Dictionary<Command, int>()
@@ -75,7 +76,9 @@ namespace TwitchBot
             { Command.SUGGEST, 10 },
             { Command.BREAK, 5 },
             { Command.UNO, 5 },
-            { Command.YO, 2 }
+            { Command.YO, 2 },
+            { Command.LOVE, 0 },
+            { Command.HUG, 0 }
         };
 
         public static Dictionary<Command, bool> globalCooldownsRunning = new Dictionary<Command, bool>()
@@ -110,7 +113,9 @@ namespace TwitchBot
             { Command.SUGGEST, false },
             { Command.BREAK, false },
             { Command.UNO, false },
-            { Command.YO, false }
+            { Command.YO, false },
+            { Command.LOVE, false },
+            { Command.HUG, false }
         };
 
 

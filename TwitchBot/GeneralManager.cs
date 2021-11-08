@@ -45,5 +45,15 @@ namespace TwitchBot
                 return "YO YO YO YO YO YO";
             }
         }
+
+        public string LoveCommand(string user, OnChatCommandReceivedArgs e)
+        {
+            return "akatri2Lovings " + User.GetUser(e) + " reminds " + user + " that they are a beautiful human being and we love them very much <3 akatri2Lovings";
+        }
+
+        public string HugCommand(string user, OnChatCommandReceivedArgs e)
+        {
+            return "/me " + User.GetUser(e) + " hugs " + user + " akatri2Lovings akatri2Lovings akatri2Lovings";
+        }
     }
 }

@@ -122,6 +122,14 @@ namespace TwitchBot
                     command = Command.YO;
                     break;
 
+                case "love":
+                    command = Command.LOVE;
+                    break;
+
+                case "hug":
+                    command = Command.HUG;
+                    break;
+
                 //case "uno":
                 //    DisplayCommand(Command.UNO, e);
                 //    break;

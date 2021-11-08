@@ -17,8 +17,9 @@ namespace TwitchBot
         SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK, BOJOCHECK, BUMBUM, CHAIRCHECK, HAPPYHIPPO,
 
         // General
-        SUGGEST, BREAK, UNO, YO,
+        SUGGEST, BREAK, UNO, YO, LOVE, HUG,
 
+        // NULL / DEBUG
         NULL
     }
 
@@ -166,6 +167,14 @@ namespace TwitchBot
 
                 case "yo":
                     DisplayCommand(Command.YO, e);
+                    break;
+
+                case "love":
+                    DisplayCommand(Command.LOVE, e);
+                    break;
+
+                case "hug":
+                    DisplayCommand(Command.HUG, e);
                     break;
 
                 // ------------------------------------------------------  MODS ONLY ------------------------------------------------------  
@@ -339,6 +348,14 @@ namespace TwitchBot
                     response = generalManager.YoCommand(taggedUser);
                     break;
 
+                case Command.LOVE:
+                    response = generalManager.LoveCommand(taggedUser, e);
+                    break;
+
+                case Command.HUG:
+                    response = generalManager.HugCommand(taggedUser, e);
+                    break;
+
                 default:
                     response = null;
                     break;
@@ -382,7 +399,7 @@ namespace TwitchBot
             string user = null;
             string text = null;
 
-            if (chatMessage.StartsWith("!uno") || chatMessage.StartsWith("!Uno") || chatMessage.StartsWith("!UNO"))
+            if (chatMessage.ToLower().StartsWith("!uno"))
             {
                 text = chatMessage.Replace(("!" + e.Command.CommandText).ToString() + " ", "");
             }
