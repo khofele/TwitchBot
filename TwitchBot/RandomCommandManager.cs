@@ -270,7 +270,7 @@ namespace TwitchBot
             {
                 return user + " ate all the happy hippos D:";
             }
-            else if(randomCounter > 50)
+            else if(randomCounter > 50 || user == "karomagkekse")
             {
                 return user + " is the happiest hippo <3";
             }
