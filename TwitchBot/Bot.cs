@@ -14,10 +14,10 @@ namespace TwitchBot
         ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS, SETTARGET, MYTASK,
         
         // Check-commands
-        SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK, BOJOCHECK, BUMBUM,
+        SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK, BOJOCHECK, BUMBUM, CHAIRCHECK, HAPPYHIPPO,
 
         // General
-        SUGGEST, BREAK, UNO,
+        SUGGEST, BREAK, UNO, YO,
 
         NULL
     }
@@ -138,6 +138,14 @@ namespace TwitchBot
                     DisplayCommand(Command.BUMBUM, e);
                     break;
 
+                case "chaircheck":
+                    DisplayCommand(Command.CHAIRCHECK, e);
+                    break;
+
+                case "happyhippo":
+                    DisplayCommand(Command.HAPPYHIPPO, e);
+                    break;
+
                 // SPOOKTOBER
                 //case "spookcheck":
                 //    DisplayCommand(Command.SPOOKCHECK, e);
@@ -154,6 +162,10 @@ namespace TwitchBot
 
                 case "uno":
                     DisplayCommand(Command.UNO, e);
+                    break;
+
+                case "yo":
+                    DisplayCommand(Command.YO, e);
                     break;
 
                 // ------------------------------------------------------  MODS ONLY ------------------------------------------------------  
@@ -281,6 +293,14 @@ namespace TwitchBot
                     response = randomManager.BumBumCommand(taggedUser);
                     break;
 
+                case Command.CHAIRCHECK:
+                    response = randomManager.ChairCheckCommand(taggedUser);
+                    break;
+
+                case Command.HAPPYHIPPO:
+                    response = randomManager.HappyHippoCommand(taggedUser);
+                    break;
+
                 // Quotes
                 case Command.ONEMORE:
                     response = "“i will just play one more game, one more, i promise!” - Mike 2019";
@@ -313,6 +333,10 @@ namespace TwitchBot
                 case Command.UNO:
                     Command lastCommand = generalManager.UnoCommand(taggedUser);
                     response = GetResponse(lastCommand, e, taggedUser);
+                    break;
+
+                case Command.YO:
+                    response = generalManager.YoCommand(taggedUser);
                     break;
 
                 default:
@@ -356,12 +380,21 @@ namespace TwitchBot
         {
             string chatMessage = e.Command.ChatMessage.Message;
             string user = null;
+            string text = null;
 
-            string text = chatMessage.Replace(("!" + e.Command.CommandText).ToString() + " ", "");
-            
-            if(text != "" && text != " " && text != "  " && text != null)
+            if (chatMessage.StartsWith("!uno") || chatMessage.StartsWith("!Uno") || chatMessage.StartsWith("!UNO"))
+            {
+                text = chatMessage.Replace(("!" + e.Command.CommandText).ToString() + " ", "");
+            }
+            else
+            {
+                text = chatMessage.Replace(("!" + e.Command.CommandText).ToString(), "");
+            }
+
+            if (text != "" && text != " " && text != "  " && text != null)
             {
                 user = text;
+
             }
             else
             {

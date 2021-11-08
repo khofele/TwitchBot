@@ -33,5 +33,17 @@ namespace TwitchBot
                 return Command.NULL;
             }            
         }
+
+        public string YoCommand(string user)
+        {
+            if(user == "akaTripzz")
+            {
+                return "YO MIKE!";
+            }
+            else
+            {
+                return "YO YO YO YO YO YO";
+            }
+        }
     }
 }

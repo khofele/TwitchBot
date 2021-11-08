@@ -14,7 +14,7 @@ namespace TwitchBot
         public static void LastUsedCommandCheck(string commandText, string user)
         {
             Command command;
-            switch (commandText)
+            switch (commandText.ToLower())
             {
                 // POMO
                 //case "addtask":
@@ -96,6 +96,14 @@ namespace TwitchBot
                     command = Command.BUMBUM;
                     break;
 
+                case "chaircheck":
+                    command = Command.CHAIRCHECK;
+                    break;
+
+                case "happyhippo":
+                    command = Command.HAPPYHIPPO;
+                    break;
+
                 // SPOOKTOBER
                 //case "spookcheck":
                 //    command = Command.SPOOKCHECK;
@@ -108,6 +116,10 @@ namespace TwitchBot
 
                 case "break":
                     command = Command.BREAK;
+                    break;
+
+                case "yo":
+                    command = Command.YO;
                     break;
 
                 //case "uno":

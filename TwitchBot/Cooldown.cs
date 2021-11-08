@@ -33,11 +33,14 @@ namespace TwitchBot
             { Command.SPOOKCHECK, DateTime.Now },
             { Command.BOJOCHECK, DateTime.Now },
             { Command.BUMBUM, DateTime.Now },
+            { Command.HAPPYHIPPO, DateTime.Now },
 
 
             { Command.SUGGEST, DateTime.Now },
             { Command.BREAK, DateTime.Now },
-            { Command.UNO, DateTime.Now }
+            { Command.UNO, DateTime.Now },
+            { Command.YO, DateTime.Now }
+
         };
 
         public static Dictionary<Command, int> globalCooldownLengths = new Dictionary<Command, int>()
@@ -66,11 +69,13 @@ namespace TwitchBot
             { Command.SPOOKCHECK, 2 },
             { Command.BOJOCHECK, 2 },
             { Command.BUMBUM, 2 },
+            { Command.HAPPYHIPPO, 2},
 
 
             { Command.SUGGEST, 10 },
             { Command.BREAK, 5 },
-            { Command.UNO, 5 }
+            { Command.UNO, 5 },
+            { Command.YO, 2 }
         };
 
         public static Dictionary<Command, bool> globalCooldownsRunning = new Dictionary<Command, bool>()
@@ -99,11 +104,13 @@ namespace TwitchBot
             { Command.SPOOKCHECK, false },
             { Command.BOJOCHECK, false },
             { Command.BUMBUM, false },
+            { Command.HAPPYHIPPO, false },
 
 
             { Command.SUGGEST, false },
             { Command.BREAK, false },
-            { Command.UNO, false }
+            { Command.UNO, false },
+            { Command.YO, false }
         };
 
 

@@ -222,7 +222,7 @@ namespace TwitchBot
             }
             else if(randomCounter == 69)
             {
-                return user + "/me is twerking through chat! akatri2Party";
+                return user + "/me twerks through chat! akatri2Party";
             }
             else if(randomCounter < 40)
             {
@@ -231,6 +231,52 @@ namespace TwitchBot
             else
             {
                 return user + " LOVES THE BUMBUM! <3";
+            }
+        }
+
+        public string ChairCheckCommand(string user)
+        {
+            int randomCounter = GetRandom(1, 101);
+            if(user == "akaTripzz") 
+            {
+                return "@akaTripzz YOU LOVE CHAIRIEL THE MOST BUT WE'RE STILL WAITING FOR THE BABY! :p <3";
+            }
+            else if(randomCounter == 69)
+            {
+                return "OOOH " + user + "! YOU HIT CHAIRIEL'S SWEET SPOT! ( ͡° ͜ʖ ͡°)";
+            }
+            else if(randomCounter >= 75)
+            {
+                return user + " loves Chairiel " + randomCounter + "%! You love Chairiel very much! ";
+            }
+            else if(randomCounter < 10)
+            {
+                return user + "loves Chairiel " + randomCounter + "%..... WOW YOU DON'T LOVE CHAIR-SENAPI VERY MUCH D:";
+            }
+            else
+            {
+                return user + " loves Chairiel " + randomCounter + " % !";
+            }
+        }
+
+        public string HappyHippoCommand(string user)
+        {
+            int randomCounter = GetRandom(1, 101);
+            if(user == "TriggerKR")
+            {
+                return "TriggerKR IS OUR FAVORITE HAPPY HIPPO! WE LOVE YOU SO MUCH! <3";
+            }
+            else if(randomCounter == 69)
+            {
+                return user + " ate all the happy hippos D:";
+            }
+            else if(randomCounter > 50)
+            {
+                return user + " is the happiest hippo <3";
+            }
+            else
+            {
+                return user + " really really really wants a happy hippo rn D:";
             }
         }
     }
