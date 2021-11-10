@@ -55,5 +55,33 @@ namespace TwitchBot
         {
             return "/me " + User.GetUser(e) + " hugs " + user + " akatri2Lovings akatri2Lovings akatri2Lovings";
         }
+
+        public string TragerCommand(string user)
+        {
+            if(user == "BettIsSomewhere")
+            {
+                return "/me Bett receives a long warm hug from Trager! <3 JUSTICE FOR TRAGER!";
+            }
+            else
+            {
+                return "JUSTICE FOR TRAGER!";
+            }
+        }
+
+        public string VincentCommand(string user)
+        {
+            if(user == "karomagkekse")
+            {
+                return "/me Karo finally found Vincent! Let's just leave her in the asylum. :p <3";
+            }
+            else if(user == "akaTripzz")
+            {
+                return "/me Mike sneaks out of the asylum. He can hear some giggles from far far away!";
+            }
+            else
+            {
+                return user + " you could not find Vincent.... yet";
+            }
+        }
     }
 }

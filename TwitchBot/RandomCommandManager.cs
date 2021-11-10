@@ -264,7 +264,7 @@ namespace TwitchBot
             int randomCounter = GetRandom(1, 101);
             if(user == "TriggerKR")
             {
-                return "TriggerKR IS OUR FAVORITE HAPPY HIPPO! WE LOVE YOU SO MUCH! <3";
+                return "TriggerKR IS OUR FAVORITE HAPPY HIPPO! WE LOVE YOU SO MUCH! <3 (please stop gambling tho you need the money for your happy hippo cake :c)";
             }
             else if(randomCounter == 69)
             {

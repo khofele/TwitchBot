@@ -8,16 +8,16 @@ namespace TwitchBot
     enum Command
     {
         // Quote
-        ONEMORE, TEA, BIO,
+        ONEMORE, TEA,
 
         // Pomo
-        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS, SETTARGET, MYTASK,
+        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS, SETTARGET, MYTASK, SETCURRENT, RESETTASKLIST,
         
         // Check-commands
         SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK, BOJOCHECK, BUMBUM, CHAIRCHECK, HAPPYHIPPO,
 
         // General
-        SUGGEST, BREAK, UNO, YO, LOVE, HUG,
+        BIO, SUGGEST, BREAK, UNO, YO, LOVE, HUG, TRAGER, VINCENT,
 
         // NULL / DEBUG
         NULL
@@ -45,6 +45,7 @@ namespace TwitchBot
 
             client.OnLog += Client_OnLog;
             client.OnChatCommandReceived += Client_OnChatCommandReceived;
+            client.OnExistingUsersDetected += Client_OnExistingUsersDetected;
 
             client.Connect();
         }
@@ -177,6 +178,14 @@ namespace TwitchBot
                     DisplayCommand(Command.HUG, e);
                     break;
 
+                case "trager":
+                    DisplayCommand(Command.TRAGER, e);
+                    break;
+
+                case "vincent":
+                    DisplayCommand(Command.VINCENT, e);
+                    break;
+
                 // ------------------------------------------------------  MODS ONLY ------------------------------------------------------  
                 // POMO
                 case "timeoutdelete":
@@ -186,11 +195,25 @@ namespace TwitchBot
                     DisplayCommand(Command.SETTARGET, e);
                     break;
 
+                case "setcurrent":
+                    DisplayCommand(Command.SETCURRENT, e);
+                    break;
+
+                case "resettasklist":
+                    DisplayCommand(Command.RESETTASKLIST, e);
+                    break;
+
                 // Debug
                 //case "banana":
-                //    CheckAndGetTaggedUser(e);
+                //    Test();
                 //    break;
             }
+        }
+
+        private void Client_OnExistingUsersDetected(object sender, OnExistingUsersDetectedArgs f)
+        {
+            SendChatMessage(f.Users.Count.ToString());
+            Test(f);
         }
 
         private void DisplayCommand(Command command, OnChatCommandReceivedArgs e)
@@ -230,6 +253,20 @@ namespace TwitchBot
                     if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
                     {
                         response = taskManager.SetTargetCommand(e);
+                    }
+                    break;
+
+                case Command.SETCURRENT:
+                    if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+                    {
+                        response = taskManager.SetCurrentCommand(e);
+                    }
+                    break;
+
+                case Command.RESETTASKLIST:
+                    if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+                    {
+                        response = taskManager.ResetTaskListCommand();
                     }
                     break;
 
@@ -356,6 +393,14 @@ namespace TwitchBot
                     response = generalManager.HugCommand(taggedUser, e);
                     break;
 
+                case Command.TRAGER:
+                    response = generalManager.TragerCommand(taggedUser);
+                    break;
+
+                case Command.VINCENT:
+                    response = generalManager.VincentCommand(taggedUser);
+                    break;
+
                 default:
                     response = null;
                     break;
@@ -421,9 +466,14 @@ namespace TwitchBot
             return user;
         }
 
-        private void DisplayUnoCommand(Command command, string user)
+            
+        private string Test(OnExistingUsersDetectedArgs e)
         {
-
+            Random random = new Random();
+            int randomNum = random.Next(1, e.Users.Count);
+            return e.Users[randomNum].ToString();
         }
+
+
     }
 }

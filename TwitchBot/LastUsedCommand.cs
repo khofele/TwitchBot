@@ -130,6 +130,14 @@ namespace TwitchBot
                     command = Command.HUG;
                     break;
 
+                case "trager":
+                    command = Command.TRAGER;
+                    break;
+
+                case "vincent":
+                    command = Command.VINCENT;
+                    break;
+
                 //case "uno":
                 //    DisplayCommand(Command.UNO, e);
                 //    break;

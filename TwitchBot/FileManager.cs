@@ -123,5 +123,76 @@ namespace TwitchBot
         {
             File.Delete(targetPath);
         }
+
+        public static void ReadInExistingTasks()
+        {
+            if (File.Exists(taskPath))
+            {
+                string line = "";
+                string user = "";
+                string task = "";
+                
+
+                using (StreamReader reader = new StreamReader(taskPath))
+                {
+                    while((line = reader.ReadLine()) != null)
+                    {
+                        string modifiedLine = line.Replace("•", "");
+                        string[] split = modifiedLine.Split(new[] {" - "}, System.StringSplitOptions.None);
+
+                        user = split[0];
+                        for(int i = 1; i < split.Length; i++)
+                        {
+                            task += split[i];
+                        }
+
+                        TaskCommandManager.tasks.Add(new Task(user, task));
+                        
+                    }
+                }
+            }
+        }
+
+        public static void ReadInExistingTargetAndCurrent()
+        {
+            if (File.Exists(targetPath))
+            {
+                string line = "";
+                string target = "";
+                string current = "";
+
+
+                using (StreamReader reader = new StreamReader(targetPath))
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string modifiedLine = line.Replace("Target: ", "");
+                        string modifiedLineDone = modifiedLine.Replace("Current: ", "");
+
+                        string[] split = modifiedLineDone.Split(' ');
+
+                        target = split[0];
+                        current = split[1];
+
+                        TaskCommandManager.Target = target;
+                        int.TryParse(current, out int value);
+                        TaskCommandManager.Current = value;
+                    }
+                }
+            }
+        }
+
+        public bool ResetTaskList()
+        {
+            if (File.Exists(taskPath))
+            {
+                File.Delete(taskPath);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

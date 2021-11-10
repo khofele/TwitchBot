@@ -1,18 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using TwitchLib.Client.Events;
 
 namespace TwitchBot
 {
     class TaskCommandManager
     {
-        public List<Task> tasks = new List<Task>();
+        public static List<Task> tasks = new List<Task>();
         public Dictionary<string, int> finishedTasks = new Dictionary<string, int>();
         private int counter = 0;
         private bool notAdded = true;
         private Task task;
-        private string target = "0";
+        private static string target = "0";
+        private static int current = 0;
 
-        private static int allFinishedTasks = 0;
+        //private static int allFinishedTasks = 0;
 
         private FileManager fileManager = new FileManager();
 
@@ -22,6 +24,24 @@ namespace TwitchBot
             set
             {
                 notAdded = value;
+            }
+        }
+
+        public static string Target
+        {
+            get => target;
+            set
+            {
+                target = value;
+            }
+        }
+
+        public static int Current
+        {
+            get => current;
+            set
+            {
+                current = value;
             }
         }
 
@@ -81,8 +101,20 @@ namespace TwitchBot
         public string AddTaskCommand(OnChatCommandReceivedArgs e)
         {
             string chatMessage = e.Command.ChatMessage.Message.ToString();
-            string taskMessage = chatMessage.Replace("!addtask", " -");
+            string lowerMessage = chatMessage.Replace("!ADDTASK", "!addtask");
+            string taskMessage = "";
+
+            if (lowerMessage != null)
+            {
+                 taskMessage = lowerMessage.Replace("!addtask", " -");
+            }
+            else
+            {
+                taskMessage = chatMessage.Replace("!addtask", " -");
+            }
+
             string response = CheckAndAddTask(taskMessage, User.GetUser(e), e);
+
             if (finishedTasks.ContainsKey(User.GetUser(e)) == false)
             {
                 finishedTasks.Add(User.GetUser(e), 0);
@@ -93,8 +125,20 @@ namespace TwitchBot
         public string EditTaskCommand(OnChatCommandReceivedArgs e)
         {
             string chatMessage = e.Command.ChatMessage.Message.ToString();
-            string editMessage = chatMessage.Replace("!edittask", " -");
+            string lowerMessage = chatMessage.Replace("!EDITTASK", "!edittask");
+            string editMessage = "";
+
+            if(lowerMessage != null)
+            {
+                editMessage = lowerMessage.Replace("!edittask", " -");
+            }
+            else
+            {
+                editMessage = chatMessage.Replace("!edittask", " -");
+            }
+
             CheckAndEditTask(User.GetUser(e), editMessage, e);
+
             if (fileManager.FindTask((User.GetUser(e))) != null)
             {
                 return User.GetUser(e) + " edited the task: " + editMessage.Replace(" -", "") + "! akatri2Work";
@@ -128,7 +172,8 @@ namespace TwitchBot
                 string finishedTask = fileManager.FindTask(User.GetUser(e)).ToUpper();
                 RemoveTask(User.GetUser(e));
                 fileManager.DeleteTaskInFile(User.GetUser(e));
-                SetTargetToFile(target, SumUpFinishedTasks());
+                AddFinishedTask();
+                SetTargetToFile(target);
                 CheckTargetAchieved();
                 return "CONGRATS " + User.GetUser(e) + "! akatri2Hype YOU COMPLETED YOUR TASK! " + finishedTask.Replace("•", "") + " IS DONE! " + response + " akatri2Party akatri2Lovings";
             }
@@ -145,27 +190,35 @@ namespace TwitchBot
 
         public string GetAllFinishedTasks()
         {
-            SumUpFinishedTasks();
-            if(allFinishedTasks == 1)
+            if(current == 1)
             {
                 return "THE BLOPSQUAD FINISHED 1 TASK TODAY! YOU'RE DOING AMAZING GUYS!  akatri2Party akatri2Hype";
             } 
-            else if(allFinishedTasks == 0)
+            else if(current == 0)
             {
                 return "THE BLOPSQUAD HASN'T FINISHED ANY TASKS TODAY! COME ON GUYS YOU CAN DO IT! akatri2Lovings";
             }
             else
             {
-                return "THE BLOPSQUAD FINISHED " + allFinishedTasks + " TASKS TODAY! YOU'RE DOING AMAZING GUYS!  akatri2Party akatri2Hype";
+                return "THE BLOPSQUAD FINISHED " + current + " TASKS TODAY! YOU'RE DOING AMAZING GUYS!  akatri2Party akatri2Hype";
             }
         }
 
         public string SetTargetCommand(OnChatCommandReceivedArgs e)
         {
-            string chatMessage = e.Command.ChatMessage.Message.ToString();
-            target = chatMessage.Replace("!settarget", "");
-            SetTargetToFile(target, SumUpFinishedTasks());
+            string chatMessage = e.Command.ChatMessage.Message.ToString().ToLower();
+            target = chatMessage.Replace("!settarget ", "");
+            SetTargetToFile(target);
             string response = "Target set to: " + target + "!";
+            return response;
+        }
+
+        public string SetCurrentCommand(OnChatCommandReceivedArgs e)
+        {
+            string chatMessage = e.Command.ChatMessage.Message.ToString().ToLower(); ;
+            int.TryParse(chatMessage.Replace("!setcurrent ", ""), out int current);
+            SetCurrentToFile(current);
+            string response = "Current tasks set to: " + current + "!";
             return response;
         }
 
@@ -183,15 +236,38 @@ namespace TwitchBot
             }
         }
 
-        private void SetTargetToFile(string target, int currentTasks)
+        public string ResetTaskListCommand()
+        {
+            if(fileManager.ResetTaskList())
+            {
+                tasks.Clear();
+                finishedTasks.Clear();
+                current = 0;
+                target = "0";
+                return "Reset successful!";
+            }
+            else
+            {
+                return "File not found!";
+            }
+        }
+
+        private void SetTargetToFile(string target)
         {
             fileManager.ResetTargetFile();
-            fileManager.WriteToFile("Target: " + target + " " + "Current: " + allFinishedTasks, FileManager.TargetPath);
+            fileManager.WriteToFile("Target: " + target + " " + "Current: " + current, FileManager.TargetPath);
+        }
+
+        private void SetCurrentToFile(int currentTasks)
+        {
+            fileManager.ResetTargetFile();
+            current = currentTasks;
+            fileManager.WriteToFile("Target: " + target + " " + "Current: " + currentTasks, FileManager.TargetPath);
         }
 
         private void CheckTargetAchieved()
         {
-            if(allFinishedTasks >= int.Parse(target) && int.Parse(target) > 0)
+            if(current >= int.Parse(target) && int.Parse(target) > 0)
             {
                 Bot.SendChatMessage("TARGET ACHIEVED! TARGET ACHIEVED! I AM SO PROUD OF Y'ALL! <3");
             }
@@ -265,14 +341,10 @@ namespace TwitchBot
             }
         }
 
-        private int SumUpFinishedTasks()
+        private int AddFinishedTask()
         {
-            allFinishedTasks = 0;
-            foreach (KeyValuePair<string, int> entry in finishedTasks)
-            {
-                allFinishedTasks += entry.Value;
-            }
-            return allFinishedTasks;
+            current += 1;
+            return current;
         }
     }
 }
