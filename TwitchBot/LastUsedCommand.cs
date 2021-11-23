@@ -16,37 +16,6 @@ namespace TwitchBot
             Command command;
             switch (commandText.ToLower())
             {
-                // POMO
-                //case "addtask":
-                //    command = Command.ADD;
-                //    break;
-
-                //case "edittask":
-                //    command = Command.EDIT;
-                //    break;
-
-                //case "removetask":
-                //    command = Command.REMOVE;
-                //    break;
-
-                //case "taskdone":
-                //    command = Command.DONE;
-                //    break;
-
-                //case "finishedtasks":
-                //    DisplayCommand(Command.FINISHEDTASKS, e);
-                //    break;
-
-                //case "allfinishedtasks":
-                //    DisplayCommand(Command.ALLFINISHEDTASKS, e);
-                //    break;
-
-                //case "mytask":
-                //    DisplayCommand(Command.MYTASK, e);
-                //    break;
-
-
-                // QUOTES
                 case "tea":
                     command = Command.TEA;
                     break;
@@ -59,7 +28,6 @@ namespace TwitchBot
                     command = Command.BIO;
                     break;
 
-                // RANDOM
                 case "spicecheck":
                     command = Command.SPICECHECK;
                     break;
@@ -104,16 +72,6 @@ namespace TwitchBot
                     command = Command.HAPPYHIPPO;
                     break;
 
-                // SPOOKTOBER
-                //case "spookcheck":
-                //    command = Command.SPOOKCHECK;
-                //    break;
-
-                // GENERAL
-                //case "suggest":
-                //    command = Command.SUGGEST;
-                //    break;
-
                 case "break":
                     command = Command.BREAK;
                     break;
@@ -137,18 +95,6 @@ namespace TwitchBot
                 case "vincent":
                     command = Command.VINCENT;
                     break;
-
-                //case "uno":
-                //    DisplayCommand(Command.UNO, e);
-                //    break;
-
-                // POMO
-                //case "timeoutdelete":
-                //    break;
-
-                //case "settarget":
-                //    DisplayCommand(Command.SETTARGET, e);
-                //    break;
 
                 default:
                     command = Command.NULL;

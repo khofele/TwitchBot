@@ -11,7 +11,6 @@ namespace TwitchBot
         {
             { Command.TEA, DateTime.Now },
             { Command.ONEMORE, DateTime.Now },
-            { Command.BIO, DateTime.Now },
 
 
             { Command.ADD, DateTime.Now },
@@ -34,8 +33,10 @@ namespace TwitchBot
             { Command.BOJOCHECK, DateTime.Now },
             { Command.BUMBUM, DateTime.Now },
             { Command.HAPPYHIPPO, DateTime.Now },
+            { Command.VINCENT, DateTime.Now },
 
-
+                        
+            { Command.BIO, DateTime.Now },
             { Command.SUGGEST, DateTime.Now },
             { Command.BREAK, DateTime.Now },
             { Command.UNO, DateTime.Now },
@@ -43,14 +44,12 @@ namespace TwitchBot
             { Command.LOVE, DateTime.Now },
             { Command.HUG, DateTime.Now },
             { Command.TRAGER, DateTime.Now },
-            { Command.VINCENT, DateTime.Now }
         };
 
         public static Dictionary<Command, int> globalCooldownLengths = new Dictionary<Command, int>()
         {
             { Command.TEA, 30 },
             { Command.ONEMORE, 30 },
-            { Command.BIO, 30 },
 
 
             { Command.ADD, 0 },
@@ -73,23 +72,23 @@ namespace TwitchBot
             { Command.BOJOCHECK, 2 },
             { Command.BUMBUM, 2 },
             { Command.HAPPYHIPPO, 2},
+            { Command.VINCENT, 2 },
 
 
+            { Command.BIO, 30 },
             { Command.SUGGEST, 10 },
             { Command.BREAK, 5 },
             { Command.UNO, 5 },
             { Command.YO, 2 },
             { Command.LOVE, 0 },
             { Command.HUG, 0 },
-            { Command.TRAGER, 2 },
-            { Command.VINCENT, 2 }
+            { Command.TRAGER, 2 }
         };
 
         public static Dictionary<Command, bool> globalCooldownsRunning = new Dictionary<Command, bool>()
         {
             { Command.TEA, false },
             { Command.ONEMORE, false },
-            { Command.BIO, false },
 
 
             { Command.ADD, false },
@@ -112,16 +111,17 @@ namespace TwitchBot
             { Command.BOJOCHECK, false },
             { Command.BUMBUM, false },
             { Command.HAPPYHIPPO, false },
+            { Command.VINCENT, false },
 
 
+            { Command.BIO, false },
             { Command.SUGGEST, false },
             { Command.BREAK, false },
             { Command.UNO, false },
             { Command.YO, false },
             { Command.LOVE, false },
             { Command.HUG, false },
-            { Command.TRAGER, false },
-            { Command.VINCENT, false }
+            { Command.TRAGER, false }
         };
 
 

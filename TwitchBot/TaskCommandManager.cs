@@ -13,6 +13,10 @@ namespace TwitchBot
         private Task task;
         private static string target = "0";
         private static int current = 0;
+        private static string weeklyTarget = "0";
+        private static int weeklyCurrent = 0;
+        private static string currentPomo = "0";
+        private static string pomoGoal = "0";
 
         //private static int allFinishedTasks = 0;
 
@@ -42,6 +46,24 @@ namespace TwitchBot
             set
             {
                 current = value;
+            }
+        }
+
+        public static string WeeklyTarget
+        {
+            get => weeklyTarget;
+            set
+            {
+                weeklyTarget = value;
+            }
+        }
+
+        public static int WeeklyCurrent
+        {
+            get => weeklyCurrent;
+            set
+            {
+                weeklyCurrent = value;
             }
         }
 
@@ -174,6 +196,7 @@ namespace TwitchBot
                 fileManager.DeleteTaskInFile(User.GetUser(e));
                 AddFinishedTask();
                 SetTargetToFile(target);
+                SetWeeklyTargetToFile(weeklyTarget);
                 CheckTargetAchieved();
                 return "CONGRATS " + User.GetUser(e) + "! akatri2Hype YOU COMPLETED YOUR TASK! " + finishedTask.Replace("•", "") + " IS DONE! " + response + " akatri2Party akatri2Lovings";
             }
@@ -222,6 +245,33 @@ namespace TwitchBot
             return response;
         }
 
+        public string SetWeeklyTargetCommand(OnChatCommandReceivedArgs e)
+        {
+            string chatMessage = e.Command.ChatMessage.Message.ToString().ToLower(); ;
+            weeklyTarget = chatMessage.Replace("!setweeklytarget ", "");
+            SetWeeklyTargetToFile(weeklyTarget);
+            string response = "Weekly target set to: " + weeklyTarget + "!";
+            return response;
+        }
+
+        public string SetPomoCommand(OnChatCommandReceivedArgs e)
+        {
+            string chatMessage = e.Command.ChatMessage.Message.ToString().ToLower();
+            currentPomo = chatMessage.Replace("!setpomo ", "");
+            SetPomoToFile(currentPomo); 
+            string response = "Current pomo: " + currentPomo + "!";
+            return response;
+        }
+
+        public string SetPomoGoalCommand(OnChatCommandReceivedArgs e)
+        {
+            string chatMessage = e.Command.ChatMessage.Message.ToString().ToLower();
+            pomoGoal = chatMessage.Replace("!setpomogoal ", "");
+            SetPomoToFile(currentPomo);
+            string response = "Pomo goal: " + pomoGoal + "!";
+            return response;
+        }
+
         public string MyTaskCommand(OnChatCommandReceivedArgs e)
         {
             string user = User.GetUser(e);
@@ -236,14 +286,39 @@ namespace TwitchBot
             }
         }
 
-        public string ResetTaskListCommand()
+        public string ResetListCommand()
         {
-            if(fileManager.ResetTaskList())
+            int counter = 0;
+            if (fileManager.ResetTaskList())
             {
                 tasks.Clear();
                 finishedTasks.Clear();
+                counter += 1;
+            }
+            if(File.Exists(FileManager.TargetPath))
+            {
+                fileManager.ResetTargetFile();
                 current = 0;
                 target = "0";
+                counter += 1;
+            }
+            if(File.Exists(FileManager.WeeklyTargetPath))
+            {
+                weeklyCurrent = 0;
+                weeklyTarget = "0";
+                fileManager.ResetWeeklyTargetFile();
+                counter += 1;
+            }
+            if(File.Exists(FileManager.PomoCounterPath))
+            {
+                pomoGoal = "0";
+                currentPomo = "0";
+                fileManager.ResetPomoCounterFile();
+                counter += 1;
+            }
+
+            if (counter >= 1)
+            {
                 return "Reset successful!";
             }
             else
@@ -265,11 +340,28 @@ namespace TwitchBot
             fileManager.WriteToFile("Target: " + target + " " + "Current: " + currentTasks, FileManager.TargetPath);
         }
 
+        private void SetWeeklyTargetToFile(string weeklyTarget)
+        {
+            fileManager.ResetWeeklyTargetFile();
+            fileManager.WriteToFile("Weekly Target: " + weeklyTarget + " " + "Current: " + weeklyCurrent, FileManager.WeeklyTargetPath);
+        }
+
+        private void SetPomoToFile(string currentPomo)
+        {
+            fileManager.ResetPomoCounterFile();
+            fileManager.WriteToFile(currentPomo + "/" + pomoGoal, FileManager.PomoCounterPath);
+        }
+
         private void CheckTargetAchieved()
         {
             if(current >= int.Parse(target) && int.Parse(target) > 0)
             {
                 Bot.SendChatMessage("TARGET ACHIEVED! TARGET ACHIEVED! I AM SO PROUD OF Y'ALL! <3");
+            }
+
+            if(weeklyCurrent >= int.Parse(weeklyTarget) && int.Parse(weeklyTarget) > 0)
+            {
+                Bot.SendChatMessage("WEEKLY TARGET ACHIEVED! WEEKLY TARGET ACHIEVED! I AM SO PROUD OF Y'ALL! <3");
             }
         }
 
@@ -344,6 +436,7 @@ namespace TwitchBot
         private int AddFinishedTask()
         {
             current += 1;
+            weeklyCurrent += 1;
             return current;
         }
     }

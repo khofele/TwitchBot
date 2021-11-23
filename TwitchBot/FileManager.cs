@@ -9,6 +9,8 @@ namespace TwitchBot
         private string tempTaskPath = @"E:\Desktop\Temp\temptext.txt";
         private static string targetPath = @"E:\Desktop\Temp\target.txt";
         private static string suggestPath = @"E:\Desktop\Temp\suggestions.txt";
+        private static string weeklyTargetPath = @"E:\Desktop\Temp\weeklytarget.txt";
+        private static string pomoCounterPath = @"E:\Desktop\Temp\pomocounter.txt";
 
         public static string TaskPath
         {
@@ -23,6 +25,16 @@ namespace TwitchBot
         public static string SuggestPath
         {
             get => suggestPath;
+        }
+
+        public static string WeeklyTargetPath
+        {
+            get => weeklyTargetPath;
+        }
+
+        public static string PomoCounterPath
+        {
+            get => pomoCounterPath;
         }
 
         public void WriteToFile(string message, string path)
@@ -121,7 +133,26 @@ namespace TwitchBot
 
         public void ResetTargetFile()
         {
-            File.Delete(targetPath);
+            if(File.Exists(targetPath))
+            {
+                File.Delete(targetPath);
+            }
+        }
+
+        public void ResetWeeklyTargetFile()
+        {
+            if(File.Exists(weeklyTargetPath))
+            {
+                File.Delete(weeklyTargetPath);
+            }
+        }
+
+        public void ResetPomoCounterFile()
+        {
+            if(File.Exists(pomoCounterPath))
+            {
+                File.Delete(pomoCounterPath);
+            }
         }
 
         public static void ReadInExistingTasks()
@@ -177,6 +208,34 @@ namespace TwitchBot
                         TaskCommandManager.Target = target;
                         int.TryParse(current, out int value);
                         TaskCommandManager.Current = value;
+                    }
+                }
+            }
+        }
+
+        public static void ReadInExistingWeeklyTargetAndCurrent()
+        {
+            if (File.Exists(weeklyTargetPath))
+            {
+                string line = "";
+                string weeklyTarget = "";
+                string weeklyCurrent = "";
+
+                using (StreamReader reader = new StreamReader(weeklyTargetPath))
+                {
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string modifiedLine = line.Replace("Weekly Target: ", "");
+                        string modifiedLineDone = modifiedLine.Replace("Current: ", "");
+
+                        string[] split = modifiedLineDone.Split(' ');
+
+                        weeklyTarget = split[0];
+                        weeklyCurrent = split[1];
+
+                        TaskCommandManager.WeeklyTarget = weeklyTarget;
+                        int.TryParse(weeklyCurrent, out int value);
+                        TaskCommandManager.WeeklyCurrent = value;
                     }
                 }
             }

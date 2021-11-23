@@ -11,13 +11,13 @@ namespace TwitchBot
         ONEMORE, TEA,
 
         // Pomo
-        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS, SETTARGET, MYTASK, SETCURRENT, RESETTASKLIST,
+        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS, SETTARGET, MYTASK, SETCURRENT, RESET, SETWEEKLYTARGET, SETPOMO, SETPOMOGOAL, 
         
         // Check-commands
-        SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK, BOJOCHECK, BUMBUM, CHAIRCHECK, HAPPYHIPPO,
+        SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK, BOJOCHECK, BUMBUM, CHAIRCHECK, HAPPYHIPPO, VINCENT,
 
         // General
-        BIO, SUGGEST, BREAK, UNO, YO, LOVE, HUG, TRAGER, VINCENT,
+        BIO, SUGGEST, BREAK, UNO, YO, LOVE, HUG, TRAGER, 
 
         // NULL / DEBUG
         NULL
@@ -148,6 +148,10 @@ namespace TwitchBot
                     DisplayCommand(Command.HAPPYHIPPO, e);
                     break;
 
+                case "vincent":
+                    DisplayCommand(Command.VINCENT, e);
+                    break;
+
                 // SPOOKTOBER
                 //case "spookcheck":
                 //    DisplayCommand(Command.SPOOKCHECK, e);
@@ -182,10 +186,6 @@ namespace TwitchBot
                     DisplayCommand(Command.TRAGER, e);
                     break;
 
-                case "vincent":
-                    DisplayCommand(Command.VINCENT, e);
-                    break;
-
                 // ------------------------------------------------------  MODS ONLY ------------------------------------------------------  
                 // POMO
                 case "timeoutdelete":
@@ -199,8 +199,20 @@ namespace TwitchBot
                     DisplayCommand(Command.SETCURRENT, e);
                     break;
 
-                case "resettasklist":
-                    DisplayCommand(Command.RESETTASKLIST, e);
+                case "reset":
+                    DisplayCommand(Command.RESET, e);
+                    break;
+
+                case "setweeklytarget":
+                    DisplayCommand(Command.SETWEEKLYTARGET, e);
+                    break;
+
+                case "setpomo":
+                    DisplayCommand(Command.SETPOMO, e);
+                    break;
+
+                case "setpomogoal":
+                    DisplayCommand(Command.SETPOMOGOAL, e);
                     break;
 
                 // Debug
@@ -263,10 +275,31 @@ namespace TwitchBot
                     }
                     break;
 
-                case Command.RESETTASKLIST:
+                case Command.RESET:
                     if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
                     {
-                        response = taskManager.ResetTaskListCommand();
+                        response = taskManager.ResetListCommand();
+                    }
+                    break;
+
+                case Command.SETWEEKLYTARGET:
+                    if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+                    {
+                        response = taskManager.SetWeeklyTargetCommand(e);
+                    }
+                    break;
+
+                case Command.SETPOMO:
+                    if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+                    {
+                        response = taskManager.SetPomoCommand(e);
+                    }
+                    break;
+
+                case Command.SETPOMOGOAL:
+                    if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+                    {
+                        response = taskManager.SetPomoGoalCommand(e);
                     }
                     break;
 
@@ -347,6 +380,10 @@ namespace TwitchBot
                     response = randomManager.HappyHippoCommand(taggedUser);
                     break;
 
+                case Command.VINCENT:
+                    response = randomManager.VincentCommand(taggedUser);
+                    break;
+
                 // Quotes
                 case Command.ONEMORE:
                     response = "“i will just play one more game, one more, i promise!” - Mike 2019";
@@ -395,10 +432,6 @@ namespace TwitchBot
 
                 case Command.TRAGER:
                     response = generalManager.TragerCommand(taggedUser);
-                    break;
-
-                case Command.VINCENT:
-                    response = generalManager.VincentCommand(taggedUser);
                     break;
 
                 default:

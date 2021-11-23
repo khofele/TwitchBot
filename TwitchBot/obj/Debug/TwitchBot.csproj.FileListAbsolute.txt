@@ -49,4 +49,4 @@ F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\obj\Debug\TwitchBot.csproj.CoreCo
 F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\obj\Debug\TwitchBot.csproj.CopyComplete
 F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\obj\Debug\TwitchBot.exe
 F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\obj\Debug\TwitchBot.pdb
-F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\obj\Debug\TwitchBot.csprojAssemblyReference.cache
+F:\Projekte\Twitchbot\TwitchBot Mike\TwitchBot\obj\Debug\TwitchBot.csproj.AssemblyReference.cache

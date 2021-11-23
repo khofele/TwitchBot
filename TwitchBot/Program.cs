@@ -14,6 +14,7 @@ namespace TwitchBot
             Bot bot = new Bot();
             FileManager.ReadInExistingTasks();
             FileManager.ReadInExistingTargetAndCurrent();
+            FileManager.ReadInExistingWeeklyTargetAndCurrent();
             Console.ReadLine();
         }
     }

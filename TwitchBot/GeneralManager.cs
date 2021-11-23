@@ -67,21 +67,5 @@ namespace TwitchBot
                 return "JUSTICE FOR TRAGER!";
             }
         }
-
-        public string VincentCommand(string user)
-        {
-            if(user == "karomagkekse")
-            {
-                return "/me Karo finally found Vincent! Let's just leave her in the asylum. :p <3";
-            }
-            else if(user == "akaTripzz")
-            {
-                return "/me Mike sneaks out of the asylum. He can hear some giggles from far far away!";
-            }
-            else
-            {
-                return user + " you could not find Vincent.... yet";
-            }
-        }
     }
 }

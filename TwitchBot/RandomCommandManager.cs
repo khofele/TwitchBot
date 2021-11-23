@@ -279,5 +279,39 @@ namespace TwitchBot
                 return user + " really really really wants a happy hippo rn D:";
             }
         }
+
+        public string VincentCommand(string user)
+        {
+            int randomCounter = GetRandom(1, 101);
+
+            if (user == "akaTripzz")
+            {
+                return "/me Mike sneaks out of the asylum. He can hear some giggles from far far away!";
+            }
+            else if (user == "CoolesOrangensaftTuetchen")
+            {
+                return "OUR LORD AND SAVIOUR VINCENT IS HERE! WE FINALLY FOUND HIM! EVERYBODY BOW DOWN! <3";
+            }
+            else if (randomCounter == 69)
+            {
+                return "Vincent our juicy juicy wall boi";
+            }
+            else if (randomCounter > 90)
+            {
+                return "/me Karo finally found Vincent! Let's just leave her in the asylum. :p <3";
+            }
+            else if (randomCounter > 70)
+            {
+                return "VIIIIIIIIIINNNNNCCCCCEEEEENNNNNT!";
+            }
+            else if (randomCounter > 40)
+            {
+                return "Vincent the beautiful. Vincent the juicy. Vincent the strong and silent as a wall. Vincent our love <3";
+            }
+            else
+            {
+                return user + " you could not find Vincent.... yet";
+            }
+        }
     }
 }
