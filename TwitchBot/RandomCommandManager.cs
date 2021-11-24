@@ -313,5 +313,24 @@ namespace TwitchBot
                 return user + " you could not find Vincent.... yet";
             }
         }
+
+        public string VibeCheckCommand(string user)
+        {
+            int randomCounter = GetRandom(0, 101);
+
+            if(randomCounter > 80)
+            {
+                return user + " passed the vibe check! blobDance";
+            }
+            else if(randomCounter > 40)
+            {
+                return user + " you're almost there! COME ON! VIBE A LIL MORE! blobDance";
+            }
+            else
+            {
+                return user + " needs to vibe a lil more! TAKE SOME OF MY HYPE <3 blobDance";
+            }
+
+        }
     }
 }

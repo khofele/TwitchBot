@@ -186,6 +186,25 @@ namespace TwitchBot
             }
         }
 
+        public string DeleteTaskCommand(string user, OnChatCommandReceivedArgs e)
+        {
+            if(User.GetUser(e) != user)
+            {
+                if(fileManager.FindTask(user) != null)
+                {
+                    RemoveTask(user);
+                    fileManager.DeleteTaskInFile(user);
+
+                    return User.GetUser(e)+ " " + user + "'s task got deleted!";
+                }
+                return User.GetUser(e) + " user's task not found!";
+            }
+            else
+            {
+                return User.GetUser(e) + " please tag someone!";
+            }
+        }
+
         public string TaskDoneCommand(OnChatCommandReceivedArgs e)
         {
             if (fileManager.FindTask(User.GetUser(e)) != null)

@@ -11,10 +11,10 @@ namespace TwitchBot
         ONEMORE, TEA,
 
         // Pomo
-        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS, SETTARGET, MYTASK, SETCURRENT, RESET, SETWEEKLYTARGET, SETPOMO, SETPOMOGOAL, 
+        ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS, SETTARGET, MYTASK, SETCURRENT, RESET, SETWEEKLYTARGET, SETPOMO, SETPOMOGOAL, DELETETASK,
         
         // Check-commands
-        SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK, BOJOCHECK, BUMBUM, CHAIRCHECK, HAPPYHIPPO, VINCENT,
+        SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK, BOJOCHECK, BUMBUM, CHAIRCHECK, HAPPYHIPPO, VINCENT, VIBECHECK,
 
         // General
         BIO, SUGGEST, BREAK, UNO, YO, LOVE, HUG, TRAGER, 
@@ -152,6 +152,10 @@ namespace TwitchBot
                     DisplayCommand(Command.VINCENT, e);
                     break;
 
+                case "vibecheck":
+                    DisplayCommand(Command.VIBECHECK, e);
+                    break;
+
                 // SPOOKTOBER
                 //case "spookcheck":
                 //    DisplayCommand(Command.SPOOKCHECK, e);
@@ -213,6 +217,10 @@ namespace TwitchBot
 
                 case "setpomogoal":
                     DisplayCommand(Command.SETPOMOGOAL, e);
+                    break;
+
+                case "deletetask":
+                    DisplayCommand(Command.DELETETASK, e);
                     break;
 
                 // Debug
@@ -303,6 +311,13 @@ namespace TwitchBot
                     }
                     break;
 
+                case Command.DELETETASK:
+                    if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+                    {
+                        response = taskManager.DeleteTaskCommand(taggedUser, e);
+                    }
+                    break;
+
                 case Command.ADD:
                     response = taskManager.AddTaskCommand(e);
                     break;
@@ -382,6 +397,10 @@ namespace TwitchBot
 
                 case Command.VINCENT:
                     response = randomManager.VincentCommand(taggedUser);
+                    break;
+
+                case Command.VIBECHECK:
+                    response = randomManager.VibeCheckCommand(taggedUser);
                     break;
 
                 // Quotes
@@ -477,7 +496,11 @@ namespace TwitchBot
             string user = null;
             string text = null;
 
-            if (chatMessage.ToLower().StartsWith("!uno"))
+            if(chatMessage.ToLower().StartsWith("!deletetask @"))
+            {
+                text = chatMessage.Replace(("!" + e.Command.CommandText).ToString() + " @", "");
+            }
+            else if (chatMessage.ToLower().StartsWith("!uno") || chatMessage.ToLower().StartsWith("!deletetask"))
             {
                 text = chatMessage.Replace(("!" + e.Command.CommandText).ToString() + " ", "");
             }
@@ -496,6 +519,7 @@ namespace TwitchBot
                 user = User.GetUser(e);
             }
 
+            SendChatMessage(user);
             return user;
         }
 

@@ -96,6 +96,10 @@ namespace TwitchBot
                     command = Command.VINCENT;
                     break;
 
+                case "vibecheck":
+                    command = Command.VIBECHECK;
+                    break;
+
                 default:
                     command = Command.NULL;
                     break;

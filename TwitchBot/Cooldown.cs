@@ -34,6 +34,7 @@ namespace TwitchBot
             { Command.BUMBUM, DateTime.Now },
             { Command.HAPPYHIPPO, DateTime.Now },
             { Command.VINCENT, DateTime.Now },
+            { Command.VIBECHECK, DateTime.Now },
 
                         
             { Command.BIO, DateTime.Now },
@@ -73,6 +74,7 @@ namespace TwitchBot
             { Command.BUMBUM, 2 },
             { Command.HAPPYHIPPO, 2},
             { Command.VINCENT, 2 },
+            { Command.VIBECHECK, 2 },
 
 
             { Command.BIO, 30 },
@@ -112,6 +114,7 @@ namespace TwitchBot
             { Command.BUMBUM, false },
             { Command.HAPPYHIPPO, false },
             { Command.VINCENT, false },
+            { Command.VIBECHECK, false },
 
 
             { Command.BIO, false },
