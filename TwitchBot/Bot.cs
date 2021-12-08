@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TwitchLib.Client;
 using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
@@ -14,10 +15,16 @@ namespace TwitchBot
         ADD, EDIT, DONE, REMOVE, FINISHEDTASKS, ALLFINISHEDTASKS, SETTARGET, MYTASK, SETCURRENT, RESET, SETWEEKLYTARGET, SETPOMO, SETPOMOGOAL, DELETETASK,
         
         // Check-commands
-        SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SPOOKCHECK, SUSCHECK, BOJOCHECK, BUMBUM, CHAIRCHECK, HAPPYHIPPO, VINCENT, VIBECHECK,
+        SPICECHECK, NAPCHECK, HYPECHECK, LOVECHECK, CHECKCHECK, BOOBACHECK, SUSCHECK, BOJOCHECK, BUMBUM, CHAIRCHECK, HAPPYHIPPO, VINCENT, VIBECHECK,
 
         // General
         BIO, SUGGEST, BREAK, UNO, YO, LOVE, HUG, TRAGER, 
+
+        // Christmas
+        GOODLIST, NAUGHTYLIST, LIST, PRESENTCHECK, MISTLETOE,
+
+        // Spooktober
+        SPOOKCHECK,
 
         // NULL / DEBUG
         NULL
@@ -32,10 +39,17 @@ namespace TwitchBot
         private TaskCommandManager taskManager = new TaskCommandManager();
         private RandomCommandManager randomManager = new RandomCommandManager();
         private GeneralManager generalManager = new GeneralManager();
+        private ChristmasCommands christmasManager = new ChristmasCommands();
+        private static List<string> userList = new List<string>();
 
         public static TwitchClient Client
         {
             get => client;
+        }
+
+        public static List<string> UserList
+        {
+            get => userList;
         }
 
         public Bot()
@@ -45,7 +59,7 @@ namespace TwitchBot
 
             client.OnLog += Client_OnLog;
             client.OnChatCommandReceived += Client_OnChatCommandReceived;
-            client.OnExistingUsersDetected += Client_OnExistingUsersDetected;
+            client.OnUserJoined += Client_OnUserJoined;
 
             client.Connect();
         }
@@ -53,6 +67,11 @@ namespace TwitchBot
         private void Client_OnLog(object sender, OnLogArgs e)
         {
             Console.WriteLine($"{e.DateTime.ToString()}: {e.BotUsername} - {e.Data}");
+        }
+
+        private void Client_OnUserJoined(object sender, OnUserJoinedArgs e)
+        {
+            userList.Add(e.Username);
         }
 
         private void Client_OnChatCommandReceived(object sender, OnChatCommandReceivedArgs e)
@@ -161,6 +180,27 @@ namespace TwitchBot
                 //    DisplayCommand(Command.SPOOKCHECK, e);
                 //    break;
 
+                // CHRISTMAS
+                case "goodlist":
+                    DisplayCommand(Command.GOODLIST, e);
+                    break;
+
+                case "naughtylist":
+                    DisplayCommand(Command.NAUGHTYLIST, e);
+                    break;
+
+                case "list":
+                    DisplayCommand(Command.LIST, e);
+                    break;
+
+                case "presentcheck":
+                    DisplayCommand(Command.PRESENTCHECK, e);
+                    break;
+
+                case "mistletoe":
+                    DisplayCommand(Command.MISTLETOE, e);
+                    break;
+
                 // GENERAL
                 case "suggest":
                     DisplayCommand(Command.SUGGEST, e);
@@ -192,8 +232,8 @@ namespace TwitchBot
 
                 // ------------------------------------------------------  MODS ONLY ------------------------------------------------------  
                 // POMO
-                case "timeoutdelete":
-                    break;
+                //case "timeoutdelete":
+                //    break;
 
                 case "settarget":
                     DisplayCommand(Command.SETTARGET, e);
@@ -225,15 +265,8 @@ namespace TwitchBot
 
                 // Debug
                 //case "banana":
-                //    Test();
                 //    break;
             }
-        }
-
-        private void Client_OnExistingUsersDetected(object sender, OnExistingUsersDetectedArgs f)
-        {
-            SendChatMessage(f.Users.Count.ToString());
-            Test(f);
         }
 
         private void DisplayCommand(Command command, OnChatCommandReceivedArgs e)
@@ -403,6 +436,33 @@ namespace TwitchBot
                     response = randomManager.VibeCheckCommand(taggedUser);
                     break;
 
+                // CHRISTMAS SPECIAL
+                case Command.GOODLIST:
+                    if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+                    {
+                        response = christmasManager.GoodListCommand(taggedUser);
+                    }
+                    break;
+
+                case Command.NAUGHTYLIST:
+                    if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
+                    {
+                        response = christmasManager.NaughtyListCommand(taggedUser);
+                    }
+                    break;
+
+                case Command.LIST:
+                    response = christmasManager.ListCommand(taggedUser);
+                    break;
+
+                case Command.PRESENTCHECK:
+                    response = christmasManager.PresentCheckCommand(taggedUser);
+                    break;
+
+                case Command.MISTLETOE:
+                    response = christmasManager.MistleToeCommand(taggedUser, e);
+                    break;
+
                 // Quotes
                 case Command.ONEMORE:
                     response = "“i will just play one more game, one more, i promise!” - Mike 2019";
@@ -519,7 +579,6 @@ namespace TwitchBot
                 user = User.GetUser(e);
             }
 
-            SendChatMessage(user);
             return user;
         }
 

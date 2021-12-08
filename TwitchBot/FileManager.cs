@@ -11,6 +11,7 @@ namespace TwitchBot
         private static string suggestPath = @"E:\Desktop\Temp\suggestions.txt";
         private static string weeklyTargetPath = @"E:\Desktop\Temp\weeklytarget.txt";
         private static string pomoCounterPath = @"E:\Desktop\Temp\pomocounter.txt";
+        private static string dateTimePath = @"E:\Desktop\Temp\dateTime.txt";
 
         public static string TaskPath
         {
@@ -35,6 +36,11 @@ namespace TwitchBot
         public static string PomoCounterPath
         {
             get => pomoCounterPath;
+        }
+
+        public static string DateTimePath
+        {
+            get => dateTimePath;
         }
 
         public void WriteToFile(string message, string path)

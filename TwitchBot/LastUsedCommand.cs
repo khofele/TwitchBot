@@ -100,6 +100,14 @@ namespace TwitchBot
                     command = Command.VIBECHECK;
                     break;
 
+                case "presentcheck":
+                    command = Command.PRESENTCHECK;
+                    break;
+
+                case "mistletoe":
+                    command = Command.MISTLETOE;
+                    break;
+
                 default:
                     command = Command.NULL;
                     break;
