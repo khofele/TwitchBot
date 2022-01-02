@@ -29,12 +29,12 @@ namespace TwitchBot
             { Command.BOOBACHECK, DateTime.Now },
             { Command.CHECKCHECK, DateTime.Now },
             { Command.SUSCHECK, DateTime.Now },
-            { Command.SPOOKCHECK, DateTime.Now },
             { Command.BOJOCHECK, DateTime.Now },
             { Command.BUMBUM, DateTime.Now },
             { Command.HAPPYHIPPO, DateTime.Now },
             { Command.VINCENT, DateTime.Now },
             { Command.VIBECHECK, DateTime.Now },
+            { Command.CHAIRCHECK, DateTime.Now },
 
 
             { Command.BIO, DateTime.Now },
@@ -48,7 +48,25 @@ namespace TwitchBot
 
             { Command.PRESENTCHECK, DateTime.Now },
             { Command.LIST, DateTime.Now },
-            { Command.MISTLETOE, DateTime.Now }
+            { Command.MISTLETOE, DateTime.Now },
+            { Command.ALLNAUGHTYLIST, DateTime.Now },
+            { Command.ALLGOODLIST, DateTime.Now },
+            // ------------------------------------------
+            { Command.NAUGHTYLIST, DateTime.Now },
+            { Command.GOODLIST, DateTime.Now },
+
+            { Command.SPOOKCHECK, DateTime.Now },
+
+            { Command.DEBUG, DateTime.Now },
+
+            //------- MODS ONLY -------
+            { Command.SETTARGET, DateTime.Now },
+            { Command.SETCURRENT, DateTime.Now },
+            { Command.RESET, DateTime.Now },
+            { Command.SETWEEKLYTARGET, DateTime.Now },
+            { Command.SETPOMO, DateTime.Now },
+            { Command.SETPOMOGOAL, DateTime.Now },
+            { Command.DELETETASK, DateTime.Now }
         };
 
         public static Dictionary<Command, int> globalCooldownLengths = new Dictionary<Command, int>()
@@ -73,12 +91,12 @@ namespace TwitchBot
             { Command.BOOBACHECK, 2 },
             { Command.CHECKCHECK, 2 },
             { Command.SUSCHECK, 2 },
-            { Command.SPOOKCHECK, 2 },
             { Command.BOJOCHECK, 2 },
             { Command.BUMBUM, 2 },
             { Command.HAPPYHIPPO, 2},
             { Command.VINCENT, 2 },
             { Command.VIBECHECK, 2 },
+            { Command.CHAIRCHECK, 2 },
 
 
             { Command.BIO, 30 },
@@ -92,7 +110,25 @@ namespace TwitchBot
 
             { Command.PRESENTCHECK, 2 },
             { Command.LIST, 2 },
-            { Command.MISTLETOE, 2 }
+            { Command.MISTLETOE, 2 },
+            { Command.ALLNAUGHTYLIST, 5 },
+            { Command.ALLGOODLIST, 5 },
+            // ------------------------------------------
+            { Command.NAUGHTYLIST, 0 },
+            { Command.GOODLIST, 0 },
+
+            { Command.SPOOKCHECK, 2 },
+
+            { Command.DEBUG, 0},
+
+            //------- MODS ONLY -------
+            { Command.SETTARGET, 0 },
+            { Command.SETCURRENT, 0 },
+            { Command.RESET, 0 },
+            { Command.SETWEEKLYTARGET, 0 },
+            { Command.SETPOMO, 0 },
+            { Command.SETPOMOGOAL, 0 },
+            { Command.DELETETASK, 0 }
         };
 
         public static Dictionary<Command, bool> globalCooldownsRunning = new Dictionary<Command, bool>()
@@ -117,12 +153,12 @@ namespace TwitchBot
             { Command.BOOBACHECK, false },
             { Command.CHECKCHECK, false },
             { Command.SUSCHECK, false },
-            { Command.SPOOKCHECK, false },
             { Command.BOJOCHECK, false },
             { Command.BUMBUM, false },
             { Command.HAPPYHIPPO, false },
             { Command.VINCENT, false },
             { Command.VIBECHECK, false },
+            { Command.CHAIRCHECK, false },
 
 
             { Command.BIO, false },
@@ -136,7 +172,25 @@ namespace TwitchBot
 
             { Command.PRESENTCHECK, false },
             { Command.LIST, false },
-            { Command.MISTLETOE, false }
+            { Command.MISTLETOE, false },
+            { Command.ALLGOODLIST, false },
+            { Command.ALLNAUGHTYLIST, false },
+            // ------------------------------------------
+            { Command.NAUGHTYLIST, false },
+            { Command.GOODLIST, false },
+
+            { Command.SPOOKCHECK, false },
+
+            { Command.DEBUG, false },
+
+            //------- MODS ONLY -------
+            { Command.SETTARGET, false },
+            { Command.SETCURRENT, false },
+            { Command.RESET, false },
+            { Command.SETWEEKLYTARGET, false },
+            { Command.SETPOMO, false },
+            { Command.SETPOMOGOAL, false },
+            { Command.DELETETASK, false }
         };
 
 

@@ -12,7 +12,7 @@ namespace TwitchBot
             string chatMessage = e.Command.ChatMessage.Message.ToString();
             string suggestMessage = chatMessage.Replace("!suggest", " suggested: ");
             fileManager.WriteToFile(User.GetUser(e) + suggestMessage, FileManager.SuggestPath);
-            return User.GetUser(e) + " thank you for your suggestion! <3";
+            return User.GetUser(e) + " thank you for your suggestion! akatri2Aww akatri2Lovings";
         }
 
         public string BreakCommand()
@@ -36,7 +36,7 @@ namespace TwitchBot
 
         public string YoCommand(string user)
         {
-            if(user == "akaTripzz")
+            if(user.ToLower() == "akatripzz".ToLower())
             {
                 return "YO MIKE!";
             }
@@ -53,18 +53,30 @@ namespace TwitchBot
 
         public string HugCommand(string user, OnChatCommandReceivedArgs e)
         {
-            return "/me " + User.GetUser(e) + " hugs " + user + " akatri2Lovings akatri2Lovings akatri2Lovings";
+            return "/me " + User.GetUser(e) + " hugs " + user + " akatri2Hug akatri2Lovings akatri2Hug akatri2Lovings";
         }
 
         public string TragerCommand(string user)
         {
-            if(user == "BettIsSomewhere")
+            if(user.ToLower() == "bettissomewhere".ToLower())
             {
                 return "/me Bett receives a long warm hug from Trager! <3 JUSTICE FOR TRAGER!";
             }
             else
             {
                 return "JUSTICE FOR TRAGER!";
+            }
+        }
+
+        public string TestCommand(string user)
+        {
+            if (user.ToLower() == "vlaroi" ||user.ToLower() == "Karomagkekse".ToLower() || user.ToLower() == "blopsquadbot")
+            {
+                return "/me yo dude!";
+            }
+            else
+            {
+                return "/me yo " + user;
             }
         }
     }

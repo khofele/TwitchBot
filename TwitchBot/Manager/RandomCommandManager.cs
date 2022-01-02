@@ -20,7 +20,7 @@ namespace TwitchBot
         public string SpiceCheckCommand(string user)
         {
             int randomCounter = GetRandom(1, 102);
-            if (user == "its_lunalia")
+            if (user.ToLower() == "its_lunalia".ToLower())
             {
                 return "@its_lunalia BOW DOWN! SPICE QUEEN LUNA IS IN DA HOUSE! ALL HAIL OUR BELOVED SPICE QUEEN! WE LOVE YOU! <3";
             }
@@ -45,32 +45,32 @@ namespace TwitchBot
         public string HypeCheckCommand(string user)
         {
             int randomCounter = GetRandom(1, 102);
-            if (user == "karomagkekse")
+            if (user.ToLower() == "karomagkekse".ToLower())
             {
-                return "@karomagkekse NUMBER ONE HYPE GIRL IS IN THE HOUSE! AYAYAYAYY KARO IS 1069% HYPED AND ABOUT TO EXPLODE AYYYYYYYYYYYYY! akatri2Party";
+                return "@karomagkekse NUMBER ONE HYPE GIRL IS IN THE HOUSE! AYAYAYAYY KARO IS 1069% HYPED AND ABOUT TO EXPLODE AYYYYYYYYYYYYY! akatri2Hype";
             }
             else if (randomCounter == 101)
             {
-                return "akatri2Party " + randomCounter + "% HYPE! " + user + " IS HYPING IN THE STRATOSPHERE! AYAYAYAYAYAYAYYYYYYYYY akatri2Party";
+                return "akatri2Hype " + randomCounter + "% HYPE! " + user + " IS HYPING IN THE STRATOSPHERE! AYAYAYAYAYAYAYYYYYYYYY akatri2Hype";
             }
             else if (randomCounter == 69)
             {
-                return user + " YOU ARE " + randomCounter + "% HYPED! S P I C E HYPE! akatri2Party";
+                return user + " YOU ARE " + randomCounter + "% HYPED! S P I C E HYPE! akatri2Hype";
             }
             else if (randomCounter > 50)
             {
                 if (randomCounter > 90)
                 {
-                    return "akatri2Party " + randomCounter + "% HYPE! SHEEEEESH THE HYPE IS SO STRONG! " + user + " YOU'RE ABOUT TO EXPLODE! akatri2Party";
+                    return "akatri2Hype " + randomCounter + "% HYPE! SHEEEEESH THE HYPE IS SO STRONG! " + user + " YOU'RE ABOUT TO EXPLODE! akatri2Hype";
                 }
                 else
                 {
-                    return "akatri2Party  " + user + " is " + randomCounter + "% hyped today! THE HYPE IS STRONG! AYAYAYAYAYAY akatri2Party";
+                    return "akatri2Hype " + user + " is " + randomCounter + "% hyped today! THE HYPE IS STRONG! AYAYAYAYAYAY akatri2Hype";
                 }
             }
             else
             {
-                return user + " is " + randomCounter + "% hyped today!";
+                return user + " is " + randomCounter + "% hyped today! akatri2Hype";
             }
         }
 
@@ -79,7 +79,7 @@ namespace TwitchBot
             int randomCounter = GetRandom(1, 101);
             if (randomCounter > 60)
             {
-                return user + " is " + randomCounter + "% tired today! You better take a nap <3";
+                return user + " is " + randomCounter + "% tired today! You better take a nap akatri2Cosy akatri2Lovings";
             }
             else if (randomCounter <= 10)
             {
@@ -87,14 +87,14 @@ namespace TwitchBot
             }
             else
             {
-                return user + " is " + randomCounter + "% tired today!";
+                return user + " is " + randomCounter + "% tired today! akatri2Cosy";
             }
         }
 
         public string LoveCheckCommand(string user)
         {
             int randomCounter = GetRandom(1, 101);
-            if (user == "akaTripzz")
+            if (user.ToLower() == "akatripzz".ToLower())
             {
                 if (randomCounter == 69)
                 {
@@ -124,7 +124,7 @@ namespace TwitchBot
         public string BoobaCheckCommand(string user)
         {
             int randomCounter = GetRandom(1, 102);
-            if (user == "sollunatic")
+            if (user.ToLower() == "sollunatic".ToLower())
             {
                 return "@sollunatic MAIN BOOBA GIRL IS 1069% BOOBALICIOUS!";
             }
@@ -149,7 +149,7 @@ namespace TwitchBot
         public string SusCheckCommand(string user)
         {
             int randomCounter = GetRandom(1, 102);
-            if (user == "kiwi_Sr")
+            if (user.ToLower() == "kiwi_sr".ToLower())
             {
                 return "@kiwi_Sr SUS-GOD! WE BOW DOWN! KIWI SUS!";
             }
@@ -201,15 +201,15 @@ namespace TwitchBot
             }
             else if(randomCounter == 69)
             {
-                return user + " OMG STOP THINKING ABOUT UKGOV! BOJO IS WATCHING YOU! YOU BETTER GET BACK TO WORK! akatri2Pew";
+                return user + " OMG STOP THINKING ABOUT UKGOV! BOJO IS WATCHING YOU! YOU BETTER GET BACK TO WORK! akatri2Bop akatri2Pew";
             }
             else if(randomCounter > 75)
             {
-                return user + " YOU'RE A TRUE MEMBER OF THE BOJO-FANCLUB! CONGRATS! LIFEGOAL ACHIEVED!";
+                return user + " YOU'RE A TRUE MEMBER OF THE BOJO-FANCLUB! CONGRATS! LIFEGOAL ACHIEVED! akatri2Aww";
             }
             else
             {
-                return user + " is " + randomCounter + "% in love with ukgov! OMG! <3";
+                return user + " is " + randomCounter + "% in love with ukgov! OMG! akatri2Aww";
             }
         }
 
@@ -218,15 +218,15 @@ namespace TwitchBot
             int randomCounter = GetRandom(1, 101);
             if(randomCounter == 101)
             {
-                return user + "akatri2Party BUMBUM-GOD! WE BOW DOWN! BUMBUM IN THE AIR AND DANCE FOR US! akatri2Party";
+                return user + "akatri2Hype BUMBUM-GOD! WE BOW DOWN! BUMBUM IN THE AIR AND DANCE FOR US! akatri2Hype";
             }
             else if(randomCounter == 69)
             {
-                return user + "/me twerks through chat! akatri2Party";
+                return user + "/me twerks through chat! akatri2Hype";
             }
             else if(randomCounter < 40)
             {
-                return user + " YOU ARE NOT HYPED ENOUGH BUMBUM IN THE AIR AND DANCE A LIL BIT! akatri2Party";
+                return user + " YOU ARE NOT HYPED ENOUGH BUMBUM IN THE AIR AND DANCE A LIL BIT! akatri2Hype";
             }
             else
             {
@@ -237,7 +237,7 @@ namespace TwitchBot
         public string ChairCheckCommand(string user)
         {
             int randomCounter = GetRandom(1, 101);
-            if(user == "akaTripzz") 
+            if(user.ToLower() == "akatripzz".ToLower()) 
             {
                 return "@akaTripzz YOU LOVE CHAIRIEL THE MOST BUT WE'RE STILL WAITING FOR THE BABY! :p <3";
             }
@@ -247,22 +247,22 @@ namespace TwitchBot
             }
             else if(randomCounter >= 75)
             {
-                return user + " loves Chairiel " + randomCounter + "%! You love Chairiel very much! ";
+                return user + " loves Chairiel " + randomCounter + "%! You love Chairiel very much! akatri2Lovings";
             }
             else if(randomCounter < 10)
             {
-                return user + "loves Chairiel " + randomCounter + "%..... WOW YOU DON'T LOVE CHAIR-SENAPI VERY MUCH D:";
+                return user + "loves Chairiel " + randomCounter + "%..... oooh... i am not sure if you love Chairiel :(";
             }
             else
             {
-                return user + " loves Chairiel " + randomCounter + " %!";
+                return user + " loves Chairiel " + randomCounter + "%! akatri2Lovings";
             }
         }
 
         public string HappyHippoCommand(string user)
         {
             int randomCounter = GetRandom(1, 101);
-            if(user == "TriggerKR")
+            if(user.ToLower() == "triggerkr".ToLower())
             {
                 return "TriggerKR IS OUR FAVORITE HAPPY HIPPO! WE LOVE YOU SO MUCH! <3 (please stop gambling tho you need the money for your happy hippo cake :c)";
             }
@@ -284,11 +284,11 @@ namespace TwitchBot
         {
             int randomCounter = GetRandom(1, 101);
 
-            if (user == "akaTripzz")
+            if (user.ToLower() == "akatripzz".ToLower())
             {
                 return "/me Mike sneaks out of the asylum. He can hear some giggles from far far away!";
             }
-            else if (user == "CoolesOrangensaftTuetchen")
+            else if (user.ToLower() == "coolesorangensafttuetchen".ToLower())
             {
                 return "OUR LORD AND SAVIOUR VINCENT IS HERE! WE FINALLY FOUND HIM! EVERYBODY BOW DOWN! <3";
             }

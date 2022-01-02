@@ -21,20 +21,20 @@ namespace TwitchBot
         BIO, SUGGEST, BREAK, UNO, YO, LOVE, HUG, TRAGER, 
 
         // Christmas
-        GOODLIST, NAUGHTYLIST, LIST, PRESENTCHECK, MISTLETOE,
+        GOODLIST, NAUGHTYLIST, LIST, PRESENTCHECK, MISTLETOE, ALLGOODLIST, ALLNAUGHTYLIST,
 
         // Spooktober
         SPOOKCHECK,
 
         // NULL / DEBUG
-        NULL
+        NULL, DEBUG
     }
 
     class Bot
     {
-        private ConnectionCredentials creds = new ConnectionCredentials("blopsquadbot", "oauth:4h6ckv84qqeu1eexdnt57qgulfjwjo");
+        private ConnectionCredentials creds = new ConnectionCredentials("theblopbot", "oauth:4h6ckv84qqeu1eexdnt57qgulfjwjo");
         private static TwitchClient client;
-        private static string channel = "karomagkekse";
+        private static string channel = "akaTripzz";
         private string response;
         private TaskCommandManager taskManager = new TaskCommandManager();
         private RandomCommandManager randomManager = new RandomCommandManager();
@@ -180,26 +180,34 @@ namespace TwitchBot
                 //    DisplayCommand(Command.SPOOKCHECK, e);
                 //    break;
 
-                // CHRISTMAS
-                case "goodlist":
-                    DisplayCommand(Command.GOODLIST, e);
-                    break;
+                // CHRISTMAS AUSKOMMENTIEREN
+                //case "goodlist":
+                //    DisplayCommand(Command.GOODLIST, e);
+                //    break;
 
-                case "naughtylist":
-                    DisplayCommand(Command.NAUGHTYLIST, e);
-                    break;
+                //case "naughtylist":
+                //    DisplayCommand(Command.NAUGHTYLIST, e);
+                //    break;
 
-                case "list":
-                    DisplayCommand(Command.LIST, e);
-                    break;
+                //case "list":
+                //    DisplayCommand(Command.LIST, e);
+                //    break;
 
-                case "presentcheck":
-                    DisplayCommand(Command.PRESENTCHECK, e);
-                    break;
+                //case "presentcheck":
+                //    DisplayCommand(Command.PRESENTCHECK, e);
+                //    break;
 
-                case "mistletoe":
-                    DisplayCommand(Command.MISTLETOE, e);
-                    break;
+                //case "mistletoe":
+                //    DisplayCommand(Command.MISTLETOE, e);
+                //    break;
+
+                //case "allnaughtylist":
+                //    DisplayCommand(Command.ALLNAUGHTYLIST, e);
+                //    break;
+
+                //case "allgoodlist":
+                //    DisplayCommand(Command.ALLGOODLIST, e);
+                //    break;
 
                 // GENERAL
                 case "suggest":
@@ -232,8 +240,6 @@ namespace TwitchBot
 
                 // ------------------------------------------------------  MODS ONLY ------------------------------------------------------  
                 // POMO
-                //case "timeoutdelete":
-                //    break;
 
                 case "settarget":
                     DisplayCommand(Command.SETTARGET, e);
@@ -265,6 +271,7 @@ namespace TwitchBot
 
                 // Debug
                 //case "banana":
+                //    DisplayCommand(Command.DEBUG, e);
                 //    break;
             }
         }
@@ -301,11 +308,19 @@ namespace TwitchBot
         {
             switch(command)
             {
+                case Command.DEBUG:
+                    response = generalManager.TestCommand(taggedUser);
+                    break;
+
                 // Pomodoro
                 case Command.SETTARGET:
                     if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
                     {
                         response = taskManager.SetTargetCommand(e);
+                    }
+                    else
+                    {
+                        response = null;
                     }
                     break;
 
@@ -314,12 +329,20 @@ namespace TwitchBot
                     {
                         response = taskManager.SetCurrentCommand(e);
                     }
+                    else
+                    {
+                        response = null;
+                    }
                     break;
 
                 case Command.RESET:
                     if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
                     {
                         response = taskManager.ResetListCommand();
+                    }
+                    else
+                    {
+                        response = null;
                     }
                     break;
 
@@ -328,12 +351,20 @@ namespace TwitchBot
                     {
                         response = taskManager.SetWeeklyTargetCommand(e);
                     }
+                    else
+                    {
+                        response = null;
+                    }
                     break;
 
                 case Command.SETPOMO:
                     if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
                     {
                         response = taskManager.SetPomoCommand(e);
+                    }
+                    else
+                    {
+                        response = null;
                     }
                     break;
 
@@ -342,12 +373,20 @@ namespace TwitchBot
                     {
                         response = taskManager.SetPomoGoalCommand(e);
                     }
+                    else
+                    {
+                        response = null;
+                    }
                     break;
 
                 case Command.DELETETASK:
                     if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
                     {
                         response = taskManager.DeleteTaskCommand(taggedUser, e);
+                    }
+                    else
+                    {
+                        response = null;
                     }
                     break;
 
@@ -442,12 +481,20 @@ namespace TwitchBot
                     {
                         response = christmasManager.GoodListCommand(taggedUser);
                     }
+                    else
+                    {
+                        response = null;
+                    }
                     break;
 
                 case Command.NAUGHTYLIST:
                     if (CheckModerator(e) == true || CheckBroadcaster(e) == true)
                     {
                         response = christmasManager.NaughtyListCommand(taggedUser);
+                    }
+                    else
+                    {
+                        response = null;
                     }
                     break;
 
@@ -461,6 +508,14 @@ namespace TwitchBot
 
                 case Command.MISTLETOE:
                     response = christmasManager.MistleToeCommand(taggedUser, e);
+                    break;
+
+                case Command.ALLGOODLIST:
+                    response = christmasManager.AllGoodListCommand();
+                    break;
+
+                case Command.ALLNAUGHTYLIST:
+                    response = christmasManager.AllNaughtyListCommand();
                     break;
 
                 // Quotes
@@ -556,11 +611,15 @@ namespace TwitchBot
             string user = null;
             string text = null;
 
-            if(chatMessage.ToLower().StartsWith("!deletetask @"))
+            if(chatMessage.ToLower() == "!list")
+            {
+                user = User.GetUser(e);
+            }
+            else if(chatMessage.ToLower().StartsWith("!deletetask @") || chatMessage.ToLower().StartsWith("!uno @") || chatMessage.ToLower().StartsWith("!goodlist @") || chatMessage.ToLower().StartsWith("!naughtylist @") || chatMessage.ToLower().StartsWith("!list @"))
             {
                 text = chatMessage.Replace(("!" + e.Command.CommandText).ToString() + " @", "");
             }
-            else if (chatMessage.ToLower().StartsWith("!uno") || chatMessage.ToLower().StartsWith("!deletetask"))
+            else if (chatMessage.ToLower().StartsWith("!uno") || chatMessage.ToLower().StartsWith("!deletetask") || chatMessage.ToLower().StartsWith("!goodlist") || chatMessage.ToLower().StartsWith("!naughtylist") || chatMessage.ToLower().StartsWith("!list"))
             {
                 text = chatMessage.Replace(("!" + e.Command.CommandText).ToString() + " ", "");
             }
@@ -583,12 +642,12 @@ namespace TwitchBot
         }
 
             
-        private string Test(OnExistingUsersDetectedArgs e)
-        {
-            Random random = new Random();
-            int randomNum = random.Next(1, e.Users.Count);
-            return e.Users[randomNum].ToString();
-        }
+        //private string Test(OnExistingUsersDetectedArgs e)
+        //{
+        //    Random random = new Random();
+        //    int randomNum = random.Next(1, e.Users.Count);
+        //    return e.Users[randomNum].ToString();
+        //}
 
 
     }

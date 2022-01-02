@@ -127,18 +127,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bot.cs" />
-    <Compile Include="ChristmasCommands.cs" />
-    <Compile Include="Cooldown.cs" />
-    <Compile Include="FileManager.cs" />
-    <Compile Include="GeneralManager.cs" />
-    <Compile Include="LastUsedCommand.cs" />
-    <Compile Include="Timer.cs" />
+    <Compile Include="Manager\ChristmasCommands.cs" />
+    <Compile Include="Util\Cooldown.cs" />
+    <Compile Include="Manager\FileManager.cs" />
+    <Compile Include="Manager\GeneralManager.cs" />
+    <Compile Include="Util\LastUsedCommand.cs" />
+    <Compile Include="Util\Timer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RandomCommandManager.cs" />
-    <Compile Include="Task.cs" />
-    <Compile Include="TaskCommandManager.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Manager\RandomCommandManager.cs" />
+    <Compile Include="Util\Task.cs" />
+    <Compile Include="Manager\TaskCommandManager.cs" />
+    <Compile Include="Util\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

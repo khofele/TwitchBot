@@ -1,6 +1,0 @@
----- ENUMS ----
-QUOTE
-Command displays a message, without any properties (User, ...)
-
-POMODORO
-Pomodoro-related commands

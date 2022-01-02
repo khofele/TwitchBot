@@ -10,7 +10,8 @@ namespace TwitchBot
 {
     static class Timer
     {
-        private static string dateTimePath = @"E:\Desktop\Temp\dateTime.txt";
+        private static string dateTimePath = @"C:\Users\mikea\Documents\KAROCHATBOT\dateTime.txt";
+
 
         private static void OverwriteText()
         {

@@ -13,6 +13,7 @@ namespace TwitchBot
         private List<string> goodList = new List<string>();
         private List<string> naughtyList = new List<string>();
         private Random random = null;
+        private Random doubleRandom = null;
         private List<string> commonPresents = new List<string> { 
             "A nuzzle from the bot. Wait, that's me! nuzzzzleessss",
             "A wine glass.",
@@ -102,7 +103,6 @@ namespace TwitchBot
             "A piece of folded paper with the PRICE OF THE FISH?! HOLY....",
             "A meditation break. Okay, let's get zen",
             "A video yoga break? Let's get stretchy!",
-            "OMG! A scribbl break? Let's GOOOOOOOOOOO!",
             "Sick! No, not sick sick. Means sick, you got a Tetrio break! Game On!",
             "A drawing of your choice from Tripzz? Wait, is this the return of Doodle Time?",
             "1 Trillion Blopcoins. !gamble all. Lost. Sorry, you get nothing.",
@@ -123,7 +123,6 @@ namespace TwitchBot
             "Holy Blop Jesus, 10,000,000 BlopCoins?! That's intense. Drinks on you?",
             "One minute of emote only mode? Let's go :P",
             "An appearance from Raffles? Let's hope she's not sleeping...",
-            "A K3 song on break. Oh good Lord....",
             "Emote only chat for the next five minutes? See you in five!"
         };
 
@@ -134,7 +133,15 @@ namespace TwitchBot
             "10 Push Ups? Tripzz will be happy. You gonna do them too?",
             "A bedtime story stream! Aww, this will be nice <3",
             "1v1 Chess game against Tripzz. Better bring your A game bish.",
-            "A gifted sub to whoever you choose? Let's go!"
+            "A gifted sub to whoever you choose? Let's go!",
+            "OMG! A scribbl break? Let's GOOOOOOOOOOO!",
+            "YUMYUMYUM Geotasty on the next break",
+            "Tetrio break? Oh cool, finally some actual fun"
+        };
+
+        private List<string> mythicPresents = new List<string>
+        {
+            "A K3 song on break. Oh good Lord...."
         };
 
         private int GetRandom(int min, int max)
@@ -143,67 +150,89 @@ namespace TwitchBot
             return random.Next(min, max);
         }
 
+        private double GetDoubleRandom()
+        {
+            doubleRandom = new Random();
+            return doubleRandom.NextDouble();
+        }
+
         public string ListCommand(string user)
         {
-            if (goodList.Count > 0)
+            user.ToLower();
+
+            if (user != null && user != "" && user != " " && user != "!list" && user != "!list ")
             {
-                for (int i = 0; i < goodList.Count; i++)
+                if (goodList.Count > 0)
                 {
-                    if(goodList[i] == user)
+                    for (int i = 0; i < goodList.Count; i++)
                     {
-                        return user + " is a good blop! akatri2Lovings";
+                        if (goodList[i] == user)
+                        {
+                            return user + " is a good blop! akatri2Peek akatri2Lovings";
+                        }
                     }
                 }
-            }
 
-            if(naughtyList.Count > 0)
-            {
-                for(int i = 0; i < naughtyList.Count; i++)
+                if (naughtyList.Count > 0)
                 {
-                    if(naughtyList[i] == user)
+                    for (int i = 0; i < naughtyList.Count; i++)
                     {
-                        return user + " is a naughty blop! akatri2Pew";
+                        if (naughtyList[i] == user)
+                        {
+                            return user + " is a naughty blop! akatri2Pew";
+                        }
                     }
                 }
-            }
 
-            return user + " is not on any list!";
+                return user + " is not on any list!";
+            }
+            return null;
         }
 
         public string GoodListCommand(string user)
         {
-            if (naughtyList.Count > 0 && naughtyList.Contains(user))
+            user.ToLower();
+            if (user != null && user != "" && user != " " && user != "!goodlist" && user != "!goodlist ")
             {
-                naughtyList.Remove(user);
-            }
+                if (naughtyList.Count > 0 && naughtyList.Contains(user))
+                {
+                    naughtyList.Remove(user);
+                }
 
-            if(goodList.Contains(user) == false)
-            {
-                goodList.Add(user);
-                return user + " has been added to the good list! " + user + " is a very good blop! akatri2Lovings";
+                if (goodList.Contains(user) == false)
+                {
+                    goodList.Add(user);
+                    return user + " has been added to the good list! " + user + " is a very good blop! akatri2Lovings";
+                }
+                else
+                {
+                    return user + " is already on the good list! akatri2Lovings";
+                }
             }
-            else
-            {
-                return user + " is already on the good list! akatri2Lovings";
-            }
+            return null;
         }
 
         public string NaughtyListCommand(string user)
         {
-            if (goodList.Count > 0 && goodList.Contains(user))
+            user.ToLower();
+            if(user != null && user != "" && user != " " && user != "!naughtylist" && user != "!naughtylist ")
             {
-                goodList.Remove(user);
-            }
+                if (goodList.Count > 0 && goodList.Contains(user))
+                {
+                    goodList.Remove(user);
+                }
 
-            if (naughtyList.Contains(user) == false)
-            {
-                naughtyList.Add(user);
-                return user + " has been added to the naughty list! " + user + " is a very naughty blop! akatri2Pew";
+                if (naughtyList.Contains(user) == false)
+                {
+                    naughtyList.Add(user);
+                    return user + " has been added to the naughty list! " + user + " is a very naughty blop! akatri2Pew";
+                }
+                else
+                {
+                    return user + " is already on the naughty list! akatri2Pew";
+                }
             }
-            else
-            {
-                return user + " is already on the naughty list! akatri2Pew";
-            }
+            return null;
         }
 
         public string MistleToeCommand(string user, OnChatCommandReceivedArgs e)
@@ -221,28 +250,82 @@ namespace TwitchBot
 
         public string PresentCheckCommand(string user)
         {
-            int listProb = GetRandom(1, 101);
+            double listProb = GetDoubleRandom();
 
-            if(listProb <= 85)
+            if(listProb <= 0.939999999999999)
             {
                 // common
-                int randomNumber = GetRandom(0, commonPresents.Count -1);
+                int randomNumber = GetRandom(0, commonPresents.Count);
 
                 return "/me " + user + " You creep downstairs, tiptoeing to stay as quiet as you can. You hide your squeals as Santa has been! The Christmas Tree has so many presents! You sneak over, pick the biggest box you can find to receive.... " + commonPresents[randomNumber];
             }
-            else if(listProb <= 98)
+            else if(listProb <= 0.989999999999999)
             {
                 // rare
-                int randomNumber = GetRandom(0, rarePresents.Count -1);
+                int randomNumber = GetRandom(0, rarePresents.Count);
 
                 return "/me " + user + " You creep downstairs, tiptoeing to stay as quiet as you can. You hide your squeals as Santa has been! The Christmas Tree has so many presents! You sneak over, pick the biggest box you can find to receive.... " + rarePresents[randomNumber];
             }
-            else
+            else if(listProb <= 0.9999997)
             {
                 // legendary
-                int randomNumber = GetRandom(0, legendaryPresents.Count -1);
+                int randomNumber = GetRandom(0, legendaryPresents.Count);
 
                 return "/me " + user + " You creep downstairs, tiptoeing to stay as quiet as you can. You hide your squeals as Santa has been! The Christmas Tree has so many presents! You sneak over, pick the biggest box you can find to receive.... " + legendaryPresents[randomNumber];
+            }
+            else
+            {
+                int randomNumber = GetRandom(0, mythicPresents.Count);
+
+                return "/me " + user + " You creep downstairs, tiptoeing to stay as quiet as you can. You hide your squeals as Santa has been! The Christmas Tree has so many presents! You sneak over, pick the biggest box you can find to receive.... " + mythicPresents[randomNumber];
+            }
+        }
+
+        public string AllNaughtyListCommand()
+        {
+            string response = "Naughty blops: ";
+            if(naughtyList.Count == 0)
+            {
+                return "There are no naughty blops! akatri2Aww";
+            }
+            else
+            {
+                for (int i = 0; i < naughtyList.Count; i++)
+                {
+                    if(i == naughtyList.Count -1)
+                    {
+                        response += naughtyList[i].ToString();
+                    }
+                    else
+                    {
+                        response += naughtyList[i].ToString() + ", ";
+                    }
+                }
+                return response;
+            }
+        }
+
+        public string AllGoodListCommand()
+        {
+            string response = "Good blops: ";
+            if (goodList.Count == 0)
+            {
+                return "There are no good blops! :O";
+            }
+            else
+            {
+                for (int i = 0; i < goodList.Count; i++)
+                {
+                    if (i == goodList.Count - 1)
+                    {
+                        response += goodList[i].ToString();
+                    }
+                    else
+                    {
+                        response += goodList[i].ToString() + ", ";
+                    }
+                }
+                return response;
             }
         }
     }

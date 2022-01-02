@@ -5,13 +5,15 @@ namespace TwitchBot
 {
     class FileManager
     {
-        private static string taskPath = @"E:\Desktop\Temp\text.txt";
-        private string tempTaskPath = @"E:\Desktop\Temp\temptext.txt";
-        private static string targetPath = @"E:\Desktop\Temp\target.txt";
-        private static string suggestPath = @"E:\Desktop\Temp\suggestions.txt";
-        private static string weeklyTargetPath = @"E:\Desktop\Temp\weeklytarget.txt";
-        private static string pomoCounterPath = @"E:\Desktop\Temp\pomocounter.txt";
-        private static string dateTimePath = @"E:\Desktop\Temp\dateTime.txt";
+        private static string taskPath = @"C:\Users\mikea\Documents\KAROCHATBOT\text.txt";
+        private string tempTaskPath = @"C:\Users\mikea\Documents\KAROCHATBOT\temptext.txt";
+        private static string targetPath = @"C:\Users\mikea\Documents\KAROCHATBOT\target.txt";
+        private static string suggestPath = @"C:\Users\mikea\Documents\KAROCHATBOT\suggestions.txt";
+        private static string weeklyTargetPath = @"C:\Users\mikea\Documents\KAROCHATBOT\weeklytarget.txt";
+        private static string pomoCounterPath = @"C:\Users\mikea\Documents\KAROCHATBOT\pomocounter.txt";
+        private static string dateTimePath = @"C:\Users\mikea\Documents\KAROCHATBOT\dateTime.txt";
+
+
 
         public static string TaskPath
         {
@@ -61,7 +63,7 @@ namespace TwitchBot
                 {
                     while ((line = reader.ReadLine()) != null)
                     {
-                        if (line.StartsWith("•" + user))
+                        if (line.StartsWith("• " + user))
                         {
                             continue;
                         }
@@ -83,7 +85,7 @@ namespace TwitchBot
                 {
                     while ((line = reader.ReadLine()) != null)
                     {
-                        if (line.StartsWith("•"+user))
+                        if (line.StartsWith("• "+user))
                         {
                             string modifiedLine = line.Replace((user + " - "), "");
                             return modifiedLine;
@@ -107,9 +109,9 @@ namespace TwitchBot
                     {
                         while ((line = reader.ReadLine()) != null)
                         {
-                            if (line.StartsWith("•" + user))
+                            if (line.StartsWith("• " + user))
                             {
-                                string modifiedLine = line.Replace(line, "•" + user + message);
+                                string modifiedLine = line.Replace(line, "• " + user + message);
                                 writer.WriteLine(modifiedLine);
                                 continue;
                             }
@@ -174,7 +176,7 @@ namespace TwitchBot
                 {
                     while((line = reader.ReadLine()) != null)
                     {
-                        string modifiedLine = line.Replace("•", "");
+                        string modifiedLine = line.Replace("• ", "");
                         string[] split = modifiedLine.Split(new[] {" - "}, System.StringSplitOptions.None);
 
                         user = split[0];

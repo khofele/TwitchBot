@@ -178,7 +178,7 @@ namespace TwitchBot
                 string canceledTask = fileManager.FindTask(User.GetUser(e));
                 RemoveTask(User.GetUser(e));
                 fileManager.DeleteTaskInFile(User.GetUser(e));
-                return User.GetUser(e) + " canceled the task: " + canceledTask.Replace("•", "") + "! akatri2Pew ";
+                return User.GetUser(e) + " canceled the task: " + canceledTask.Replace("• ", "") + "! akatri2Pew ";
             }
             else
             {
@@ -217,7 +217,7 @@ namespace TwitchBot
                 SetTargetToFile(target);
                 SetWeeklyTargetToFile(weeklyTarget);
                 CheckTargetAchieved();
-                return "CONGRATS " + User.GetUser(e) + "! akatri2Hype YOU COMPLETED YOUR TASK! " + finishedTask.Replace("•", "") + " IS DONE! " + response + " akatri2Party akatri2Lovings";
+                return "CONGRATS " + User.GetUser(e) + "! akatri2Hype YOU COMPLETED YOUR TASK! " + finishedTask.Replace("• ", "") + " IS DONE! " + response + " akatri2Hype akatri2Lovings";
             }
             else
             {
@@ -234,7 +234,7 @@ namespace TwitchBot
         {
             if(current == 1)
             {
-                return "THE BLOPSQUAD FINISHED 1 TASK TODAY! YOU'RE DOING AMAZING GUYS!  akatri2Party akatri2Hype";
+                return "THE BLOPSQUAD FINISHED 1 TASK TODAY! YOU'RE DOING AMAZING GUYS! akatri2Work akatri2Hype";
             } 
             else if(current == 0)
             {
@@ -242,7 +242,7 @@ namespace TwitchBot
             }
             else
             {
-                return "THE BLOPSQUAD FINISHED " + current + " TASKS TODAY! YOU'RE DOING AMAZING GUYS!  akatri2Party akatri2Hype";
+                return "THE BLOPSQUAD FINISHED " + current + " TASKS TODAY! YOU'RE DOING AMAZING GUYS! akatri2Work akatri2Hype";
             }
         }
 
@@ -286,7 +286,7 @@ namespace TwitchBot
         {
             string chatMessage = e.Command.ChatMessage.Message.ToString().ToLower();
             pomoGoal = chatMessage.Replace("!setpomogoal ", "");
-            SetPomoToFile(currentPomo);
+            SetPomoGoalToFile(pomoGoal);
             string response = "Pomo goal: " + pomoGoal + "!";
             return response;
         }
@@ -297,7 +297,7 @@ namespace TwitchBot
             if (fileManager.FindTask(User.GetUser(e)) != null)
             {
                 string task = fileManager.FindTask(user);
-                string response = user + " you are working on: " + task.Replace("•", "") + "! Good luck! <3";
+                string response = user + " you are working on: " + task.Replace("• ", "") + "! Good luck! <3";
                 return response;
             } else
             {
@@ -371,16 +371,22 @@ namespace TwitchBot
             fileManager.WriteToFile(currentPomo + "/" + pomoGoal, FileManager.PomoCounterPath);
         }
 
+        private void SetPomoGoalToFile(string pomoGoal)
+        {
+            fileManager.ResetPomoCounterFile();
+            fileManager.WriteToFile(currentPomo + "/" + pomoGoal, FileManager.PomoCounterPath);
+        }
+
         private void CheckTargetAchieved()
         {
             if(current >= int.Parse(target) && int.Parse(target) > 0)
             {
-                Bot.SendChatMessage("TARGET ACHIEVED! TARGET ACHIEVED! I AM SO PROUD OF Y'ALL! <3");
+                Bot.SendChatMessage("TARGET ACHIEVED! TARGET ACHIEVED! I AM SO PROUD OF Y'ALL! akatri2Lovings");
             }
 
             if(weeklyCurrent >= int.Parse(weeklyTarget) && int.Parse(weeklyTarget) > 0)
             {
-                Bot.SendChatMessage("WEEKLY TARGET ACHIEVED! WEEKLY TARGET ACHIEVED! I AM SO PROUD OF Y'ALL! <3");
+                Bot.SendChatMessage("WEEKLY TARGET ACHIEVED! WEEKLY TARGET ACHIEVED! I AM SO PROUD OF Y'ALL! akatri2Lovings");
             }
         }
 
@@ -392,13 +398,13 @@ namespace TwitchBot
 
             if (NotAdded == true)
             {
-                fileManager.WriteToFile("•" + User.GetUser(e) + task.UserTask, FileManager.TaskPath);
+                fileManager.WriteToFile("• " + User.GetUser(e) + task.UserTask, FileManager.TaskPath);
                 AddTask(task);
-                return User.GetUser(e) + " added a task: " + taskMessage.Replace("- ", "") + "! akatri2Work ";
+                return User.GetUser(e) + " added a task: " + taskMessage.Replace("- ", "") + "! akatri2Work";
             }
             else
             {
-                return User.GetUser(e) + " you already added a task! Remove or finish your task first! akatri2Pew ";
+                return User.GetUser(e) + " you already added a task! Remove or finish your task first! akatri2Pew";
             }
         }
 
@@ -427,7 +433,7 @@ namespace TwitchBot
             else
             {
                 finishedTasks.Add(User.GetUser(e), 1);
-                return User.GetUser(e) + " finished one task today! akatri2Party";
+                return User.GetUser(e) + " finished one task today! akatri2Hype";
             }
         }
 
@@ -439,11 +445,11 @@ namespace TwitchBot
 
                 if (finished == 1)
                 {
-                    return User.GetUser(e) + " finished " + finished + " task today! akatri2Party";
+                    return User.GetUser(e) + " finished " + finished + " task today! akatri2Hype";
                 }
                 else
                 {
-                    return User.GetUser(e) + " finished " + finished + " tasks today! akatri2Party";
+                    return User.GetUser(e) + " finished " + finished + " tasks today! akatri2Hype";
                 }
             }
             else
