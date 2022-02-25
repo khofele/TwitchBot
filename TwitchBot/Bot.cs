@@ -32,9 +32,9 @@ namespace TwitchBot
 
     class Bot
     {
-        private ConnectionCredentials creds = new ConnectionCredentials("theblopbot", "oauth:4h6ckv84qqeu1eexdnt57qgulfjwjo");
+        private ConnectionCredentials creds = new ConnectionCredentials("theblopbot", "oauth:bqo100nbdgrk8x5uhitj6nbci0u92j");
         private static TwitchClient client;
-        private static string channel = "akaTripzz";
+        private static string channel = "karomagkekse";
         private string response;
         private TaskCommandManager taskManager = new TaskCommandManager();
         private RandomCommandManager randomManager = new RandomCommandManager();

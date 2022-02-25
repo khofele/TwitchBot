@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "1dd9372d-5720-4c88-8107-88df976d5f28": {
+      "ProjectGuid": "1dd9372d-5720-4c88-8107-88df976d5f28",
+      "DisplayName": "TwitchBot",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

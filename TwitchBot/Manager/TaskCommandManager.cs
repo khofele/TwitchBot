@@ -328,7 +328,7 @@ namespace TwitchBot
                 fileManager.ResetWeeklyTargetFile();
                 counter += 1;
             }
-            if(File.Exists(FileManager.PomoCounterPath))
+            if(File.Exists(FileManager.PomoCounterPath) || File.Exists(FileManager.PomoCounterPathVersionTwo))
             {
                 pomoGoal = "0";
                 currentPomo = "0";
@@ -350,6 +350,7 @@ namespace TwitchBot
         {
             fileManager.ResetTargetFile();
             fileManager.WriteToFile("Target: " + target + " " + "Current: " + current, FileManager.TargetPath);
+            fileManager.WriteToFile(current +"/"+target, FileManager.TargetPathVersionTwo);
         }
 
         private void SetCurrentToFile(int currentTasks)
@@ -357,6 +358,7 @@ namespace TwitchBot
             fileManager.ResetTargetFile();
             current = currentTasks;
             fileManager.WriteToFile("Target: " + target + " " + "Current: " + currentTasks, FileManager.TargetPath);
+            fileManager.WriteToFile(currentTasks + "/" + target, FileManager.TargetPathVersionTwo);
         }
 
         private void SetWeeklyTargetToFile(string weeklyTarget)
@@ -369,6 +371,7 @@ namespace TwitchBot
         {
             fileManager.ResetPomoCounterFile();
             fileManager.WriteToFile(currentPomo + "/" + pomoGoal, FileManager.PomoCounterPath);
+            fileManager.WriteToFile("POMO " + currentPomo, FileManager.PomoCounterPathVersionTwo);
         }
 
         private void SetPomoGoalToFile(string pomoGoal)

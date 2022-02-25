@@ -5,14 +5,14 @@ namespace TwitchBot
 {
     class FileManager
     {
-        private static string taskPath = @"C:\Users\mikea\Documents\KAROCHATBOT\text.txt";
-        private string tempTaskPath = @"C:\Users\mikea\Documents\KAROCHATBOT\temptext.txt";
-        private static string targetPath = @"C:\Users\mikea\Documents\KAROCHATBOT\target.txt";
-        private static string suggestPath = @"C:\Users\mikea\Documents\KAROCHATBOT\suggestions.txt";
-        private static string weeklyTargetPath = @"C:\Users\mikea\Documents\KAROCHATBOT\weeklytarget.txt";
-        private static string pomoCounterPath = @"C:\Users\mikea\Documents\KAROCHATBOT\pomocounter.txt";
-        private static string dateTimePath = @"C:\Users\mikea\Documents\KAROCHATBOT\dateTime.txt";
-
+        private static string taskPath = @"E:\Desktop\Temp\text.txt";
+        private string tempTaskPath = @"E:\Desktop\Temp\temptext.txt";
+        private static string targetPath = @"E:\Desktop\Temp\target.txt";
+        private static string targetPathVersionTwo = @"E:\Desktop\Temp\target2.txt";
+        private static string suggestPath = @"E:\Desktop\Temp\suggestions.txt";
+        private static string weeklyTargetPath = @"E:\Desktop\Temp\weeklytarget.txt";
+        private static string pomoCounterPath = @"E:\Desktop\Temp\pomocounter.txt";
+        private static string pomoCounterPathVersionTwo = @"E:\Desktop\Temp\pomocounter2.txt";
 
 
         public static string TaskPath
@@ -40,9 +40,14 @@ namespace TwitchBot
             get => pomoCounterPath;
         }
 
-        public static string DateTimePath
+        public static string PomoCounterPathVersionTwo
         {
-            get => dateTimePath;
+            get => pomoCounterPathVersionTwo;
+        }
+
+        public static string TargetPathVersionTwo
+        {
+            get => targetPathVersionTwo;
         }
 
         public void WriteToFile(string message, string path)
@@ -145,6 +150,11 @@ namespace TwitchBot
             {
                 File.Delete(targetPath);
             }
+
+            if(File.Exists(targetPathVersionTwo))
+            {
+                File.Delete(targetPathVersionTwo);
+            }
         }
 
         public void ResetWeeklyTargetFile()
@@ -160,6 +170,11 @@ namespace TwitchBot
             if(File.Exists(pomoCounterPath))
             {
                 File.Delete(pomoCounterPath);
+            }
+
+            if(File.Exists(pomoCounterPathVersionTwo))
+            {
+                File.Delete(pomoCounterPathVersionTwo);
             }
         }
 

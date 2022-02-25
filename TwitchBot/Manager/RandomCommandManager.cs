@@ -167,7 +167,7 @@ namespace TwitchBot
             }
             else
             {
-                return user + " is " + randomCounter + " % sus! akatri2Pew ";
+                return user + " is " + randomCounter + "% sus! akatri2Pew ";
             }
         }
 
