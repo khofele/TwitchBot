@@ -13,6 +13,8 @@ namespace TwitchBot
         private static string weeklyTargetPath = @"E:\Desktop\Temp\weeklytarget.txt";
         private static string pomoCounterPath = @"E:\Desktop\Temp\pomocounter.txt";
         private static string pomoCounterPathVersionTwo = @"E:\Desktop\Temp\pomocounter2.txt";
+        private static string taskCounterPath = @"E:\Desktop\Temp\taskcounter.txt";
+        private string tempTaskCounterPath = @"E:\Desktop\Temp\temptaskcounter.txt";
 
 
         public static string TaskPath
@@ -48,6 +50,11 @@ namespace TwitchBot
         public static string TargetPathVersionTwo
         {
             get => targetPathVersionTwo;
+        }
+
+        public static string TaskCounterPath
+        {
+            get => taskCounterPath;
         }
 
         public void WriteToFile(string message, string path)
@@ -144,37 +151,81 @@ namespace TwitchBot
             File.Delete(tempTaskPath);
         }
 
-        public void ResetTargetFile()
+        public bool ResetTargetFile()
         {
             if(File.Exists(targetPath))
             {
                 File.Delete(targetPath);
+                return true;
             }
-
-            if(File.Exists(targetPathVersionTwo))
+            else
             {
-                File.Delete(targetPathVersionTwo);
+                return false;
             }
         }
 
-        public void ResetWeeklyTargetFile()
+        public bool ResetTargetFileVersionTwo()
+        {
+            if (File.Exists(targetPathVersionTwo))
+            {
+                File.Delete(targetPathVersionTwo);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool ResetWeeklyTargetFile()
         {
             if(File.Exists(weeklyTargetPath))
             {
                 File.Delete(weeklyTargetPath);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
-        public void ResetPomoCounterFile()
+        public bool ResetPomoCounterFile()
         {
             if(File.Exists(pomoCounterPath))
             {
                 File.Delete(pomoCounterPath);
+                return true;
             }
+            else
+            {
+                return false;
+            }
+        }
 
-            if(File.Exists(pomoCounterPathVersionTwo))
+        public bool ResetPomoCounterFileVersionTwo()
+        {
+            if (File.Exists(pomoCounterPathVersionTwo))
             {
                 File.Delete(pomoCounterPathVersionTwo);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool ResetTaskCounterFile()
+        {
+            if(File.Exists(taskCounterPath))
+            {
+                File.Delete(taskCounterPath);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -274,6 +325,58 @@ namespace TwitchBot
             else
             {
                 return false;
+            }
+        }
+
+        public void EditIndividualCounter(string user, int counter)
+        {
+            if(File.Exists(FileManager.TaskCounterPath))
+            {
+                string line = "";
+
+                using (StreamReader reader = new StreamReader(taskCounterPath))
+                {
+                    using (StreamWriter writer = new StreamWriter(tempTaskCounterPath))
+                    {
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (line.StartsWith(user))
+                            {
+                                writer.WriteLine(line.Replace(line, user + " " + counter));
+                                continue;
+                            }
+                            writer.WriteLine(line);
+                        }
+                    }
+                }
+
+                File.Delete(taskCounterPath);
+                File.Move(tempTaskCounterPath, taskCounterPath);
+                File.Delete(tempTaskCounterPath);
+            }
+        }
+
+        public static void ReadInExistingTaskCounters()
+        {
+            if(File.Exists(taskCounterPath))
+            {
+                string line = "";
+                string user = "";
+                string counterLine = "";
+
+                using (StreamReader reader = new StreamReader(taskCounterPath))
+                {
+                    while((line = reader.ReadLine()) != null)
+                    {
+                        string[] split = line.Split(new[] { " " }, System.StringSplitOptions.None);
+
+                        user = split[0];
+                        counterLine = split[1];
+
+                        int.TryParse(counterLine, out int value);
+                        TaskCommandManager.finishedTasks.Add(user, value);
+                    }
+                }
             }
         }
     }

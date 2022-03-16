@@ -7,7 +7,7 @@ namespace TwitchBot
     class TaskCommandManager
     {
         public static List<Task> tasks = new List<Task>();
-        public Dictionary<string, int> finishedTasks = new Dictionary<string, int>();
+        public static Dictionary<string, int> finishedTasks = new Dictionary<string, int>();
         private int counter = 0;
         private bool notAdded = true;
         private Task task;
@@ -311,28 +311,41 @@ namespace TwitchBot
             if (fileManager.ResetTaskList())
             {
                 tasks.Clear();
-                finishedTasks.Clear();
                 counter += 1;
             }
-            if(File.Exists(FileManager.TargetPath))
+            if(fileManager.ResetTargetFile())
             {
-                fileManager.ResetTargetFile();
                 current = 0;
                 target = "0";
                 counter += 1;
             }
-            if(File.Exists(FileManager.WeeklyTargetPath))
+            if(fileManager.ResetTargetFileVersionTwo())
+            {
+                current = 0;
+                target = "0";
+                counter += 1;
+            }
+            if(fileManager.ResetWeeklyTargetFile())
             {
                 weeklyCurrent = 0;
                 weeklyTarget = "0";
-                fileManager.ResetWeeklyTargetFile();
                 counter += 1;
             }
-            if(File.Exists(FileManager.PomoCounterPath) || File.Exists(FileManager.PomoCounterPathVersionTwo))
+            if(fileManager.ResetPomoCounterFile())
             {
                 pomoGoal = "0";
                 currentPomo = "0";
-                fileManager.ResetPomoCounterFile();
+                counter += 1;
+            }
+            if(fileManager.ResetPomoCounterFileVersionTwo())
+            {
+                pomoGoal = "0";
+                currentPomo = "0";
+                counter += 1;
+            }
+            if(fileManager.ResetTaskCounterFile())
+            {
+                finishedTasks.Clear();
                 counter += 1;
             }
 
@@ -426,17 +439,20 @@ namespace TwitchBot
 
                 if (finished == 1)
                 {
+                    fileManager.WriteToFile(User.GetUser(e) + " " + 1, FileManager.TaskCounterPath);
                     return User.GetUser(e) + " finished " + finished + " task today!";
                 }
                 else
                 {
+                    fileManager.EditIndividualCounter(User.GetUser(e), finished);
                     return User.GetUser(e) + " finished " + finished + " tasks today!";
                 }
             }
             else
             {
                 finishedTasks.Add(User.GetUser(e), 1);
-                return User.GetUser(e) + " finished one task today! akatri2Hype";
+                fileManager.WriteToFile(User.GetUser(e) + " " + 1, FileManager.TaskCounterPath);
+                return User.GetUser(e) + " finished 1 task today! akatri2Hype";
             }
         }
 
@@ -449,6 +465,10 @@ namespace TwitchBot
                 if (finished == 1)
                 {
                     return User.GetUser(e) + " finished " + finished + " task today! akatri2Hype";
+                }
+                else if(finished == 0)
+                {
+                    return User.GetUser(e) + " you finished 0 tasks today! COME ON YOU CAN DO IT! akatri2Lovings";
                 }
                 else
                 {
