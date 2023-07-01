@@ -1,8 +1,9 @@
+Twitchbot für einen Coworking-Stream auf Twitch mit eigenen Chat-Commands. Chatteilnehmer können Aufgaben zu einer To-Do-Liste, welche im Stream angezeigt werden kann, hinzufügen, editieren, löschen und als "erledigt" markieren. Darüber hinaus wurden in dieser Version auf Wunsch des Streamers noch einige weitere Chat-Commands hinzugefügt.
+Version: 2022
+
 ----- SETUP -----
 - set channel (Bot.cs)
 - set paths (FileManager.cs)
-
-
 
 ----- COMMANDS -----
 
